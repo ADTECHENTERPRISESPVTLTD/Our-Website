@@ -394,7 +394,7 @@ export default function ChatWidget() {
       {!isOpen && (
         <button
           onClick={toggleChat}
-          className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-slate-900 shadow-xl border border-slate-700 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer hover:shadow-2xl overflow-visible"
+          className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-slate-900 shadow-xl border border-slate-700 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer hover:shadow-2xl overflow-visible animate-float"
           title="Talk to AD TECH Assistant"
         >
           {/* Outer ring glow */}
