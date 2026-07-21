@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server';
+import dns from 'dns';
+dns.setDefaultResultOrder('ipv4first'); // Force IPv4 first to prevent Windows fetch issues
+
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { KNOWLEDGE_BASE, COMPANY_NAME, EMAIL, PHONE } from '@/data/knowledgeBase';
 
