@@ -394,26 +394,29 @@ export default function ChatWidget() {
       {!isOpen && (
         <button
           onClick={toggleChat}
-          className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-slate-900 shadow-xl border border-slate-700 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer hover:shadow-2xl overflow-visible animate-float"
+          className="group relative flex h-20 w-20 items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer overflow-visible animate-float"
           title="Talk to AD TECH Assistant"
         >
-          {/* Outer ring glow */}
-          <div className="absolute -inset-0.5 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-600 opacity-30 blur-sm group-hover:opacity-75 transition-opacity duration-300"></div>
+          {/* Futuristic Hologram Back-Glow */}
+          <div className="absolute h-12 w-12 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-600 opacity-40 blur-md group-hover:opacity-85 transition-opacity duration-300"></div>
           
+          {/* Glowing ring */}
+          <div className="absolute inset-1.5 rounded-full border border-sky-400/30 group-hover:border-sky-400/80 transition-colors duration-300 animate-pulse-slow"></div>
+
           {/* Cute Robot Image Bubble */}
-          <div className="relative h-full w-full rounded-full overflow-hidden border border-slate-600/50 bg-[#111827]">
+          <div className="relative h-15 w-15 rounded-full overflow-hidden shadow-2xl border border-slate-700/50">
             <img src="/bot-avatar.png" className="h-full w-full object-cover avatar-wave transition-transform duration-300" alt="AD TECH Bot" />
           </div>
           
           {/* Wiggle notification badge */}
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white animate-pulse">
+            <span className="absolute top-1 right-1 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white animate-pulse">
               {unreadCount}
             </span>
           )}
           
           {/* Quick intro text on hover (Cute moments bubble) */}
-          <div className="absolute right-16 bottom-1 hidden md:group-hover:flex flex-col items-end">
+          <div className="absolute right-20 bottom-3 hidden md:group-hover:flex flex-col items-end">
             <div className="bg-slate-900 border border-slate-700 text-slate-200 text-xs py-2 px-3.5 rounded-2xl rounded-br-none shadow-xl whitespace-nowrap animate-bounce flex items-center gap-1.5">
               <span>Hi there! 👋 Need help?</span>
             </div>
