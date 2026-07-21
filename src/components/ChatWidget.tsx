@@ -439,7 +439,6 @@ export default function ChatWidget() {
             <div className="flex items-center gap-2.5">
               <div className="relative flex h-9.5 w-9.5 items-center justify-center rounded-full bg-slate-800 border border-slate-700 overflow-hidden">
                 <img src="/bot-avatar.png" className="h-full w-full object-cover" alt="AD TECH Bot" />
-                <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-[#10B981] border border-slate-950"></span>
               </div>
               <div>
                 <h3 className="text-sm font-bold tracking-wide">AD TECH Assistant</h3>
