@@ -5,7 +5,7 @@ export async function POST(request: Request) {
     const data = await request.json();
     const { formType, name, phone, email, company, scope, budget } = data;
 
-    const adminEmail = 'hradtechenterpriseschepvtltd@gmail.com';
+    const adminEmail = 'sohamsantoshamne@gmail.com';
     const resendApiKey = process.env.RESEND_API_KEY;
 
     // Log the lead details to the server console (Mock Alert)
