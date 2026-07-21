@@ -306,11 +306,26 @@ export default function ChatWidget() {
   };
 
   // Submit Callback Form
-  const handleCallbackSubmit = (e: React.FormEvent, msgId: string) => {
+  const handleCallbackSubmit = async (e: React.FormEvent, msgId: string) => {
     e.preventDefault();
     if (!callbackForm.name || !callbackForm.phone) return;
 
-    // Simulate API Submission
+    // Send data to backend endpoint
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formType: 'callback',
+          name: callbackForm.name,
+          phone: callbackForm.phone,
+          email: callbackForm.email
+        })
+      });
+    } catch (err) {
+      console.error('Failed to send lead to backend:', err);
+    }
+
     const successMsg: Message = {
       id: `callback-success-${Date.now()}`,
       role: 'assistant',
@@ -332,9 +347,26 @@ export default function ChatWidget() {
   };
 
   // Submit Requirements Form
-  const handleReqSubmit = (e: React.FormEvent, msgId: string) => {
+  const handleReqSubmit = async (e: React.FormEvent, msgId: string) => {
     e.preventDefault();
     if (!reqForm.name || !reqForm.scope) return;
+
+    // Send data to backend endpoint
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formType: 'requirements',
+          name: reqForm.name,
+          company: reqForm.company,
+          scope: reqForm.scope,
+          budget: reqForm.budget
+        })
+      });
+    } catch (err) {
+      console.error('Failed to send lead to backend:', err);
+    }
 
     const successMsg: Message = {
       id: `req-success-${Date.now()}`,
