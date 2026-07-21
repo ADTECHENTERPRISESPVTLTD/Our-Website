@@ -16,6 +16,15 @@ export async function POST(request: Request) {
     if (!apiKey) {
       const lowerMsg = message.toLowerCase().trim();
       
+      // Match greetings
+      const greetings = ['hi', 'hello', 'hey', 'greetings', 'hola', 'good morning', 'good afternoon', 'hey there'];
+      if (greetings.some(g => lowerMsg === g || lowerMsg.startsWith(g + ' ') || lowerMsg.endsWith(' ' + g))) {
+        return NextResponse.json({ 
+          response: "Hello! I am the AD TECH AI Assistant. How can I help you today? You can ask about our services, internship programs, hiring process, or choose one of our quick actions below.", 
+          source: 'local_greeting' 
+        });
+      }
+
       // Match keywords in knowledge base
       let matchedAnswer = '';
       for (const item of KNOWLEDGE_BASE) {
@@ -69,9 +78,20 @@ Use the conversation history to maintain context during the session. Keep answer
         parts: [{ text: h.content }]
       }));
 
+    // Gemini requires the first message in the chat history to be from the 'user'.
+    // If the first message is a welcome message from the model, we filter it out.
+    let firstUserIndex = -1;
+    for (let i = 0; i < geminiHistory.length; i++) {
+      if (geminiHistory[i].role === 'user') {
+        firstUserIndex = i;
+        break;
+      }
+    }
+    const slicedHistory = firstUserIndex !== -1 ? geminiHistory.slice(firstUserIndex) : [];
+
     // Start chat session
     const chat = model.startChat({
-      history: geminiHistory,
+      history: slicedHistory,
       systemInstruction: systemPrompt,
     });
 

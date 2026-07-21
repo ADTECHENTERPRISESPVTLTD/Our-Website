@@ -349,9 +349,11 @@ export default function ChatWidget() {
       {isOpen && (
         <div
           ref={chatWindowRef}
-          className="flex h-[600px] w-[92vw] max-w-[400px] flex-col rounded-2xl border shadow-2xl transition-all duration-300 animate-slide-in overflow-hidden
-            light:bg-white light:border-slate-200 light:text-slate-800
-            dark:bg-[#0B1120] dark:border-[#2A3648] dark:text-slate-100"
+          className={`flex h-[600px] w-[92vw] max-w-[400px] flex-col rounded-2xl border shadow-2xl transition-all duration-300 animate-slide-in overflow-hidden
+            ${isLightMode 
+              ? 'bg-white border-slate-200 text-slate-800' 
+              : 'bg-[#0B1120] border-[#2A3648] text-slate-100'
+            }`}
         >
           {/* Chat Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-slate-900 via-[#111827] to-[#1A2233] border-b border-[#2A3648] text-white">
@@ -397,7 +399,7 @@ export default function ChatWidget() {
           </div>
 
           {/* Messages Container */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-[#0f172a]/20 light:bg-slate-50/50">
+          <div className={`flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar ${isLightMode ? 'bg-slate-50/50' : 'bg-[#0f172a]/20'}`}>
             {messages.map((msg) => (
               <div 
                 key={msg.id}
@@ -408,7 +410,9 @@ export default function ChatWidget() {
                   className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm shadow-sm leading-relaxed whitespace-pre-wrap
                     ${msg.role === 'user' 
                       ? 'bg-slate-700 text-white rounded-br-none' 
-                      : 'bg-[#1A2233] border border-[#2A3648] text-slate-100 rounded-bl-none light:bg-white light:border-slate-200 light:text-slate-800'
+                      : isLightMode
+                        ? 'bg-white border border-slate-200 text-slate-800 rounded-bl-none'
+                        : 'bg-[#1A2233] border border-[#2A3648] text-slate-100 rounded-bl-none'
                     }`}
                 >
                   {/* Format markdown bold correctly for UI rendering */}
@@ -418,7 +422,7 @@ export default function ChatWidget() {
 
                   {/* Render Callback Form if Active */}
                   {msg.isForm === 'callback' && msg.formState === 'active' && (
-                    <form onSubmit={(e) => handleCallbackSubmit(e, msg.id)} className="mt-3 space-y-2 border-t border-[#374151] pt-3 light:border-slate-200">
+                    <form onSubmit={(e) => handleCallbackSubmit(e, msg.id)} className={`mt-3 space-y-2 border-t pt-3 ${isLightMode ? 'border-slate-200' : 'border-[#374151]'}`}>
                       <div>
                         <label className="text-[11px] text-slate-400 block mb-1">Your Name *</label>
                         <input 
@@ -426,7 +430,7 @@ export default function ChatWidget() {
                           required
                           value={callbackForm.name}
                           onChange={(e) => setCallbackForm({ ...callbackForm, name: e.target.value })}
-                          className="w-full bg-[#0B1120] border border-[#2A3648] text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 light:bg-slate-100 light:border-slate-300 light:text-slate-900"
+                          className={`w-full text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="Soham"
                         />
                       </div>
@@ -437,7 +441,7 @@ export default function ChatWidget() {
                           required
                           value={callbackForm.phone}
                           onChange={(e) => setCallbackForm({ ...callbackForm, phone: e.target.value })}
-                          className="w-full bg-[#0B1120] border border-[#2A3648] text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 light:bg-slate-100 light:border-slate-300 light:text-slate-900"
+                          className={`w-full text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="+91 98765 43210"
                         />
                       </div>
@@ -447,7 +451,7 @@ export default function ChatWidget() {
                           type="email" 
                           value={callbackForm.email}
                           onChange={(e) => setCallbackForm({ ...callbackForm, email: e.target.value })}
-                          className="w-full bg-[#0B1120] border border-[#2A3648] text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 light:bg-slate-100 light:border-slate-300 light:text-slate-900"
+                          className={`w-full text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="example@gmail.com"
                         />
                       </div>
@@ -462,7 +466,7 @@ export default function ChatWidget() {
 
                   {/* Render Requirements Form if Active */}
                   {msg.isForm === 'requirements' && msg.formState === 'active' && (
-                    <form onSubmit={(e) => handleReqSubmit(e, msg.id)} className="mt-3 space-y-2 border-t border-[#374151] pt-3 light:border-slate-200">
+                    <form onSubmit={(e) => handleReqSubmit(e, msg.id)} className={`mt-3 space-y-2 border-t pt-3 ${isLightMode ? 'border-slate-200' : 'border-[#374151]'}`}>
                       <div>
                         <label className="text-[11px] text-slate-400 block mb-1">Your Name *</label>
                         <input 
@@ -470,7 +474,7 @@ export default function ChatWidget() {
                           required
                           value={reqForm.name}
                           onChange={(e) => setReqForm({ ...reqForm, name: e.target.value })}
-                          className="w-full bg-[#0B1120] border border-[#2A3648] text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 light:bg-slate-100 light:border-slate-300 light:text-slate-900"
+                          className={`w-full text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="Soham Amne"
                         />
                       </div>
@@ -480,7 +484,7 @@ export default function ChatWidget() {
                           type="text" 
                           value={reqForm.company}
                           onChange={(e) => setReqForm({ ...reqForm, company: e.target.value })}
-                          className="w-full bg-[#0B1120] border border-[#2A3648] text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 light:bg-slate-100 light:border-slate-300 light:text-slate-900"
+                          className={`w-full text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="AD TECH"
                         />
                       </div>
@@ -491,7 +495,7 @@ export default function ChatWidget() {
                           value={reqForm.scope}
                           onChange={(e) => setReqForm({ ...reqForm, scope: e.target.value })}
                           rows={2}
-                          className="w-full bg-[#0B1120] border border-[#2A3648] text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 resize-none light:bg-slate-100 light:border-slate-300 light:text-slate-900"
+                          className={`w-full text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 resize-none ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="Brief description of the chatbot or site needed..."
                         />
                       </div>
@@ -500,7 +504,7 @@ export default function ChatWidget() {
                         <select 
                           value={reqForm.budget}
                           onChange={(e) => setReqForm({ ...reqForm, budget: e.target.value })}
-                          className="w-full bg-[#0B1120] border border-[#2A3648] text-xs px-2 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 light:bg-slate-100 light:border-slate-300 light:text-slate-900"
+                          className={`w-full text-xs px-2 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                         >
                           <option value="1000-5000">$1,000 - $5,000</option>
                           <option value="5000-15000">$5,000 - $15,000</option>
@@ -529,8 +533,10 @@ export default function ChatWidget() {
                       <button
                         key={index}
                         onClick={() => handleQuickAction(sug)}
-                        className="text-[11px] px-2.5 py-1 rounded-full border border-slate-600/40 text-slate-300 bg-slate-800/40 hover:bg-slate-800 hover:text-white transition-all cursor-pointer hover:border-slate-500 active:scale-95
-                          light:border-slate-200 light:text-slate-600 light:bg-slate-100 light:hover:bg-slate-200 light:hover:text-slate-900"
+                        className={`text-[11px] px-2.5 py-1 rounded-full border transition-all cursor-pointer active:scale-95
+                          ${isLightMode 
+                            ? 'border-slate-200 text-slate-600 bg-slate-100 hover:bg-slate-200 hover:text-slate-900' 
+                            : 'border-slate-600/40 text-slate-300 bg-slate-800/40 hover:bg-slate-800 hover:text-white hover:border-slate-500'}`}
                       >
                         {sug}
                       </button>
@@ -543,7 +549,7 @@ export default function ChatWidget() {
             {/* Typing Indicator */}
             {isTyping && (
               <div className="flex flex-col items-start animate-fade-in-up">
-                <div className="flex items-center gap-1.5 bg-[#1A2233] border border-[#2A3648] rounded-2xl rounded-bl-none px-4 py-3 light:bg-white light:border-slate-200">
+                <div className={`flex items-center gap-1.5 border rounded-2xl rounded-bl-none px-4 py-3 ${isLightMode ? 'bg-white border-slate-200' : 'bg-[#1A2233] border-[#2A3648]'}`}>
                   <div className="h-2 w-2 rounded-full bg-slate-500 animate-bounce [animation-delay:-0.3s]"></div>
                   <div className="h-2 w-2 rounded-full bg-slate-500 animate-bounce [animation-delay:-0.15s]"></div>
                   <div className="h-2 w-2 rounded-full bg-slate-500 animate-bounce"></div>
@@ -555,7 +561,7 @@ export default function ChatWidget() {
           </div>
 
           {/* Quick Input Bar */}
-          <div className="px-4 py-3 border-t border-[#2A3648] bg-[#0B1120] light:bg-white light:border-slate-200">
+          <div className={`px-4 py-3 border-t bg-[#0B1120] ${isLightMode ? 'bg-white border-slate-200' : 'border-[#2A3648]'}`}>
             <div className="flex gap-2">
               <input
                 type="text"
@@ -563,8 +569,10 @@ export default function ChatWidget() {
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                 placeholder="Ask about AD TECH..."
-                className="flex-1 bg-[#1A2233] border border-[#2A3648] text-sm px-3.5 py-2.5 rounded-xl text-slate-100 placeholder-slate-500 focus:outline-none focus:border-slate-500
-                  light:bg-slate-50 light:border-slate-200 light:text-slate-800 light:placeholder-slate-400"
+                className={`flex-1 text-sm px-3.5 py-2.5 rounded-xl focus:outline-none focus:border-slate-500
+                  ${isLightMode 
+                    ? 'bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400' 
+                    : 'bg-[#1A2233] border border-[#2A3648] text-slate-100 placeholder-slate-500'}`}
               />
               <button
                 onClick={() => handleSendMessage()}
