@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   MessageSquare, X, Send, Phone, Briefcase, FileText, 
   Calendar, Info, HelpCircle, CheckCircle, Moon, Sun, 
-  Minus, Sparkles, SendHorizontal
+  Minus, Sparkles, SendHorizontal, Mic
 } from 'lucide-react';
 import { EMAIL, PHONE, KNOWLEDGE_BASE } from '@/data/knowledgeBase';
 
@@ -33,9 +33,46 @@ export default function ChatWidget() {
   // Requirements form states
   const [reqForm, setReqForm] = useState({ name: '', company: '', scope: '', budget: '1000-5000' });
 
+  // Speech Recognition States
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
+
+  // Initialize Speech Recognition
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        const rec = new SpeechRecognition();
+        rec.continuous = false;
+        rec.interimResults = false;
+        rec.lang = 'en-US';
+
+        rec.onstart = () => setIsListening(true);
+        rec.onend = () => setIsListening(false);
+        rec.onresult = (e: any) => {
+          const transcript = e.results[0][0].transcript;
+          setInputMessage(transcript);
+        };
+        recognitionRef.current = rec;
+      }
+    }
+  }, []);
+
+  const handleMicClick = () => {
+    if (!recognitionRef.current) {
+      alert("Speech recognition is not supported in this browser. Try Google Chrome or Microsoft Edge!");
+      return;
+    }
+    if (isListening) {
+      recognitionRef.current.stop();
+    } else {
+      recognitionRef.current.start();
+    }
+  };
+
   // Initialize and load chat history
   useEffect(() => {
-    const savedHistory = sessionStorage.getItem('adtech_chat_history');
+    const savedHistory = localStorage.getItem('adtech_chat_history');
     const savedTheme = localStorage.getItem('adtech_chat_theme');
     
     if (savedTheme === 'light') {
@@ -54,7 +91,7 @@ export default function ChatWidget() {
         suggestions: ['Our Services', 'Apply for Internship', 'Book a Callback', 'Submit Requirements', 'Hiring Process FAQ']
       };
       setMessages([welcomeMessage]);
-      sessionStorage.setItem('adtech_chat_history', JSON.stringify([welcomeMessage]));
+      localStorage.setItem('adtech_chat_history', JSON.stringify([welcomeMessage]));
     }
   }, []);
 
@@ -66,7 +103,7 @@ export default function ChatWidget() {
   // Save history helper
   const saveHistory = (newMessages: Message[]) => {
     setMessages(newMessages);
-    sessionStorage.setItem('adtech_chat_history', JSON.stringify(newMessages));
+    localStorage.setItem('adtech_chat_history', JSON.stringify(newMessages));
   };
 
   // Toggle open/close
@@ -563,6 +600,19 @@ export default function ChatWidget() {
           {/* Quick Input Bar */}
           <div className={`px-4 py-3 border-t bg-[#0B1120] ${isLightMode ? 'bg-white border-slate-200' : 'border-[#2A3648]'}`}>
             <div className="flex gap-2">
+              {/* Mic Button */}
+              <button
+                onClick={handleMicClick}
+                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all active:scale-95 cursor-pointer
+                  ${isListening 
+                    ? 'bg-red-500 text-white animate-pulse' 
+                    : isLightMode
+                      ? 'bg-slate-100 border border-slate-200 text-slate-500 hover:text-slate-800'
+                      : 'bg-[#1a2233] border border-[#2a3648] text-slate-400 hover:text-slate-200'}`}
+                title={isListening ? "Listening... Click to stop" : "Voice Input"}
+              >
+                <Mic className={`h-4.5 w-4.5 ${isListening ? 'animate-bounce' : ''}`} />
+              </button>
               <input
                 type="text"
                 value={inputMessage}
