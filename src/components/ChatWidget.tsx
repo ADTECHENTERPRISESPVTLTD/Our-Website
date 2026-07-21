@@ -428,14 +428,14 @@ export default function ChatWidget() {
       {isOpen && (
         <div
           ref={chatWindowRef}
-          className={`relative flex h-[600px] w-[92vw] max-w-[400px] flex-col rounded-2xl border shadow-2xl transition-all duration-300 animate-slide-in overflow-visible
+          className={`relative flex h-[600px] w-[92vw] max-w-[400px] flex-col rounded-2xl border shadow-2xl transition-all duration-300 animate-slide-in overflow-hidden
             ${isLightMode 
               ? 'bg-white border-slate-200 text-slate-800' 
               : 'bg-[#0B1120] border-[#2A3648] text-slate-100'
             }`}
         >
-          {/* Circular Holographic Robot Mascot overlapping the right edge */}
-          <div className="absolute -right-12 bottom-24 z-30 h-28 w-28 rounded-full overflow-hidden border-2 border-sky-400/50 bg-[#0B1120] shadow-[0_0_25px_rgba(56,189,248,0.3)] animate-float hidden md:block">
+          {/* Circular Holographic Robot Mascot floating inside the right side */}
+          <div className="absolute right-2 bottom-24 z-30 h-24 w-24 rounded-full overflow-hidden border-2 border-sky-400/50 bg-[#0B1120] shadow-[0_0_20px_rgba(56,189,248,0.25)] animate-float hidden md:block">
             <img 
               src="/bot-avatar.png" 
               className="h-full w-full object-cover avatar-wave" 
@@ -494,9 +494,9 @@ export default function ChatWidget() {
               >
                 {/* Bubble */}
                 <div 
-                  className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm shadow-sm leading-relaxed whitespace-pre-wrap
+                  className={`rounded-2xl px-4 py-2.5 text-sm shadow-sm leading-relaxed whitespace-pre-wrap max-w-[70%]
                     ${msg.role === 'user' 
-                      ? 'bg-slate-700 text-white rounded-br-none' 
+                      ? 'bg-slate-700 text-white rounded-br-none mr-12' 
                       : isLightMode
                         ? 'bg-white border border-slate-200 text-slate-800 rounded-bl-none'
                         : 'bg-[#1A2233] border border-[#2A3648] text-slate-100 rounded-bl-none'
