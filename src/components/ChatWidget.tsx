@@ -428,17 +428,26 @@ export default function ChatWidget() {
       {isOpen && (
         <div
           ref={chatWindowRef}
-          className={`flex h-[600px] w-[92vw] max-w-[400px] flex-col rounded-2xl border shadow-2xl transition-all duration-300 animate-slide-in overflow-hidden
+          className={`relative flex h-[600px] w-[92vw] max-w-[400px] flex-col rounded-2xl border shadow-2xl transition-all duration-300 animate-slide-in overflow-visible
             ${isLightMode 
               ? 'bg-white border-slate-200 text-slate-800' 
               : 'bg-[#0B1120] border-[#2A3648] text-slate-100'
             }`}
         >
+          {/* Large Floating Robot Mascot overlapping the right edge */}
+          <div className="absolute -right-20 bottom-24 z-30 h-36 w-36 pointer-events-none animate-float hidden md:block">
+            <img 
+              src="/bot-avatar.png" 
+              className="h-full w-full object-contain filter drop-shadow-[0_15px_25px_rgba(56,189,248,0.35)] avatar-wave" 
+              alt="AD TECH Mascot" 
+            />
+          </div>
+
           {/* Chat Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-slate-900 via-[#111827] to-[#1A2233] border-b border-[#2A3648] text-white">
             <div className="flex items-center gap-2.5">
-              <div className="relative flex h-9.5 w-9.5 items-center justify-center rounded-full bg-slate-800 border border-slate-700 overflow-hidden">
-                <img src="/bot-avatar.png" className="h-full w-full object-cover" alt="AD TECH Bot" />
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 border border-slate-700">
+                <Sparkles className="h-4.5 w-4.5 text-sky-400 animate-pulse" />
               </div>
               <div>
                 <h3 className="text-sm font-bold tracking-wide">AD TECH Assistant</h3>
