@@ -435,7 +435,7 @@ export default function ChatWidget() {
             }`}
         >
           {/* Circular Holographic Robot Mascot floating inside the right side */}
-          <div className="absolute right-2 bottom-24 z-30 h-24 w-24 rounded-full overflow-hidden border-2 border-sky-400/50 bg-[#0B1120] shadow-[0_0_20px_rgba(56,189,248,0.25)] animate-float hidden md:block">
+          <div className="absolute right-1 bottom-24 z-30 h-20 w-20 rounded-full overflow-hidden border-2 border-sky-400/50 bg-[#0B1120] shadow-[0_0_20px_rgba(56,189,248,0.25)] animate-float hidden md:block">
             <img 
               src="/bot-avatar.png" 
               className="h-full w-full object-cover avatar-wave" 
@@ -486,7 +486,7 @@ export default function ChatWidget() {
           </div>
 
           {/* Messages Container */}
-          <div className={`flex-1 overflow-y-auto p-4 md:pr-28 space-y-4 custom-scrollbar ${isLightMode ? 'bg-slate-50/50' : 'bg-[#0f172a]/20'}`}>
+          <div className={`flex-1 overflow-y-auto p-4 md:pr-22 space-y-4 custom-scrollbar ${isLightMode ? 'bg-slate-50/50' : 'bg-[#0f172a]/20'}`}>
             {messages.map((msg) => (
               <div 
                 key={msg.id}

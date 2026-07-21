@@ -6,7 +6,7 @@ export interface QAItem {
 }
 
 export const COMPANY_NAME = "AD Tech Enterprises Pvt. Ltd.";
-export const EMAIL = "sohamsantoshamne@gmail.com";
+export const EMAIL = "hradtechenterpriseschepvtltd@gmail.com";
 export const PHONE = "+91 83193 58568";
 
 export const KNOWLEDGE_BASE: QAItem[] = [
