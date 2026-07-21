@@ -434,11 +434,11 @@ export default function ChatWidget() {
               : 'bg-[#0B1120] border-[#2A3648] text-slate-100'
             }`}
         >
-          {/* Large Floating Robot Mascot overlapping the right edge */}
-          <div className="absolute -right-20 bottom-24 z-30 h-36 w-36 pointer-events-none animate-float hidden md:block">
+          {/* Circular Holographic Robot Mascot overlapping the right edge */}
+          <div className="absolute -right-12 bottom-24 z-30 h-28 w-28 rounded-full overflow-hidden border-2 border-sky-400/50 bg-[#0B1120] shadow-[0_0_25px_rgba(56,189,248,0.3)] animate-float hidden md:block">
             <img 
               src="/bot-avatar.png" 
-              className="h-full w-full object-contain filter drop-shadow-[0_15px_25px_rgba(56,189,248,0.35)] avatar-wave" 
+              className="h-full w-full object-cover avatar-wave" 
               alt="AD TECH Mascot" 
             />
           </div>
