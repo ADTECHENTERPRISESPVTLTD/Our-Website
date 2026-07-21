@@ -402,7 +402,7 @@ export default function ChatWidget() {
           
           {/* Cute Robot Image Bubble */}
           <div className="relative h-full w-full rounded-full overflow-hidden border border-slate-600/50 bg-[#111827]">
-            <img src="/bot-avatar.png" className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-300" alt="AD TECH Bot" />
+            <img src="/bot-avatar.png" className="h-full w-full object-cover avatar-wave transition-transform duration-300" alt="AD TECH Bot" />
           </div>
           
           {/* Wiggle notification badge */}
