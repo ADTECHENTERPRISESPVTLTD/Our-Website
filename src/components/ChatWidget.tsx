@@ -394,22 +394,29 @@ export default function ChatWidget() {
       {!isOpen && (
         <button
           onClick={toggleChat}
-          className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-tr from-slate-700 via-slate-800 to-slate-900 text-slate-100 shadow-xl border border-slate-600 transition-all duration-300 hover:scale-115 active:scale-95 cursor-pointer hover:shadow-2xl"
+          className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-slate-900 shadow-xl border border-slate-700 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer hover:shadow-2xl overflow-visible"
           title="Talk to AD TECH Assistant"
         >
-          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-sky-400 to-blue-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-          <MessageSquare className="h-6 w-6 group-hover:rotate-6 transition-transform duration-300" />
+          {/* Outer ring glow */}
+          <div className="absolute -inset-0.5 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-600 opacity-30 blur-sm group-hover:opacity-75 transition-opacity duration-300"></div>
           
+          {/* Cute Robot Image Bubble */}
+          <div className="relative h-full w-full rounded-full overflow-hidden border border-slate-600/50 bg-[#111827]">
+            <img src="/bot-avatar.png" className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-300" alt="AD TECH Bot" />
+          </div>
+          
+          {/* Wiggle notification badge */}
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white animate-pulse">
+            <span className="absolute -top-1 -right-1 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white animate-pulse">
               {unreadCount}
             </span>
           )}
           
-          {/* Quick intro text on hover */}
-          <div className="absolute right-16 hidden md:group-hover:flex items-center bg-slate-900 border border-slate-700 text-slate-200 text-xs py-2 px-3 rounded-lg shadow-lg whitespace-nowrap animate-fade-in-up">
-            <Sparkles className="h-3.5 w-3.5 text-yellow-400 mr-1.5" />
-            Talk to AD TECH AI Assistant
+          {/* Quick intro text on hover (Cute moments bubble) */}
+          <div className="absolute right-16 bottom-1 hidden md:group-hover:flex flex-col items-end">
+            <div className="bg-slate-900 border border-slate-700 text-slate-200 text-xs py-2 px-3.5 rounded-2xl rounded-br-none shadow-xl whitespace-nowrap animate-bounce flex items-center gap-1.5">
+              <span>Hi there! 👋 Need help?</span>
+            </div>
           </div>
         </button>
       )}
@@ -427,8 +434,8 @@ export default function ChatWidget() {
           {/* Chat Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-slate-900 via-[#111827] to-[#1A2233] border-b border-[#2A3648] text-white">
             <div className="flex items-center gap-2.5">
-              <div className="relative flex h-9.5 w-9.5 items-center justify-center rounded-full bg-gradient-to-tr from-slate-700 to-slate-800 border border-slate-600">
-                <Sparkles className="h-4.5 w-4.5 text-sky-400 animate-pulse" />
+              <div className="relative flex h-9.5 w-9.5 items-center justify-center rounded-full bg-slate-800 border border-slate-700 overflow-hidden">
+                <img src="/bot-avatar.png" className="h-full w-full object-cover" alt="AD TECH Bot" />
                 <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-[#10B981] border border-slate-950"></span>
               </div>
               <div>
