@@ -2,7 +2,18 @@ export interface QAItem {
   keywords: string[];
   question: string;
   answer: string;
-  category: 'overview' | 'services' | 'automation' | 'internship' | 'hiring' | 'contact' | 'faqs';
+  category: 
+    | 'overview' 
+    | 'services' 
+    | 'automation' 
+    | 'internship' 
+    | 'hiring' 
+    | 'contact' 
+    | 'faqs'
+    | 'vision_mission'
+    | 'industries'
+    | 'why_choose_us'
+    | 'development_approach';
 }
 
 export const COMPANY_NAME = "AD Tech Enterprises Pvt. Ltd.";
@@ -12,21 +23,69 @@ export const PHONE = "+91 83193 58568";
 export const KNOWLEDGE_BASE: QAItem[] = [
   {
     category: 'overview',
-    keywords: ['who are you', 'about ad tech', 'company overview', 'what is ad tech', 'tell me about the company', 'introduction', 'mission', 'vision', 'adtech'],
+    keywords: ['who are you', 'about ad tech', 'company overview', 'what is ad tech', 'tell me about the company', 'introduction', 'tagline', 'adtech'],
     question: "What is AD Tech Enterprises Pvt. Ltd.?",
-    answer: "AD Tech Enterprises Pvt. Ltd. is a premier technology company dedicated to \"Building Future Tech Talent.\" We focus on helping businesses transition into AI-first enterprises by designing and integrating practical, production-ready AI solutions, while simultaneously mentoring and training future technology leaders through real-world developer roles and project sprints."
+    answer: "AD Tech Enterprises Pvt. Ltd. is a modern software development and AI Automation company dedicated to \"Building Future Tech Talent.\" We help businesses transition into AI-first enterprises by designing and integrating practical, production-ready AI solutions, while simultaneously nurturing and mentoring future technology leaders through structured developer roles and sprint-based project delivery."
+  },
+  {
+    category: 'vision_mission',
+    keywords: ['vision', 'mission', 'values', 'our values', 'goals', 'strategic goals', 'purpose'],
+    question: "What is AD TECH's Vision, Mission, and Core Values?",
+    answer: "Our Vision is to become one of India's most trusted technology companies by empowering organizations with intelligent, AI-driven solutions. Our Mission is to make advanced technology accessible to organizations of every size. Our Core Values are Innovation (exploring future-ready tech), Integrity (honesty and transparency), Quality (attention to detail and performance), Collaboration (teamwork), and Continuous Learning."
   },
   {
     category: 'services',
     keywords: ['services', 'what do you offer', 'what do you build', 'capabilities', 'development', 'technologies', 'tech stack', 'products'],
-    question: "What services does AD TECH provide?",
-    answer: "We offer comprehensive digital transformation services including high-performance Frontend Web Development (React, Next.js, Tailwind CSS), Backend API & Database Architecting (Node.js, Express, databases), and specialized AI Integration and Knowledge Assistants (incorporating LLMs like OpenAI/Gemini APIs, LangChain, and Vector Databases)."
+    question: "What core services does AD TECH provide?",
+    answer: "AD TECH provides end-to-end technology solutions across six major service domains:\n1) **Web Application Development** (responsive sites, enterprise portals, SaaS)\n2) **Android Application Development** (business, student, and e-commerce apps)\n3) **iOS Application Development** (premium iOS solutions optimized for Apple's ecosystem)\n4) **Artificial Intelligence & Automation** (custom chatbots, agents, workflow automation)\n5) **Learning Management Systems (LMS)** (student/teacher portals, progress tracking)\n6) **EV Installment Management Solutions** (financing, EMI tracking, vehicle inventory)"
+  },
+  {
+    category: 'services',
+    keywords: ['web development', 'frontend', 'backend', 'websites', 'databases', 'next.js', 'react', 'node.js', 'express'],
+    question: "Tell me about AD TECH's Web and Backend Development capabilities.",
+    answer: "We design and develop responsive, modern, and scalable web applications. On the frontend, we use React, Next.js, and Tailwind CSS to ensure outstanding performance. On the backend, we build production-ready microservices using Node.js and Express, architecting secure databases and scalable API endpoints."
+  },
+  {
+    category: 'services',
+    keywords: ['android', 'ios', 'mobile app', 'iphone app', 'app development', 'phone app'],
+    question: "Does AD TECH build mobile applications?",
+    answer: "Yes, we build high-performance mobile apps for both platforms:\n- **Android Application Development**: We create business apps, student systems, employee management, and e-commerce apps focused on usability.\n- **iOS Application Development**: We build premium iOS applications optimized for Apple's ecosystem while maintaining top security, performance, and elegant user experiences."
+  },
+  {
+    category: 'services',
+    keywords: ['lms', 'learning management system', 'education portal', 'school portal', 'teacher portal'],
+    question: "What features are included in your Learning Management Systems (LMS)?",
+    answer: "Our LMS platforms are built for schools, colleges, and coaching institutes. They include Student Portals, Teacher Dashboards, Course Management, Attendance tracking, Assignments distribution, Online Assessments, Progress tracking, and Learning Analytics."
+  },
+  {
+    category: 'services',
+    keywords: ['ev solutions', 'electric vehicle', 'installment financing', 'emi tracking', 'dealer dashboard', 'vehicle inventory'],
+    question: "What are your EV Installment Management Solutions?",
+    answer: "We develop dedicated software platforms for electric vehicle businesses to manage installment-based purchasing and financing. Key features include Customer Management, EMI Tracking, Payment Records tracking, Dealer Dashboards, Vehicle Inventory management, detailed Analytics, and Automated Notifications."
   },
   {
     category: 'automation',
     keywords: ['ai automation', 'artificial intelligence', 'chatbot integration', 'intelligent agents', 'process automation', 'llm', 'gpt', 'gemini'],
     question: "What is your expertise in AI Automation?",
-    answer: "We specialize in building advanced, context-aware AI agents, custom customer support widgets, intelligent lead qualification tools, and automated workflows. By integrating robust LLMs with proprietary company knowledge bases, we build highly practical, secure, and production-ready assistants that enhance customer experiences and reduce operational overhead."
+    answer: "AI is a core area of expertise. We build context-aware AI chatbots, advanced AI agents, workflow automation pipelines, document processing tools, customer support systems, and predictive analytics models to improve operational efficiency and customer engagement."
+  },
+  {
+    category: 'industries',
+    keywords: ['industries', 'sectors', 'clients', 'market', 'who do you serve', 'logistics', 'healthcare', 'manufacturing', 'retail', 'schools', 'colleges'],
+    question: "What industries does AD TECH serve?",
+    answer: "We work with organizations across multiple industries, including: Schools, Colleges, and Educational Institutions; MSMEs and Startups; Healthcare; Manufacturing; Retail; Professional Services; Technology Companies; Logistics; and Financial Services."
+  },
+  {
+    category: 'why_choose_us',
+    keywords: ['why choose ad tech', 'why ad tech', 'benefits', 'why hire you', 'why work with you', 'advantages'],
+    question: "Why should organizations choose AD TECH?",
+    answer: "Organizations choose AD TECH because we focus on solving real business problems rather than simply delivering software. We emphasize a modern technology stack, an AI-First approach, scalable architecture, user-centric designs, reliable support, a transparent development process, and cost-effective long-term partnerships."
+  },
+  {
+    category: 'development_approach',
+    keywords: ['development approach', 'development process', 'workflow', 'steps', 'how do you work', 'lifecycle', 'methodology'],
+    question: "What is AD TECH's development approach?",
+    answer: "Every project follows our structured 7-step workflow:\n1) **Requirement Analysis** (understand client objectives and processes)\n2) **Planning** (technical architecture and project roadmap)\n3) **Design** (intuitive UI/UX designs)\n4) **Development** (writing clean frontend, backend, database, and AI code)\n5) **Testing** (usability, security, and performance verification)\n6) **Deployment** (launching on reliable cloud infrastructure)\n7) **Support & Improvement** (ongoing maintenance and updates)"
   },
   {
     category: 'internship',

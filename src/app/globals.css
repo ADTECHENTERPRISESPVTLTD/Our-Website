@@ -35,7 +35,8 @@
   --color-warning: var(--warning);
   --color-error: var(--error);
   
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-space-grotesk), 'Space Grotesk', sans-serif;
   
   --animate-fade-in-up: fade-in-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-slide-in: slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -91,10 +92,42 @@
   animation: wave 0.6s ease-in-out infinite;
 }
 
+/* Base Typographical Alignments */
+h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(30px, 4vw, 42px);
+  line-height: 1.15;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.25;
+}
+
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 2.5vw, 24px);
+  line-height: 1.35;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  font-size: clamp(16px, 1.8vw, 17px);
+  line-height: 1.7;
   overflow-x: hidden;
 }
 
@@ -125,4 +158,85 @@ body {
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
+}
+
+/* Typography Guide Sizing Helpers */
+.body-large {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(17px, 2vw, 20px) !important;
+  line-height: 1.8 !important;
+}
+
+.body-regular {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(16px, 1.8vw, 17px) !important;
+  line-height: 1.7 !important;
+}
+
+.small-text {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 14px !important;
+}
+
+.btn-text {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 16px !important;
+}
+
+.nav-text {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(15px, 1.5vw, 16px) !important;
+}
+
+.form-label {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 15px !important;
+}
+
+.form-input {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 16px !important;
+}
+
+.card-title-style {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 24px !important;
+}
+
+.card-desc {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 16px !important;
+}
+
+.card-btn {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 16px !important;
+}
+
+.footer-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px !important;
+}
+
+.footer-link {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 15px !important;
+}
+
+.footer-copyright {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 14px !important;
 }

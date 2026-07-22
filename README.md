@@ -68,15 +68,17 @@ When `GEMINI_API_KEY` is provided, the API handler builds a system instruction t
 
 ## 💼 Core Features & Quick Actions
 
-1. **Floating Widget**: Clean, sliding interface positioned at the bottom right that expands/collapses smoothly.
-2. **Interactive Quick Actions**:
-   - **Our Services**: Scrolls user to the services section of the page and returns details on web dev, backend databases, and AI.
-   - **Apply for Internship**: Scrolls to Careers, provides the HR application email and list of open developer slots.
+1. **Floating Holographic Widget**: Borderless floating holographic robot drone positioned at the bottom right that expands/collapses smoothly.
+2. **Speech Recognition (Voice Input)**: Micro-interaction voice capability allowing users to dictate queries directly into the chatbox using speech recognition.
+3. **Persistent Local History**: Messages are saved in browser `localStorage` ensuring chat continuity across browser sessions and page reloads.
+4. **Interactive Quick Actions & Navigation Assistance**:
+   - **Our Services**: Auto-scrolls user to the services section of the page and returns details on web dev, backend databases, and AI.
+   - **Apply for Internship**: Auto-scrolls to Careers, provides the HR application email and list of open developer slots.
    - **Book a Callback**: Opens a dynamic form directly inside the chat window for capturing user names, phone numbers, and emails.
    - **Submit Requirements**: Opens a business scoping form inside the chat window.
-3. **Session Memory**: Messages are saved in `sessionStorage` so history is kept as long as the browser tab is open.
-4. **Bouncing Typing Indicators**: Displays feedback while waiting for API responses.
-5. **Theme Switching**: Includes a dark/light mode toggle inside the widget header.
+5. **Backend Lead Intake (Resend Integration)**: Interactive forms trigger serverless `/api/leads` handler to log incoming leads to the server console and dispatch live email alerts to administrative staff (`hradtechenterpriseschepvtltd@gmail.com`) using Resend API.
+6. **Bouncing Typing Indicators**: Real-time visual feedback while waiting for API/Generative responses.
+7. **Theme Switching**: Seamless dark/light mode toggle inside the widget header.
 
 ---
 

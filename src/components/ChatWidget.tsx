@@ -509,42 +509,42 @@ export default function ChatWidget() {
 
                   {/* Render Callback Form if Active */}
                   {msg.isForm === 'callback' && msg.formState === 'active' && (
-                    <form onSubmit={(e) => handleCallbackSubmit(e, msg.id)} className={`mt-3 space-y-2 border-t pt-3 ${isLightMode ? 'border-slate-200' : 'border-[#374151]'}`}>
+                    <form onSubmit={(e) => handleCallbackSubmit(e, msg.id)} className={`mt-3 space-y-3 border-t pt-3 ${isLightMode ? 'border-slate-200' : 'border-[#374151]'}`}>
                       <div>
-                        <label className="text-[11px] text-slate-400 block mb-1">Your Name *</label>
+                        <label className="form-label text-slate-400 block mb-1">Your Name *</label>
                         <input 
                           type="text" 
                           required
                           value={callbackForm.name}
                           onChange={(e) => setCallbackForm({ ...callbackForm, name: e.target.value })}
-                          className={`w-full text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          className={`w-full form-input px-3.5 py-2 rounded-lg focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="Soham"
                         />
                       </div>
                       <div>
-                        <label className="text-[11px] text-slate-400 block mb-1">Phone Number *</label>
+                        <label className="form-label text-slate-400 block mb-1">Phone Number *</label>
                         <input 
                           type="tel" 
                           required
                           value={callbackForm.phone}
                           onChange={(e) => setCallbackForm({ ...callbackForm, phone: e.target.value })}
-                          className={`w-full text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
-                          placeholder="+91 98765 43210"
+                          className={`w-full form-input px-3.5 py-2 rounded-lg focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          placeholder="+91 83193 58568"
                         />
                       </div>
                       <div>
-                        <label className="text-[11px] text-slate-400 block mb-1">Email Address</label>
+                        <label className="form-label text-slate-400 block mb-1">Email Address</label>
                         <input 
                           type="email" 
                           value={callbackForm.email}
                           onChange={(e) => setCallbackForm({ ...callbackForm, email: e.target.value })}
-                          className={`w-full text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          className={`w-full form-input px-3.5 py-2 rounded-lg focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="example@gmail.com"
                         />
                       </div>
                       <button 
                         type="submit" 
-                        className="w-full bg-slate-200 text-[#0B1120] text-xs font-semibold py-1.5 rounded-lg transition-transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer block text-center"
+                        className="w-full bg-btn-primary text-btn-primary-text btn-text py-2 rounded-lg transition-transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer block text-center border border-border"
                       >
                         Request Callback
                       </button>
@@ -553,45 +553,45 @@ export default function ChatWidget() {
 
                   {/* Render Requirements Form if Active */}
                   {msg.isForm === 'requirements' && msg.formState === 'active' && (
-                    <form onSubmit={(e) => handleReqSubmit(e, msg.id)} className={`mt-3 space-y-2 border-t pt-3 ${isLightMode ? 'border-slate-200' : 'border-[#374151]'}`}>
+                    <form onSubmit={(e) => handleReqSubmit(e, msg.id)} className={`mt-3 space-y-3 border-t pt-3 ${isLightMode ? 'border-slate-200' : 'border-[#374151]'}`}>
                       <div>
-                        <label className="text-[11px] text-slate-400 block mb-1">Your Name *</label>
+                        <label className="form-label text-slate-400 block mb-1">Your Name *</label>
                         <input 
                           type="text" 
                           required
                           value={reqForm.name}
                           onChange={(e) => setReqForm({ ...reqForm, name: e.target.value })}
-                          className={`w-full text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          className={`w-full form-input px-3.5 py-2 rounded-lg focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="Soham Amne"
                         />
                       </div>
                       <div>
-                        <label className="text-[11px] text-slate-400 block mb-1">Company Name</label>
+                        <label className="form-label text-slate-400 block mb-1">Company Name</label>
                         <input 
                           type="text" 
                           value={reqForm.company}
                           onChange={(e) => setReqForm({ ...reqForm, company: e.target.value })}
-                          className={`w-full text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          className={`w-full form-input px-3.5 py-2 rounded-lg focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="AD TECH"
                         />
                       </div>
                       <div>
-                        <label className="text-[11px] text-slate-400 block mb-1">Project Scope / Requirements *</label>
+                        <label className="form-label text-slate-400 block mb-1">Project Scope / Requirements *</label>
                         <textarea 
                           required
                           value={reqForm.scope}
                           onChange={(e) => setReqForm({ ...reqForm, scope: e.target.value })}
                           rows={2}
-                          className={`w-full text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 resize-none ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          className={`w-full form-input px-3.5 py-2 rounded-lg focus:outline-none focus:border-slate-500 resize-none placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="Brief description of the chatbot or site needed..."
                         />
                       </div>
                       <div>
-                        <label className="text-[11px] text-slate-400 block mb-1">Budget Preference</label>
+                        <label className="form-label text-slate-400 block mb-1">Budget Preference</label>
                         <select 
                           value={reqForm.budget}
                           onChange={(e) => setReqForm({ ...reqForm, budget: e.target.value })}
-                          className={`w-full text-xs px-2 py-1.5 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          className={`w-full form-input px-3 py-2 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                         >
                           <option value="1000-5000">$1,000 - $5,000</option>
                           <option value="5000-15000">$5,000 - $15,000</option>
@@ -600,7 +600,7 @@ export default function ChatWidget() {
                       </div>
                       <button 
                         type="submit" 
-                        className="w-full bg-slate-200 text-[#0B1120] text-xs font-semibold py-1.5 rounded-lg transition-transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer block text-center"
+                        className="w-full bg-btn-primary text-btn-primary-text btn-text py-2 rounded-lg transition-transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer block text-center border border-border"
                       >
                         Submit Scope
                       </button>
