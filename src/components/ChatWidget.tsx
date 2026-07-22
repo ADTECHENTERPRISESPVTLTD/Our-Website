@@ -446,8 +446,8 @@ export default function ChatWidget() {
           {/* Chat Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-slate-900 via-[#111827] to-[#1A2233] border-b border-[#2A3648] text-white">
             <div className="flex items-center gap-2.5">
-              <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 border border-slate-700">
-                <Sparkles className="h-4.5 w-4.5 text-sky-400 animate-pulse" />
+              <div className="h-7 w-7 rounded bg-gradient-to-tr from-sky-400 via-indigo-500 to-purple-600 flex items-center justify-center font-black text-white text-[10px] tracking-wider shadow-md shrink-0 select-none animate-pulse-slow">
+                AD
               </div>
               <div>
                 <h3 className="text-sm font-bold tracking-wide">AD TECH Assistant</h3>
@@ -682,9 +682,11 @@ export default function ChatWidget() {
                 <SendHorizontal className="h-4.5 w-4.5" />
               </button>
             </div>
-            <div className="mt-2 text-[10px] text-center text-slate-500 flex items-center justify-center gap-1">
-              <Sparkles className="h-3 w-3 text-sky-400" />
-              Powered by AD TECH Generative Engine
+            <div className="mt-2 text-[10px] text-center text-slate-500 flex items-center justify-center gap-1.5">
+              <div className="h-3.5 w-3.5 rounded bg-gradient-to-tr from-sky-400 via-indigo-500 to-purple-600 flex items-center justify-center font-black text-white text-[6px] tracking-wider shadow-sm shrink-0 select-none">
+                AD
+              </div>
+              <span>Powered by AD TECH Generative Engine</span>
             </div>
           </div>
 
