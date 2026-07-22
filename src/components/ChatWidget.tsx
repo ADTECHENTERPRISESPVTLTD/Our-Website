@@ -446,9 +446,7 @@ export default function ChatWidget() {
           {/* Chat Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-slate-900 via-[#111827] to-[#1A2233] border-b border-[#2A3648] text-white">
             <div className="flex items-center gap-2.5">
-              <div className="h-7 w-7 rounded bg-gradient-to-tr from-sky-400 via-indigo-500 to-purple-600 flex items-center justify-center font-black text-white text-[10px] tracking-wider shadow-md shrink-0 select-none animate-pulse-slow">
-                AD
-              </div>
+              <img src="/adtech-logo.png" className="h-7 w-7 object-contain shrink-0 select-none" alt="AD TECH Logo" />
               <div>
                 <h3 className="text-sm font-bold tracking-wide">AD TECH Assistant</h3>
                 <span className="text-[10px] text-slate-400">AI Knowledge Assistant</span>
@@ -683,9 +681,7 @@ export default function ChatWidget() {
               </button>
             </div>
             <div className="mt-2 text-[10px] text-center text-slate-500 flex items-center justify-center gap-1.5">
-              <div className="h-3.5 w-3.5 rounded bg-gradient-to-tr from-sky-400 via-indigo-500 to-purple-600 flex items-center justify-center font-black text-white text-[6px] tracking-wider shadow-sm shrink-0 select-none">
-                AD
-              </div>
+              <img src="/adtech-logo.png" className="h-3.5 w-3.5 object-contain shrink-0 select-none" alt="AD TECH Logo" />
               <span>Powered by AD TECH Generative Engine</span>
             </div>
           </div>

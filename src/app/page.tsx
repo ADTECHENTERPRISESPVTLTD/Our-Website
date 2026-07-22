@@ -16,9 +16,7 @@ export default function Home() {
       <header className="sticky top-0 z-40 w-full glass border-b border-border/60">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-lg bg-gradient-to-tr from-sky-400 via-indigo-500 to-purple-600 flex items-center justify-center font-black text-white text-lg tracking-wider shadow-md">
-              AD
-            </div>
+            <img src="/adtech-logo.png" className="h-9 w-9 object-contain select-none" alt="AD TECH Logo" />
             <div>
               <span className="font-bold font-display text-base tracking-wide bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
                 AD TECH
