@@ -8,7 +8,7 @@ import { KNOWLEDGE_BASE, COMPANY_NAME, EMAIL, PHONE } from '@/data/knowledgeBase
 export async function POST(request: Request) {
   try {
     const { message, history } = await request.json();
-    
+
     if (!message) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
@@ -18,13 +18,13 @@ export async function POST(request: Request) {
     // Local response matching helper
     const getLocalResponse = (msg: string) => {
       const lowerMsg = msg.toLowerCase().trim();
-      
+
       // Match greetings
       const greetings = ['hi', 'hello', 'hey', 'greetings', 'hola', 'good morning', 'good afternoon', 'hey there', 'yo'];
       if (greetings.some(g => lowerMsg === g || lowerMsg.startsWith(g + ' ') || lowerMsg.endsWith(' ' + g))) {
-        return { 
-          response: "Hello! I am the AD TECH AI Assistant. How can I help you today? You can ask about our services, internship programs, hiring process, or choose one of our quick actions below.", 
-          source: 'local_greeting' 
+        return {
+          response: "Hello! I am the AD TECH AI Assistant. How can I help you today? You can ask about our services, internship programs, hiring process, or choose one of our quick actions below.",
+          source: 'local_greeting'
         };
       }
 
@@ -48,10 +48,6 @@ export async function POST(request: Request) {
 
     // Try calling the live Gemini API
     try {
-      // Initialize Generative AI
-      const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-
       // Format Knowledge Base Context
       const kbContext = KNOWLEDGE_BASE.map(item => {
         return `Category: ${item.category}\nKeywords: ${item.keywords.join(', ')}\nQuestion: ${item.question}\nAnswer: ${item.answer}`;
@@ -74,6 +70,13 @@ Strict instructions:
 
 Use the conversation history to maintain context during the session. Keep answers brief (typically 1-3 sentences).`;
 
+      // Initialize Generative AI
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({
+        model: 'gemini-flash-latest',
+        systemInstruction: systemPrompt
+      });
+
       // Format history for Gemini
       const geminiHistory = (history || [])
         .filter((h: any) => h.role === 'user' || h.role === 'model' || h.role === 'assistant')
@@ -95,7 +98,6 @@ Use the conversation history to maintain context during the session. Keep answer
       // Start chat session
       const chat = model.startChat({
         history: slicedHistory,
-        systemInstruction: systemPrompt,
       });
 
       const result = await chat.sendMessage(message);
@@ -104,7 +106,7 @@ Use the conversation history to maintain context during the session. Keep answer
       return NextResponse.json({ response: responseText, source: 'gemini' });
     } catch (apiError: any) {
       console.warn("Gemini API call failed, falling back to local matcher. Error:", apiError.message || apiError);
-      
+
       // FALLBACK: If Gemini API fails (quota limits, invalid keys, rate limits, etc.), return the local response!
       const localResult = getLocalResponse(message);
       return NextResponse.json({
