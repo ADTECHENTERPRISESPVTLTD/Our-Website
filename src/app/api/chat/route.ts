@@ -14,6 +14,7 @@ export async function POST(request: Request) {
     }
 
     const apiKey = process.env.GEMINI_API_KEY;
+    const isApiKeyMissing = !apiKey || apiKey.trim() === '' || apiKey.includes('YOUR_GEMINI_API_KEY');
 
     // Local response matching helper
     const getLocalResponse = (msg: string) => {
@@ -40,10 +41,10 @@ export async function POST(request: Request) {
       return { response: fallback, source: 'local_fallback' };
     };
 
-    // If API Key is not set, run local rule-based response match directly
-    if (!apiKey) {
+    // If API Key is not set or is a placeholder, run local rule-based response match directly
+    if (isApiKeyMissing) {
       const localResult = getLocalResponse(message);
-      return NextResponse.json(localResult);
+      return NextResponse.json({ ...localResult, mode: 'offline' });
     }
 
     // Try calling the live Gemini API
@@ -71,7 +72,7 @@ Strict instructions:
 Use the conversation history to maintain context during the session. Keep answers brief (typically 1-3 sentences).`;
 
       // Initialize Generative AI
-      const genAI = new GoogleGenerativeAI(apiKey);
+      const genAI = new GoogleGenerativeAI(apiKey as string);
       const model = genAI.getGenerativeModel({
         model: 'gemini-flash-latest',
         systemInstruction: systemPrompt
@@ -103,7 +104,7 @@ Use the conversation history to maintain context during the session. Keep answer
       const result = await chat.sendMessage(message);
       const responseText = result.response.text();
 
-      return NextResponse.json({ response: responseText, source: 'gemini' });
+      return NextResponse.json({ response: responseText, source: 'gemini', mode: 'online' });
     } catch (apiError: any) {
       console.warn("Gemini API call failed, falling back to local matcher. Error:", apiError.message || apiError);
 
@@ -111,7 +112,8 @@ Use the conversation history to maintain context during the session. Keep answer
       const localResult = getLocalResponse(message);
       return NextResponse.json({
         ...localResult,
-        warning: 'Gemini API unavailable. Running in local fallback mode.'
+        warning: 'Gemini API unavailable. Running in local fallback mode.',
+        mode: 'offline'
       });
     }
 

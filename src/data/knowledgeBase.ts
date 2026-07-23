@@ -106,6 +106,18 @@ export const KNOWLEDGE_BASE: QAItem[] = [
     answer: "You can reach out to our team via email at hradtechenterpriseschepvtltd@gmail.com, or call us at +91 83193 58568. Alternatively, you can use the 'Book a Callback' or 'Contact Us' quick action buttons in this chat widget to schedule a session with our specialists."
   },
   {
+    category: 'automation',
+    keywords: ['custom agents', 'ai agents', 'agentic workflows', 'agent developers', 'chatbots', 'custom ai', 'llm agents'],
+    question: "Does AD TECH build custom AI agents?",
+    answer: "Yes! AD TECH designs custom, goal-oriented AI agents capable of executing multi-step workflows. Our agents use techniques like advanced prompting, memory persistence, tool integration, and fallback execution systems to automate complex business processes like lead scoring, customer onboarding, and content generation."
+  },
+  {
+    category: 'internship',
+    keywords: ['sprint structure', 'sprint deliverables', 'evaluations', 'how are interns evaluated', 'mentors', 'learning path', '5-day sprint'],
+    question: "How is the internship at AD TECH structured?",
+    answer: "The internship is organized into highly structured 5-day sprints. Each sprint begins with task planning, followed by execution, active code reviews, and final staging deployment. Interns receive direct evaluations from senior developers, helping them master real-world collaboration tools like Git, Slack, Jira-like workflows, and continuous integration."
+  },
+  {
     category: 'faqs',
     keywords: ['faq', 'duration', 'timeline', 'technologies', 'api key', 'location', 'frequently asked questions'],
     question: "Frequently Asked Questions (FAQs)",

@@ -91,17 +91,43 @@ npm install
 ```
 
 ### 2. Environment Variables Setup
-Create a `.env.local` file in the root of the project to add your Gemini API Key:
+Create a `.env.local` file in the root of the project and add your Gemini API Key:
 ```env
-GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
 ```
-*Note: If no `.env.local` or API key is set, the chatbot will seamlessly run in local matching mode, meaning you can test it completely without an internet/API connection!*
+*Note: If no `.env.local` is present, the key is missing, or the key remains the placeholder, the system will automatically degrade gracefully to the local rule-based matching engine without crashing.*
 
-### 3. Start the Development Server
+### 3. Connection Status Indicator
+We've added a premium visual feedback dot in the widget header:
+* **Emerald Pulse (AI Online)**: The chatbot is actively communicating with the live Gemini API.
+* **Amber Dot (Offline Fallback)**: The Gemini API is either disabled, blocked by quota, or experiencing networks errors. The chatbot uses local rule-based matches in [knowledgeBase.ts](file:///c:/Users/soham/OneDrive/Desktop/New%20folder/Our-Website/src/data/knowledgeBase.ts) to guarantee zero downtime.
+
+### 4. Start the Development Server
 ```bash
 npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser to test.
+
+---
+
+## 🔌 Integration Guide
+To integrate this chatbot widget into any other page or layout in your Next.js application, simply import and render it:
+
+```tsx
+import ChatWidget from '@/components/ChatWidget';
+
+export default function Layout({ children }) {
+  return (
+    <html>
+      <body>
+        {children}
+        {/* Render widget at the root level */}
+        <ChatWidget />
+      </body>
+    </html>
+  );
+}
+```
 
 ---
 

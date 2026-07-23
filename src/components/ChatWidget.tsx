@@ -37,6 +37,27 @@ export default function ChatWidget() {
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<any>(null);
 
+  // Connection/API Status State
+  const [apiMode, setApiMode] = useState<'online' | 'offline' | 'checking'>('checking');
+
+  // Verify API connectivity on load
+  useEffect(() => {
+    const verifyStatus = async () => {
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: 'ping', history: [] })
+        });
+        const data = await response.json();
+        setApiMode(data.mode || 'offline');
+      } catch (err) {
+        setApiMode('offline');
+      }
+    };
+    verifyStatus();
+  }, []);
+
   // Initialize Speech Recognition
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -154,6 +175,9 @@ export default function ChatWidget() {
       });
 
       const data = await response.json();
+      if (data.mode) {
+        setApiMode(data.mode);
+      }
       
       let suggestions: string[] = [];
       if (text.toLowerCase().includes('service')) {
@@ -175,6 +199,7 @@ export default function ChatWidget() {
       saveHistory([...updatedMessages, assistantMsg]);
     } catch (e) {
       console.error(e);
+      setApiMode('offline');
       const errorMsg: Message = {
         id: `msg-${Date.now()}-error`,
         role: 'assistant',
@@ -651,7 +676,8 @@ export default function ChatWidget() {
               {/* Mic Button */}
               <button
                 onClick={handleMicClick}
-                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all active:scale-95 cursor-pointer
+                disabled={isTyping}
+                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed
                   ${isListening 
                     ? 'bg-red-500 text-white animate-pulse' 
                     : isLightMode
@@ -664,17 +690,19 @@ export default function ChatWidget() {
               <input
                 type="text"
                 value={inputMessage}
+                disabled={isTyping}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                placeholder="Ask about AD TECH..."
-                className={`flex-1 text-sm px-3.5 py-2.5 rounded-xl focus:outline-none focus:border-slate-500
+                placeholder={isTyping ? "AI Assistant is thinking..." : "Ask about AD TECH..."}
+                className={`flex-1 text-sm px-3.5 py-2.5 rounded-xl focus:outline-none focus:border-slate-500 disabled:opacity-50 disabled:cursor-not-allowed
                   ${isLightMode 
                     ? 'bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400' 
                     : 'bg-[#1A2233] border border-[#2A3648] text-slate-100 placeholder-slate-500'}`}
               />
               <button
                 onClick={() => handleSendMessage()}
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-700 hover:bg-slate-600 hover:text-white transition-all active:scale-95 text-slate-200 cursor-pointer"
+                disabled={isTyping || !inputMessage.trim()}
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-700 hover:bg-slate-600 hover:text-white transition-all active:scale-95 text-slate-200 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 title="Send Message"
               >
                 <SendHorizontal className="h-4.5 w-4.5" />
