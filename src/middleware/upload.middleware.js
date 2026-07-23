@@ -1,18 +1,22 @@
 const multer = require("multer");
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const path = require("path");
+const fs = require("fs");
 
-const cloudinary = require("../config/cloudinary");
+const uploadDir = path.join(__dirname, "../../uploads");
 
-const storage = new CloudinaryStorage({
-    params: {
-        folder: "adtech-resumes",
-        resource_type: "auto",
-        allowed_formats: ["pdf", "doc", "docx"],
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+}
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadDir);
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
     },
 });
 
-const upload = multer({
-    storage: storage,
-});
+const upload = multer({ storage });
 
-module.export = upload;
+module.exports = upload;
