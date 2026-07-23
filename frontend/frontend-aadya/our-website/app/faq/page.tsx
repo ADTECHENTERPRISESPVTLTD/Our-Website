@@ -1,14 +1,15 @@
 "use client";
 
+import React from "react";
 import Navbar from "@/components/Navbar";
-import FAQSection from "@/components/FAQsection";
+import FAQsection from "@/components/FAQsection";
 
-export default function FAQRoute() {
+export default function FAQPage() {
   return (
-    <main className="min-h-screen bg-brand-primary-bg text-brand-primary-text flex flex-col">
+    <main className="min-h-screen bg-brand-primary-bg">
       <Navbar />
-      <div className="flex-1 py-12">
-        <FAQSection />
+      <div className="max-w-4xl mx-auto py-12 px-4 md:px-8">
+        <FAQsection />
       </div>
     </main>
   );
