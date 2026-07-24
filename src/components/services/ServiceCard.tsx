@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { Service } from "@/types";
+import Card from "@/components/ui/Card";
 
 interface ServiceCardProps {
   service: Service;
@@ -9,7 +10,7 @@ export default function ServiceCard({
   service,
 }: ServiceCardProps) {
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-slate-800 bg-[#111827] p-8 transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/60 hover:shadow-[0_0_40px_rgba(34,211,238,0.15)]">
+    <Card className="group relative h-full overflow-hidden p-8 transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/60 hover:shadow-[0_0_40px_rgba(34,211,238,0.15)]">
 
       {/* Background Glow */}
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-blue-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -41,6 +42,6 @@ export default function ServiceCard({
         </button>
 
       </div>
-    </div>
+    </Card>
   );
 }

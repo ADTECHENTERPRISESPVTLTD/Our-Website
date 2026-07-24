@@ -35,8 +35,8 @@ export default function CoreValues() {
   return (
     <section className="relative py-28 bg-[#0B1120] overflow-hidden">
 
-      <div className="absolute left-0 top-10 h-80 w-80 rounded-full bg-blue-600/10 blur-[140px]" />
-      <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-[160px]" />
+      <div className="bg-glow-blue absolute left-0 top-10 h-80 w-80" />
+      <div className="bg-glow-cyan absolute right-0 bottom-0 h-96 w-96" />
 
       <div className="relative max-w-7xl mx-auto px-6">
 
@@ -46,7 +46,7 @@ export default function CoreValues() {
             OUR VALUES
           </p>
 
-          <h2 className="text-5xl md:text-6xl font-bold text-white mt-6">
+          <h2 className="mt-6 text-4xl font-bold text-white md:text-5xl">
             What Drives Us
           </h2>
 

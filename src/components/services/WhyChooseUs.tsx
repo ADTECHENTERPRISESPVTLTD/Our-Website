@@ -6,6 +6,7 @@ import {
   Sparkles,
   Headphones,
 } from "lucide-react";
+import Card from "@/components/ui/Card";
 
 const features = [
   {
@@ -50,8 +51,8 @@ export default function WhyChooseUs() {
   return (
     <section className="relative overflow-hidden bg-[#0B1120] py-24">
       {/* Background Glow */}
-      <div className="absolute left-0 top-0 h-80 w-80 rounded-full bg-cyan-500/10 blur-[130px]" />
-      <div className="absolute right-0 bottom-0 h-80 w-80 rounded-full bg-blue-500/10 blur-[130px]" />
+      <div className="bg-glow-cyan absolute left-0 top-0 h-80 w-80" />
+      <div className="bg-glow-blue absolute right-0 bottom-0 h-80 w-80" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mb-16 text-center">
@@ -71,9 +72,9 @@ export default function WhyChooseUs() {
 
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
           {features.map((feature) => (
-            <div
+            <Card
               key={feature.title}
-              className="rounded-2xl border border-slate-800 bg-[#111827] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/50 hover:shadow-[0_0_35px_rgba(34,211,238,0.15)]"
+              className="p-8 transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/50 hover:shadow-[0_0_35px_rgba(34,211,238,0.15)]"
             >
               <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400">
                 {feature.icon}
@@ -86,7 +87,7 @@ export default function WhyChooseUs() {
               <p className="leading-7 text-slate-400">
                 {feature.description}
               </p>
-            </div>
+            </Card>
           ))}
         </div>
       </div>

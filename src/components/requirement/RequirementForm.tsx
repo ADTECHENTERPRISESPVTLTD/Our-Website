@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState } from "react";
+import Card from "@/components/ui/Card";
 
 const services = [
   "AI Automation",
@@ -54,7 +55,7 @@ export default function RequirementForm() {
   return (
     <section className="mx-auto max-w-7xl px-6 pb-24">
       <div className="grid gap-8 lg:grid-cols-[1.04fr_0.96fr]">
-        <div className="glass-card border border-cyan-500/10 p-10 shadow-[0_40px_80px_rgba(2,12,27,0.45)]">
+        <Card className="border border-cyan-500/10 p-10 shadow-[0_40px_80px_rgba(2,12,27,0.45)]">
           <span className="inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm uppercase tracking-[0.24em] text-cyan-300">
             Why submit here
           </span>
@@ -84,9 +85,9 @@ export default function RequirementForm() {
               <p className="mt-3 text-slate-400">Share goals, budget, timeline, and must-have features.</p>
             </div>
           </div>
-        </div>
+        </Card>
 
-        <div className="glass-card border border-cyan-500/20 p-10 shadow-[0_40px_80px_rgba(2,12,27,0.45)]">
+        <Card className="border border-cyan-500/20 p-10 shadow-[0_40px_80px_rgba(2,12,27,0.45)]">
           <p className="text-sm uppercase tracking-[0.24em] text-cyan-300">Submit your requirement</p>
           <h2 className="mt-3 text-3xl font-bold text-white">Let’s get started</h2>
           <p className="mt-3 text-slate-400">The more details you provide, the better we can propose the right solution.</p>
@@ -165,7 +166,7 @@ export default function RequirementForm() {
               Submit Requirement
             </button>
           </form>
-        </div>
+        </Card>
       </div>
     </section>
   );

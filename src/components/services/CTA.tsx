@@ -1,14 +1,15 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import Card from "@/components/ui/Card";
 
 export default function CTA() {
   return (
     <section className="relative overflow-hidden bg-[#0B1120] py-24">
       {/* Glow */}
-      <div className="absolute left-1/2 top-1/2 h-[350px] w-[350px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
+      <div className="bg-glow-cyan absolute left-1/2 top-1/2 h-[350px] w-[350px] -translate-x-1/2 -translate-y-1/2" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-6">
-        <div className="rounded-3xl border border-cyan-500/20 bg-gradient-to-br from-[#111827] to-[#0F172A] p-12 text-center">
+        <Card className="rounded-3xl border border-cyan-500/20 bg-gradient-to-br from-[#111827] to-[#0F172A] p-12 text-center">
 
           <span className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-400">
             LET'S BUILD TOGETHER
@@ -45,7 +46,7 @@ export default function CTA() {
 
           </div>
 
-        </div>
+        </Card>
       </div>
     </section>
   );

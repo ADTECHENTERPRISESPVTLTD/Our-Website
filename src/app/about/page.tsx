@@ -11,7 +11,7 @@ import AboutCTA from "@/components/about/AboutCTA";
 
 export default function AboutPage() {
   return (
-    <main className="bg-[#0B1120] text-white overflow-x-hidden">
+    <main className="page-shell">
 
       <AboutHero />
 

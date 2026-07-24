@@ -43,6 +43,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+main.page-shell {
+  background: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
 /* Common Typography */
 h1,
 h2,
@@ -246,7 +252,91 @@ p {
 /* Accent Color Class for Heading Highlighting */
 .text-accent {
   color: var(--accent);
-  .input-style {
+}
+
+.input-style {
   @apply w-full rounded-lg border border-white/10 bg-white/10 p-3 text-white outline-none placeholder:text-gray-400 focus:border-cyan-400;
 }
+
+/* Site-wide hero/background utilities */
+.site-hero {
+  min-height: 100vh;
+  background: var(--background);
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 70px 70px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-grid.compact {
+  background-size: 40px 40px;
+}
+
+.bg-glow-cyan,
+.bg-glow-blue {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(150px);
+  pointer-events: none;
+}
+
+.bg-glow-cyan {
+  background: rgba(6,182,212,0.12);
+}
+
+.bg-glow-blue {
+  background: rgba(59,130,246,0.10);
+}
+
+/* Animated heading helpers for SplitText targets */
+.split-parent {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.split-char,
+.split-word,
+.split-line {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* Base heading utilities */
+.heading-base {
+  color: var(--primary-text);
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(90deg, #f8fbff 0%, #7dd3fc 35%, #38bdf8 65%, #2563eb 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: text-shimmer 5s ease-in-out infinite;
+}
+
+@keyframes text-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.hero-title {
+  font-size: 3.75rem;
+  line-height: 1.1;
 }

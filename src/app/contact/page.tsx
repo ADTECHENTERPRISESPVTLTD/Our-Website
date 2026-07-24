@@ -5,7 +5,7 @@ import Map from "@/components/contact/Map";
 
 export default function ContactPage() {
   return (
-    <main className="overflow-hidden bg-[#0B1120]">
+    <main className="page-shell overflow-hidden">
       <ContactHero />
 
       <section className="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-2 lg:px-8">
