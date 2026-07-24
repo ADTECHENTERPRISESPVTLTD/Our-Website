@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-primary: #0B1120;
+    --bg-secondary: #111827;
+    --card-bg: #1A2233;
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    --accent-primary: #64748B;
+    --border-custom: #2A3648;
+    --divider-custom: #374151;
+    --btn-bg: #F8FAFC;
+    --btn-text: #0B1120;
+    --status-success: #10B981;
+    --status-warning: #F59E0B;
+    --status-error: #EF4444;
+  }
+
+  /* White side borders/gaps completely remove karne ke liye */
+  html,
+  body {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100%;
+  }
+}
