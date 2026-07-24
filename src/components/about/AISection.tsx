@@ -37,9 +37,9 @@ export default function AISection() {
 
       {/* Background Glow */}
 
-      <div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-blue-600/20 blur-[180px]" />
+      <div className="bg-glow-blue absolute left-0 top-0 h-96 w-96" />
 
-      <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-cyan-500/20 blur-[180px]" />
+      <div className="bg-glow-cyan absolute right-0 bottom-0 h-96 w-96" />
 
       <div className="relative max-w-7xl mx-auto px-6">
 
@@ -58,7 +58,7 @@ export default function AISection() {
               AI FIRST COMPANY
             </p>
 
-            <h2 className="text-5xl md:text-6xl font-bold text-white mt-6 leading-tight">
+            <h2 className="mt-6 text-4xl font-bold leading-tight text-white md:text-5xl">
               Intelligent Technology
               <span className="block text-[#38BDF8]">
                 Powered by AI

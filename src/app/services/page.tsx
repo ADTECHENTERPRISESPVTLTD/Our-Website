@@ -6,7 +6,7 @@ import CTA from "@/components/services/CTA";
 
 export default function ServicesPage() {
   return (
-    <main className="bg-[#0B1120] overflow-hidden">
+    <main className="page-shell overflow-hidden">
       <ServicesHero />
       <ServicesGrid />
       <Process />

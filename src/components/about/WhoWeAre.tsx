@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Cpu, Bot, Globe, Cloud } from "lucide-react";
+import Card from "@/components/ui/Card";
 
 export default function WhoWeAre() {
   return (
@@ -9,9 +10,9 @@ export default function WhoWeAre() {
 
       {/* Background Glow */}
 
-      <div className="absolute left-0 top-20 h-72 w-72 rounded-full bg-blue-600/10 blur-[120px]" />
+      <div className="bg-glow-blue absolute left-0 top-20 h-72 w-72" />
 
-      <div className="absolute right-0 bottom-10 h-80 w-80 rounded-full bg-cyan-500/10 blur-[140px]" />
+      <div className="bg-glow-cyan absolute right-0 bottom-10 h-80 w-80" />
 
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
 
@@ -28,7 +29,7 @@ export default function WhoWeAre() {
             WHO WE ARE
           </p>
 
-          <h2 className="text-5xl font-bold text-white mt-5 leading-tight">
+          <h2 className="mt-5 text-4xl font-bold leading-tight text-white">
             Empowering Organizations
             <span className="block text-[#38BDF8]">
               Through Intelligent Technology
@@ -77,54 +78,62 @@ export default function WhoWeAre() {
 
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="rounded-2xl bg-[#0F172A] border border-[#2A3648] p-6"
+                className="rounded-2xl"
               >
-                <Cpu size={40} className="text-[#38BDF8]" />
-                <h3 className="mt-5 text-white font-semibold text-xl">
-                  Software
-                </h3>
-                <p className="text-[#94A3B8] mt-3 text-sm">
-                  Modern scalable applications for every business.
-                </p>
+                <Card className="h-full rounded-2xl border border-[#2A3648] bg-[#0F172A] p-6">
+                  <Cpu size={40} className="text-[#38BDF8]" />
+                  <h3 className="mt-5 text-white font-semibold text-xl">
+                    Software
+                  </h3>
+                  <p className="text-[#94A3B8] mt-3 text-sm">
+                    Modern scalable applications for every business.
+                  </p>
+                </Card>
               </motion.div>
 
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="rounded-2xl bg-[#0F172A] border border-[#2A3648] p-6"
+                className="rounded-2xl"
               >
-                <Bot size={40} className="text-[#38BDF8]" />
-                <h3 className="mt-5 text-white font-semibold text-xl">
-                  Artificial Intelligence
-                </h3>
-                <p className="text-[#94A3B8] mt-3 text-sm">
-                  AI Chatbots, Automation and Intelligent Systems.
-                </p>
+                <Card className="h-full rounded-2xl border border-[#2A3648] bg-[#0F172A] p-6">
+                  <Bot size={40} className="text-[#38BDF8]" />
+                  <h3 className="mt-5 text-white font-semibold text-xl">
+                    Artificial Intelligence
+                  </h3>
+                  <p className="text-[#94A3B8] mt-3 text-sm">
+                    AI Chatbots, Automation and Intelligent Systems.
+                  </p>
+                </Card>
               </motion.div>
 
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="rounded-2xl bg-[#0F172A] border border-[#2A3648] p-6"
+                className="rounded-2xl"
               >
-                <Cloud size={40} className="text-[#38BDF8]" />
-                <h3 className="mt-5 text-white font-semibold text-xl">
-                  Cloud
-                </h3>
-                <p className="text-[#94A3B8] mt-3 text-sm">
-                  Reliable cloud infrastructure and deployment.
-                </p>
+                <Card className="h-full rounded-2xl border border-[#2A3648] bg-[#0F172A] p-6">
+                  <Cloud size={40} className="text-[#38BDF8]" />
+                  <h3 className="mt-5 text-white font-semibold text-xl">
+                    Cloud
+                  </h3>
+                  <p className="text-[#94A3B8] mt-3 text-sm">
+                    Reliable cloud infrastructure and deployment.
+                  </p>
+                </Card>
               </motion.div>
 
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="rounded-2xl bg-[#0F172A] border border-[#2A3648] p-6"
+                className="rounded-2xl"
               >
-                <Globe size={40} className="text-[#38BDF8]" />
-                <h3 className="mt-5 text-white font-semibold text-xl">
-                  Digital Transformation
-                </h3>
-                <p className="text-[#94A3B8] mt-3 text-sm">
-                  Helping businesses become AI-powered organizations.
-                </p>
+                <Card className="h-full rounded-2xl border border-[#2A3648] bg-[#0F172A] p-6">
+                  <Globe size={40} className="text-[#38BDF8]" />
+                  <h3 className="mt-5 text-white font-semibold text-xl">
+                    Digital Transformation
+                  </h3>
+                  <p className="text-[#94A3B8] mt-3 text-sm">
+                    Helping businesses become AI-powered organizations.
+                  </p>
+                </Card>
               </motion.div>
 
             </div>

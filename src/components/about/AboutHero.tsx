@@ -2,41 +2,18 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import AnimatedHeading from "@/components/ui/AnimatedHeading";
 
 export default function AboutHero() {
   return (
-    <section className="relative overflow-hidden bg-[#0B1120] py-28">
+    <section className="site-hero relative overflow-hidden py-28">
 
       {/* Background Glow */}
       <div className="absolute inset-0 overflow-hidden">
-
-        <div className="absolute -left-32 top-20 h-96 w-96 rounded-full bg-blue-600/20 blur-[120px]" />
-
-        <div className="absolute right-0 bottom-0 h-[450px] w-[450px] rounded-full bg-cyan-500/10 blur-[150px]" />
-
-        <div className="absolute left-1/2 top-10 h-[250px] w-[250px] -translate-x-1/2 rounded-full bg-sky-400/10 blur-[120px]" />
-
+        <div className="bg-glow-cyan -left-20 top-10 h-[360px] w-[360px] opacity-60" />
+        <div className="bg-glow-blue -bottom-20 right-0 h-[360px] w-[360px] opacity-70" />
+        <div className="bg-grid" />
       </div>
-
-      {/* Floating Shapes */}
-
-      <motion.div
-        animate={{ y: [-15, 15, -15], rotate: [0, 12, 0] }}
-        transition={{ duration: 8, repeat: Infinity }}
-        className="absolute left-20 top-32 h-20 w-20 rounded-2xl border border-blue-500/30 bg-blue-500/10"
-      />
-
-      <motion.div
-        animate={{ y: [20, -20, 20], rotate: [0, -15, 0] }}
-        transition={{ duration: 7, repeat: Infinity }}
-        className="absolute right-20 bottom-28 h-28 w-28 rounded-full border border-cyan-400/30 bg-cyan-400/10"
-      />
-
-      <motion.div
-        animate={{ y: [-10, 15, -10] }}
-        transition={{ duration: 10, repeat: Infinity }}
-        className="absolute right-1/4 top-16 h-10 w-10 rotate-45 border border-sky-400/40 bg-sky-400/10"
-      />
 
       <div className="relative mx-auto flex max-w-7xl flex-col items-center px-6 text-center">
 
@@ -44,22 +21,30 @@ export default function AboutHero() {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: .6 }}
-          className="mb-5 rounded-full border border-[#2A3648] bg-[#1A2233]/60 px-5 py-2 uppercase tracking-[4px] text-[#38BDF8] backdrop-blur-md"
+          className="mb-5 rounded-full border border-sky-400/30 bg-sky-400/10 px-5 py-2 uppercase tracking-[4px] text-sky-300 shadow-[0_0_20px_rgba(56,189,248,0.15)] backdrop-blur-md"
         >
           ABOUT AD TECH
         </motion.p>
 
-        <motion.h1
+        <motion.div
           initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: .2 }}
-          className="max-w-5xl text-5xl font-extrabold leading-tight text-white md:text-7xl"
+          className="max-w-5xl"
         >
-          Building Intelligent Software
-          <span className="block bg-gradient-to-r from-blue-500 via-cyan-400 to-sky-300 bg-clip-text text-transparent">
-            Empowering Businesses Through AI
-          </span>
-        </motion.h1>
+          <AnimatedHeading
+            text="Building Intelligent Software"
+            className="text-4xl font-extrabold leading-tight text-[#F8FAFC] md:text-6xl xl:text-7xl"
+            tag="h1"
+            textAlign="center"
+          />
+          <AnimatedHeading
+            text="Empowering Businesses Through AI"
+            className="mt-4 text-4xl font-extrabold leading-tight text-sky-300 drop-shadow-[0_0_18px_rgba(125,211,252,0.25)] md:text-6xl xl:text-7xl"
+            tag="h2"
+            textAlign="center"
+          />
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0 }}

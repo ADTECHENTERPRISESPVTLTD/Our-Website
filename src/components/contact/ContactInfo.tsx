@@ -1,4 +1,5 @@
 import { contactInfo } from "@/data/contact";
+import Card from "@/components/ui/Card";
 
 export default function ContactInfo() {
   return (
@@ -11,9 +12,9 @@ export default function ContactInfo() {
             const Icon = item.icon;
 
             return (
-              <div
+              <Card
                 key={item.title}
-                className="rounded-2xl border border-slate-800 bg-[#111827] p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)]"
+                className="p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)]"
               >
                 <div className="flex items-start gap-5">
 
@@ -35,7 +36,7 @@ export default function ContactInfo() {
                   </div>
 
                 </div>
-              </div>
+              </Card>
             );
           })}
 

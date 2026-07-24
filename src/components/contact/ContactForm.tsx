@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Card from "@/components/ui/Card";
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -14,7 +15,7 @@ export default function ContactForm() {
     <section className="bg-[#0B1120] py-20">
       <div className="mx-auto max-w-3xl px-6 lg:px-8">
 
-        <div className="rounded-3xl border border-slate-800 bg-[#111827] p-8 md:p-10">
+        <Card className="p-8 md:p-10">
 
           <h2 className="text-3xl font-bold text-white">
             Send Us A Message
@@ -72,7 +73,7 @@ export default function ContactForm() {
 
           </form>
 
-        </div>
+        </Card>
 
       </div>
     </section>
