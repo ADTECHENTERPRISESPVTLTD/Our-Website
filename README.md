@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AD TECH Enterprises Workspace
 
-## Getting Started
+Welcome to the unified workspace for **AD TECH Enterprises**. This repository is structured as a multi-app repository, organizing both frontends and the backend into clear, standardized directories, run concurrently from the root.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📁 Directory Structure
+
+```
+Our-Website/
+├── backend/                         # Unified Express & Mongoose API
+│   ├── config/                      # Cloudinary & MongoDB configurations
+│   ├── controllers/                 # Callback, Career, and Intern management controllers
+│   ├── middleware/                  # Multer file upload middleware
+│   ├── models/                      # Database schemas (Attendance, Callback, Career, Intern, Task, Requirement)
+│   ├── routes/                      # Route bindings for API endpoints
+│   ├── uploads/                     # Temp storage directory for resume uploads
+│   ├── server.js                    # Unified Express application
+│   └── package.json                 # Backend dependencies & dev scripts
+│
+├── frontend/                        # Frontend applications
+│   ├── main/                        # Main AD TECH Next.js website (Port 3000)
+│   │   ├── src/                     # App Router pages and styled section components
+│   │   │   ├── app/                 # about, contact, requirement, services, careers, faq
+│   │   │   └── components/          # navbar, footer, sections, ui controls
+│   │   ├── public/                  # Main site static assets
+│   │   └── package.json             # Next.js configurations
+│   │
+│   └── intern-portal/               # Intern Management Portal Next.js app (Port 3001)
+│       ├── src/                     # Login, Dashboard, Attendance tracking pages
+│       ├── public/                  # Intern portal assets
+│       └── package.json             # Next.js configurations
+│
+├── package.json                     # Root npm commands and workspace runners
+├── README.md                        # Project documentation
+└── .gitignore                       # Git ignore rules for node_modules, builds, and envs
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔌 Port Mapping
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Service | Technology | Port | Access URL |
+| :--- | :--- | :--- | :--- |
+| **Backend API** | Node.js / Express | `5000` | [http://localhost:5000](http://localhost:5000) |
+| **Main Website** | Next.js / Tailwind | `3000` | [http://localhost:3000](http://localhost:3000) |
+| **Intern Portal** | Next.js / Tailwind | `3001` | [http://localhost:3001](http://localhost:3001) |
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Getting Started
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) installed (v18 or higher recommended).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 1. Installation
+Install all dependencies across the backend and frontends using the custom workspace command:
+```bash
+npm run install:all
+```
 
-## Deploy on Vercel
+### 2. Environment Configuration
+Create a `.env` file inside the `backend/` folder and populate the variables:
+```env
+PORT=5000
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/adtech
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3. Running in Development
+Start all frontends and the backend concurrently with a single command from the root folder:
+```bash
+npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This will spin up:
+- Backend nodemon dev server on `http://localhost:5000`
+- Main website Next.js server on `http://localhost:3000`
+- Intern portal Next.js server on `http://localhost:3001`
+
+---
+
+## 🛠️ Build & Production commands
+
+You can build the production-ready bundles for the frontend applications individually or all at once:
+
+- **Build Main Website:**
+  ```bash
+  npm run build:main
+  ```
+- **Build Intern Portal:**
+  ```bash
+  npm run build:intern
+  ```
+- **Build Both Apps:**
+  ```bash
+  npm run build:all
+  ```
