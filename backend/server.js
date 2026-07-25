@@ -1,9 +1,12 @@
 const express = require("express");
 const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
 const dotenv = require("dotenv");
 
 const connectDB = require("./config/database");
 
+// Intern Portal Routes
 const contactRoutes = require("./routes/contactRoutes");
 const internshipRoutes = require("./routes/internshipRoutes");
 const newsletterRoutes = require("./routes/newsletterRoutes");
@@ -13,16 +16,29 @@ const taskRoutes = require("./routes/taskRoutes");
 const workStatusRoutes = require("./routes/workStatusRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 
+// Main Website Routes
+const requirementRoutes = require("./routes/requirementRoutes");
+const callbackRoutes = require("./routes/callbackRoutes");
+const careerRoutes = require("./routes/careerRoutes");
+
 dotenv.config();
 
 connectDB();
 
 const app = express();
 
+// Middleware
 app.use(cors());
+app.use(helmet());
+app.use(morgan("dev"));
 app.use(express.json());
 
-// Routes
+// Main Website Route Bindings
+app.use("/api/requirements", requirementRoutes);
+app.use("/api/callback", callbackRoutes);
+app.use("/api/careers", careerRoutes);
+
+// Intern Portal Route Bindings
 app.use("/api/contact", contactRoutes);
 app.use("/api/internship", internshipRoutes);
 app.use("/api/newsletter", newsletterRoutes);
@@ -32,7 +48,14 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/work-status", workStatusRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
-// Health API
+// Root / Health API
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "AD TECH Backend API is running",
+  });
+});
+
 app.get("/api/health", (req, res) => {
   res.json({
     status: "Server Running",
