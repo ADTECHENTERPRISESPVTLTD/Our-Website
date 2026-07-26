@@ -215,7 +215,6 @@ export default function ChatWidget() {
 
   // Handle Quick Actions
   const handleQuickAction = (action: string) => {
-    // 1. Interactive quick action handling
     if (action === 'Our Services') {
       const el = document.getElementById('services');
       el?.scrollIntoView({ behavior: 'smooth' });
@@ -335,7 +334,6 @@ export default function ChatWidget() {
     e.preventDefault();
     if (!callbackForm.name || !callbackForm.phone) return;
 
-    // Send data to backend endpoint
     try {
       await fetch('/api/leads', {
         method: 'POST',
@@ -359,7 +357,6 @@ export default function ChatWidget() {
       suggestions: ['Our Services', 'Submit Requirements']
     };
 
-    // Update form state to submitted
     const updated = messages.map(m => {
       if (m.id === msgId) {
         return { ...m, formState: 'submitted' as const };
@@ -376,7 +373,6 @@ export default function ChatWidget() {
     e.preventDefault();
     if (!reqForm.name || !reqForm.scope) return;
 
-    // Send data to backend endpoint
     try {
       await fetch('/api/leads', {
         method: 'POST',
@@ -428,19 +424,22 @@ export default function ChatWidget() {
           {/* Glowing ring */}
           <div className="absolute inset-1.5 rounded-full border border-sky-400/30 group-hover:border-sky-400/80 transition-colors duration-300 animate-pulse-slow"></div>
 
-          {/* Cute Robot Image Bubble */}
-          <div className="relative h-15 w-15 rounded-full overflow-hidden shadow-2xl border border-slate-700/50">
-            <img src="/bot-avatar.png" className="h-full w-full object-cover avatar-wave transition-transform duration-300" alt="AD TECH Bot" />
+          {/* Cute Robot Image Bubble with Green Online Indicator Dot at Upper Right */}
+          <div className="relative h-15 w-15 rounded-full overflow-visible shadow-2xl border border-slate-700/50">
+            <img src="/bot-avatar.png" className="h-full w-full rounded-full object-cover avatar-wave transition-transform duration-300" alt="AD TECH Bot" />
+            
+            {/* Green Active/Online Status Dot on Upper Right Hand Side */}
+            <span className="absolute top-0 right-0 h-4 w-4 rounded-full bg-emerald-500 border-2 border-[#0B1120] shadow-[0_0_10px_rgba(16,185,129,0.9)] z-20 animate-pulse"></span>
           </div>
           
-          {/* Wiggle notification badge */}
+          {/* Unread notification badge */}
           {unreadCount > 0 && (
-            <span className="absolute top-1 right-1 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white animate-pulse">
+            <span className="absolute top-0 left-0 z-20 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white animate-pulse">
               {unreadCount}
             </span>
           )}
           
-          {/* Quick intro text on hover (Cute moments bubble) */}
+          {/* Quick intro text on hover */}
           <div className="absolute right-20 bottom-3 hidden md:group-hover:flex flex-col items-end">
             <div className="bg-slate-900 border border-slate-700 text-slate-200 text-xs py-2 px-3.5 rounded-2xl rounded-br-none shadow-xl whitespace-nowrap animate-bounce flex items-center gap-1.5">
               <span>Hi there! 👋 Need help?</span>
@@ -459,22 +458,29 @@ export default function ChatWidget() {
               : 'bg-[#0B1120] border-[#2A3648] text-slate-100'
             }`}
         >
-          {/* Circular Holographic Robot Mascot floating inside the right side */}
-          <div className="absolute right-1 bottom-24 z-30 h-20 w-20 rounded-full overflow-hidden border-2 border-sky-400/50 bg-[#0B1120] shadow-[0_0_20px_rgba(56,189,248,0.25)] animate-float hidden md:block">
+          {/* Circular Holographic Robot Mascot with Green Online Indicator Dot floating inside the right side */}
+          <div className="absolute right-1 bottom-24 z-30 h-20 w-20 rounded-full overflow-visible border-2 border-sky-400/50 bg-[#0B1120] shadow-[0_0_20px_rgba(56,189,248,0.25)] animate-float hidden md:block">
             <img 
               src="/bot-avatar.png" 
-              className="h-full w-full object-cover avatar-wave" 
+              className="h-full w-full rounded-full object-cover avatar-wave" 
               alt="AD TECH Mascot" 
             />
+            {/* Green Active/Online Status Dot on Upper Right Hand Side */}
+            <span className="absolute top-0 right-0 h-4.5 w-4.5 rounded-full bg-emerald-500 border-2 border-[#0B1120] shadow-[0_0_12px_rgba(16,185,129,0.95)] z-40 animate-pulse"></span>
           </div>
 
           {/* Chat Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-slate-900 via-[#111827] to-[#1A2233] border-b border-[#2A3648] text-white">
             <div className="flex items-center gap-2.5">
-              <img src="/adtech-logo.png" className="h-7 w-7 object-contain shrink-0 select-none" alt="AD TECH Logo" />
+              <div className="relative">
+                <img src="/adtech-logo.png" className="h-7 w-7 object-contain shrink-0 select-none" alt="AD TECH Logo" />
+              </div>
               <div>
                 <h3 className="text-sm font-bold tracking-wide">AD TECH Assistant</h3>
-                <span className="text-[10px] text-slate-400">AI Knowledge Assistant</span>
+                <div className="flex items-center gap-1.5 text-[10px] text-slate-400">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span>AI Knowledge Assistant (Online)</span>
+                </div>
               </div>
             </div>
             
