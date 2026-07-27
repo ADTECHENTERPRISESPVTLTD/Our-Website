@@ -1,138 +1,130 @@
-# AD TECH AI Chatbot Integration & Knowledge Assistant
+# AD TECH Enterprises Workspace
 
-This repository contains the official AI Chatbot Integration and Knowledge Assistant for **AD Tech Enterprises Pvt. Ltd.**
-
-The project is built as a production-ready MVP using **Next.js (App Router)**, **React**, and **Tailwind CSS v4**, and is integrated directly with the **Gemini API** for generative responses, with an intelligent local rule-based system that activates if no API key is present.
+Welcome to the unified workspace for **AD TECH Enterprises**. This repository is structured as a multi-app repository, organizing both frontends and the backend into clear, standardized directories, run concurrently from the root.
 
 ---
 
-## 🛠️ Technology Stack
-- **Frontend**: React 19, Next.js 15 (App Router), Tailwind CSS v4, Lucide React (for premium icons).
-- **Backend/API Routing**: Next.js Serverless Route Handlers (Node.js/TypeScript environment).
-- **AI Engine**: `@google/generative-ai` SDK (`gemini-1.5-flash` model).
-
----
-
-## 🏗️ Project Architecture & Components
-
-The application is modularized as follows:
+## 📁 Directory Structure
 
 ```
 Our-Website/
-├── src/
-│   ├── app/
-│   │   ├── api/
-│   │   │   └── chat/
-│   │   │       └── route.ts       # Backend chat handler & Gemini execution
-│   │   ├── globals.css            # Global CSS, theme mapping, custom animations
-│   │   ├── layout.tsx             # Root template & font definitions
-│   │   └── page.tsx               # Mock Landing Page hosting the floating widget
-│   ├── components/
-│   │   └── ChatWidget.tsx         # Floating chatbot widget, forms, theme toggles
-│   └── data/
-│       └── knowledgeBase.ts       # Structured company knowledge & facts
-├── package.json                   # Node modules & build tasks configuration
-└── tsconfig.json                  # TypeScript compiler settings
+├── backend/                         # Unified Express & Mongoose API
+│   ├── config/                      # Cloudinary & MongoDB configurations
+│   ├── controllers/                 # Callback, Career, and Intern management controllers
+│   ├── middleware/                  # Multer file upload middleware
+│   ├── models/                      # Database schemas (Attendance, Callback, Career, Intern, Task, Requirement)
+│   ├── routes/                      # Route bindings for API endpoints
+│   ├── uploads/                     # Temp storage directory for resume uploads
+│   ├── server.js                    # Unified Express application
+│   └── package.json                 # Backend dependencies & dev scripts
+│
+├── frontend/                        # Frontend applications
+│   ├── main/                        # Main AD TECH Next.js website (Port 3000)
+│   │   ├── src/                     # App Router pages and styled section components
+│   │   │   ├── app/                 # about, contact, requirement, services, careers, faq
+│   │   │   └── components/          # navbar, footer, sections, ui controls
+│   │   ├── public/                  # Main site static assets
+│   │   └── package.json             # Next.js configurations
+│   │
+│   └── intern-portal/               # Intern Management Portal Next.js app (Port 3001)
+│       ├── src/                     # Login, Dashboard, Attendance tracking pages
+│       ├── public/                  # Intern portal assets
+│       └── package.json             # Next.js configurations
+│
+├── package.json                     # Root npm commands and workspace runners
+├── README.md                        # Project documentation
+└── .gitignore                       # Git ignore rules for node_modules, builds, and envs
 ```
 
 ---
 
-## 🤖 AI Flow and System Design
+## 🔌 Port Mapping
 
-### 1. Conversation & Context Flow
-```mermaid
-graph TD
-    A[User Message] --> B[ChatWidget Component]
-    B -->|Check Session Storage| C[Append to History]
-    C --> D[POST /api/chat]
-    D -->|Check environment| E{GEMINI_API_KEY set?}
-    E -->|Yes| F[Initialize GoogleGenerativeAI]
-    F --> G[Load local KNOWLEDGE_BASE context]
-    G --> H[Query gemini-1.5-flash]
-    H --> I[Return AI Response]
-    E -->|No| J[Keyword Match in local KB]
-    J -->|Match Found| K[Return matched answer]
-    J -->|No Match| L[Return helpful contact fallback]
-    I --> M[Render Message & update sessionStorage]
-    K --> M
-    L --> M
-```
-
-### 2. Prompt Structure (System Instructions)
-When `GEMINI_API_KEY` is provided, the API handler builds a system instruction that forces the LLM to restrict its answers to the AD TECH knowledge base:
-- **Scope Restriction**: The assistant is strictly ordered to only answer questions based on the local knowledge base structure.
-- **Tone & Conciseness**: The assistant is guided to output clear, professional, and brief answers (typically 1 to 3 sentences).
-- **Graceful Fallbacks**: If the question is outside the knowledge base context, it returns a friendly fallback suggesting that the user email `hradtechenterpriseschepvtltd@gmail.com` or call `+91 83193 58568`.
+| Service | Technology | Port | Access URL |
+| :--- | :--- | :--- | :--- |
+| **Backend API** | Node.js / Express | `5000` | [http://localhost:5000](http://localhost:5000) |
+| **Main Website** | Next.js / Tailwind | `3000` | [http://localhost:3000](http://localhost:3000) |
+| **Intern Portal** | Next.js / Tailwind | `3001` | [http://localhost:3001](http://localhost:3001) |
 
 ---
 
-## 💼 Core Features & Quick Actions
+## 🚀 Getting Started
 
-1. **Floating Holographic Widget**: Borderless floating holographic robot drone positioned at the bottom right that expands/collapses smoothly.
-2. **Speech Recognition (Voice Input)**: Micro-interaction voice capability allowing users to dictate queries directly into the chatbox using speech recognition.
-3. **Persistent Local History**: Messages are saved in browser `localStorage` ensuring chat continuity across browser sessions and page reloads.
-4. **Interactive Quick Actions & Navigation Assistance**:
-   - **Our Services**: Auto-scrolls user to the services section of the page and returns details on web dev, backend databases, and AI.
-   - **Apply for Internship**: Auto-scrolls to Careers, provides the HR application email and list of open developer slots.
-   - **Book a Callback**: Opens a dynamic form directly inside the chat window for capturing user names, phone numbers, and emails.
-   - **Submit Requirements**: Opens a business scoping form inside the chat window.
-5. **Backend Lead Intake (Resend Integration)**: Interactive forms trigger serverless `/api/leads` handler to log incoming leads to the server console and dispatch live email alerts to administrative staff (`hradtechenterpriseschepvtltd@gmail.com`) using Resend API.
-6. **Bouncing Typing Indicators**: Real-time visual feedback while waiting for API/Generative responses.
-7. **Theme Switching**: Seamless dark/light mode toggle inside the widget header.
+### Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) installed (v18 or higher recommended).
 
----
-
-## 🚀 How to Run and Set Up
-
-### 1. Clone & Install Dependencies
-Ensure you have [Node.js](https://nodejs.org/) installed, then run:
+### 1. Installation
+Install all dependencies across the backend and frontends using the custom workspace command:
 ```bash
-npm install
+npm run install:all
 ```
 
-### 2. Environment Variables Setup
-Create a `.env.local` file in the root of the project and add your Gemini API Key:
+### 2. Environment Configuration
+Create a `.env` file inside the `backend/` folder and populate the variables:
 ```env
-GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
+PORT=5000
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/adtech
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
-*Note: If no `.env.local` is present, the key is missing, or the key remains the placeholder, the system will automatically degrade gracefully to the local rule-based matching engine without crashing.*
 
-### 3. Connection Status Indicator
-We've added a premium visual feedback dot in the widget header:
-* **Emerald Pulse (AI Online)**: The chatbot is actively communicating with the live Gemini API.
-* **Amber Dot (Offline Fallback)**: The Gemini API is either disabled, blocked by quota, or experiencing networks errors. The chatbot uses local rule-based matches in [knowledgeBase.ts](file:///c:/Users/soham/OneDrive/Desktop/New%20folder/Our-Website/src/data/knowledgeBase.ts) to guarantee zero downtime.
-
-### 4. Start the Development Server
+### 3. Running in Development
+Start all frontends and the backend concurrently with a single command from the root folder:
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser to test.
+
+This will spin up:
+- Backend nodemon dev server on `http://localhost:5000`
+- Main website Next.js server on `http://localhost:3000`
+- Intern portal Next.js server on `http://localhost:3001`
 
 ---
 
-## 🔌 Integration Guide
-To integrate this chatbot widget into any other page or layout in your Next.js application, simply import and render it:
+## 🛠️ Build & Production commands
 
-```tsx
-import ChatWidget from '@/components/ChatWidget';
+You can build the production-ready bundles for the frontend applications individually or all at once:
 
-export default function Layout({ children }) {
-  return (
-    <html>
-      <body>
-        {children}
-        {/* Render widget at the root level */}
-        <ChatWidget />
-      </body>
-    </html>
-  );
-}
-```
+- **Build Main Website:**
+  ```bash
+  npm run build:main
+  ```
+- **Build Intern Portal:**
+  ```bash
+  npm run build:intern
+  ```
+- **Build Both Apps:**
+  ```bash
+  npm run build:all
+  ```
 
 ---
 
-## 🔮 Future Improvements
-- **Vector Search Database (RAG)**: Connect the backend to a vector database (e.g., Pinecone or ChromaDB) to support massive documents and FAQs dynamically.
-- **Callback DB Integration**: Save submitted callback details directly into a SQL or MongoDB database.
-- **Email/Slack Alerts**: Automatically send email notifications to HR or developers when a user submits requirements or requests a callback.
-- **Authentication**: Keep chat history saved across user logins rather than just browser sessions.
+## ✨ UI & Animation Components
+
+The repository includes a modern, high-performance UI library using GSAP and Framer Motion located under `frontend/main/src/components/ui/`:
+
+- **`SplitText`**: Smooth, scroll-triggered text-reveal animations.
+- **`LogoLoop`**: Endlessly looping, GPU-accelerated typed carousel.
+- **`BorderGlow`**: Interactive card wrappers with colorful hover glow borders.
+- **`SpotlightCard`**: Interactive cards featuring custom cursor-following spotlights.
+- **`AnimatedHeading`**: Component combining `SplitText` and custom scroll triggers.
+
+---
+
+## ⚡ Backend REST APIs
+
+The unified API server connects to MongoDB and binds the following endpoints:
+
+| Domain | Route | HTTP Method | Action |
+| :--- | :--- | :--- | :--- |
+| **Requirements** | `/api/requirements` | `POST` | Submit software requirements |
+| **Callbacks** | `/api/callback` | `POST` / `GET` | Request / retrieve callback schedules |
+| **Careers** | `/api/careers` | `POST` | Submit job/intern application (with resume upload) |
+| **Contacts** | `/api/contact` | `POST` / `GET` | Submit / retrieve contact inquiries |
+| **Newsletters** | `/api/newsletter` | `POST` / `GET` | Subscribe / retrieve newsletter emails |
+| **Attendance** | `/api/attendance` | `POST` / `PUT` / `GET` | Mark intern online, offline, or view history |
+| **Tasks** | `/api/tasks` | `POST` / `PUT` / `GET` | Create, update, or assign task lists |
+| **Dashboard** | `/api/dashboard` | `GET` | Fetch monorepo system performance summaries |
+
