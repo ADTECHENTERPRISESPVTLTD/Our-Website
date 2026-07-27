@@ -98,3 +98,33 @@ You can build the production-ready bundles for the frontend applications individ
   ```bash
   npm run build:all
   ```
+
+---
+
+## ✨ UI & Animation Components
+
+The repository includes a modern, high-performance UI library using GSAP and Framer Motion located under `frontend/main/src/components/ui/`:
+
+- **`SplitText`**: Smooth, scroll-triggered text-reveal animations.
+- **`LogoLoop`**: Endlessly looping, GPU-accelerated typed carousel.
+- **`BorderGlow`**: Interactive card wrappers with colorful hover glow borders.
+- **`SpotlightCard`**: Interactive cards featuring custom cursor-following spotlights.
+- **`AnimatedHeading`**: Component combining `SplitText` and custom scroll triggers.
+
+---
+
+## ⚡ Backend REST APIs
+
+The unified API server connects to MongoDB and binds the following endpoints:
+
+| Domain | Route | HTTP Method | Action |
+| :--- | :--- | :--- | :--- |
+| **Requirements** | `/api/requirements` | `POST` | Submit software requirements |
+| **Callbacks** | `/api/callback` | `POST` / `GET` | Request / retrieve callback schedules |
+| **Careers** | `/api/careers` | `POST` | Submit job/intern application (with resume upload) |
+| **Contacts** | `/api/contact` | `POST` / `GET` | Submit / retrieve contact inquiries |
+| **Newsletters** | `/api/newsletter` | `POST` / `GET` | Subscribe / retrieve newsletter emails |
+| **Attendance** | `/api/attendance` | `POST` / `PUT` / `GET` | Mark intern online, offline, or view history |
+| **Tasks** | `/api/tasks` | `POST` / `PUT` / `GET` | Create, update, or assign task lists |
+| **Dashboard** | `/api/dashboard` | `GET` | Fetch monorepo system performance summaries |
+
