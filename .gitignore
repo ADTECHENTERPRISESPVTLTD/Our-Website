@@ -39,3 +39,6 @@ yarn-error.log*
 # Root prototype backup directory
 /src/
 
+
+# Build info
+tsconfig.tsbuildinfo
