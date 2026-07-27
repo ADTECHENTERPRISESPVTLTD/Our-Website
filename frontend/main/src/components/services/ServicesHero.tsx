@@ -17,7 +17,7 @@ export default function ServicesHero() {
         </span>
 
         <AnimatedHeading
-          text={"Smart Digital Solutions For Modern Businesses"}
+          text="Smart Digital Solutions For Modern Businesses"
           className="mt-8 text-5xl md:text-6xl lg:text-7xl"
           tag="h1"
         />

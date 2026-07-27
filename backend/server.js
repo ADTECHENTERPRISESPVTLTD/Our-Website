@@ -7,9 +7,9 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/database");
 
 // Intern Portal Routes
-const contactRoutes = require("./routes/contactRoutes");
+const contactRoutes = require("./routes/contact.routes");
 const internshipRoutes = require("./routes/internshipRoutes");
-const newsletterRoutes = require("./routes/newsletterRoutes");
+const newsletterRoutes = require("./routes/newsletter.routes");
 const internRoutes = require("./routes/internRoutes");
 const attendanceRoutes = require("./routes/attendanceRoutes");
 const taskRoutes = require("./routes/taskRoutes");

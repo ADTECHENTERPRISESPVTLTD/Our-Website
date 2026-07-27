@@ -8,12 +8,14 @@ export default function ContactPage() {
     <main className="page-shell overflow-hidden">
       <ContactHero />
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-2 lg:px-8">
-        <ContactInfo />
-        <ContactForm />
-      </section>
+      {/* Info Cards */}
+      <ContactInfo />
+
+      {/* Contact Form */}
+      <ContactForm />
 
       <Map />
     </main>
   );
 }
+

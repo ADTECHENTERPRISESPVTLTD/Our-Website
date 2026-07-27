@@ -1,12 +1,12 @@
 // src/types/index.ts
 
-import { ReactNode } from "react";
+import { LucideIcon } from "lucide-react";
 
 export interface Service {
   id: number;
   title: string;
   description: string;
-  icon: ReactNode;
+  icon: LucideIcon;
 }
 
 export interface ContactInfo {
