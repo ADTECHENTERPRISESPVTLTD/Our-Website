@@ -34,7 +34,74 @@ const STOP_WORDS = new Set([
 ]);
 
 /**
- * In-Memory Vector Database with Semantic Matching
+ * Calculate Levenshtein Distance between two strings.
+ * Used for typo tolerance (e.g., "servises" -> "services", "intrenship" -> "internship").
+ */
+export function getLevenshteinDistance(a: string, b: string): number {
+  if (a.length === 0) return b.length;
+  if (b.length === 0) return a.length;
+
+  const matrix: number[][] = [];
+  for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+  for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) === a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1, // substitution
+          matrix[i][j - 1] + 1,     // insertion
+          matrix[i - 1][j] + 1      // deletion
+        );
+      }
+    }
+  }
+
+  return matrix[b.length][a.length];
+}
+
+/**
+ * Known domain dictionary terms for auto-correcting typos in queries
+ */
+const DICTIONARY_TERMS = [
+  'services', 'service', 'internship', 'internships', 'intern', 'hiring', 'career', 'careers',
+  'contact', 'email', 'phone', 'website', 'android', 'ios', 'automation', 'ai',
+  'learning', 'installment', 'overview', 'vision', 'mission', 'maths', 'development',
+  'application', 'solutions', 'requirements', 'callback', 'process', 'project', 'pricing'
+];
+
+/**
+ * Normalizes common misspelled words into standard keywords via Levenshtein fuzzy matching
+ */
+export function normalizeQueryTypos(query: string): string {
+  const words = query.toLowerCase().split(/\s+/);
+  const normalizedWords = words.map(word => {
+    const cleanWord = word.replace(/[^\w]/g, '');
+    if (cleanWord.length <= 3) return word; // skip short words like "is", "a", "of"
+
+    let bestMatch = cleanWord;
+    let minDistance = Infinity;
+
+    for (const dictWord of DICTIONARY_TERMS) {
+      const dist = getLevenshteinDistance(cleanWord, dictWord);
+      const maxEdits = dictWord.length <= 5 ? 1 : 2;
+
+      if (dist <= maxEdits && dist < minDistance) {
+        minDistance = dist;
+        bestMatch = dictWord;
+      }
+    }
+
+    return word.replace(cleanWord, bestMatch);
+  });
+
+  return normalizedWords.join(' ');
+}
+
+/**
+ * In-Memory Vector Database with Semantic & Levenshtein Fuzzy Matching
  */
 export class LangChainVectorStore {
   private docs: Document[];
@@ -44,7 +111,8 @@ export class LangChainVectorStore {
   }
 
   public similaritySearchWithScore(query: string, k = 3): { docs: Document[]; maxScore: number } {
-    const queryTerms = query.toLowerCase().split(/\W+/).filter(t => t.length > 2 && !STOP_WORDS.has(t));
+    const normalizedQuery = normalizeQueryTypos(query);
+    const queryTerms = normalizedQuery.toLowerCase().split(/\W+/).filter(t => t.length > 2 && !STOP_WORDS.has(t));
     
     if (queryTerms.length === 0) {
       return { docs: [], maxScore: 0 };
@@ -53,6 +121,7 @@ export class LangChainVectorStore {
     const scoredDocs = this.docs.map(doc => {
       const contentLower = doc.pageContent.toLowerCase();
       const keywordsLower = (doc.metadata.keywords || '').toLowerCase();
+      const docWords = (contentLower + ' ' + keywordsLower).split(/\W+/).filter(w => w.length > 2);
       
       let score = 0;
       queryTerms.forEach(term => {
@@ -63,6 +132,13 @@ export class LangChainVectorStore {
           score += 3;
         } else if (wordRegex.test(contentLower)) {
           score += 1;
+        } else {
+          // Check Levenshtein Fuzzy Matching for typos
+          const maxEdits = term.length <= 4 ? 1 : 2;
+          const hasFuzzyMatch = docWords.some(dw => getLevenshteinDistance(term, dw) <= maxEdits);
+          if (hasFuzzyMatch) {
+            score += 2;
+          }
         }
       });
 
@@ -296,8 +372,11 @@ export async function runLangChainRAG(
   const apiKey = process.env.GEMINI_API_KEY;
   const isApiKeyMissing = !apiKey || apiKey.trim() === '' || apiKey.includes('YOUR_GEMINI_API_KEY');
 
-  // Check direct conversational intent matching first
-  const directResponse = handleConversationalIntents(message);
+  // Normalize spelling typos (e.g. "servises" -> "services", "intrenship" -> "internship")
+  const normalizedMessage = normalizeQueryTypos(message);
+
+  // Check direct conversational intent matching first (with normalized query & original fallback)
+  const directResponse = handleConversationalIntents(normalizedMessage) || handleConversationalIntents(message);
   if (directResponse) {
     return {
       response: directResponse,
