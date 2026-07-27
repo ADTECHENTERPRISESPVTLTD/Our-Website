@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Eye, Target } from "lucide-react";
+import { Eye, Target, Check } from "lucide-react";
 
 export default function VisionMission() {
   return (
@@ -166,15 +166,15 @@ export default function VisionMission() {
             leading-7
             ">
 
-              <li>✓ Build high-quality software solutions.</li>
+              <li><Check size={16} className="inline text-[#38BDF8] mr-2" /> Build high-quality software solutions.</li>
 
-              <li>✓ Help organizations adopt AI responsibly.</li>
+              <li><Check size={16} className="inline text-[#38BDF8] mr-2" /> Help organizations adopt AI responsibly.</li>
 
-              <li>✓ Reduce operational inefficiencies.</li>
+              <li><Check size={16} className="inline text-[#38BDF8] mr-2" /> Reduce operational inefficiencies.</li>
 
-              <li>✓ Deliver scalable digital products.</li>
+              <li><Check size={16} className="inline text-[#38BDF8] mr-2" /> Deliver scalable digital products.</li>
 
-              <li>✓ Enable innovation through technology.</li>
+              <li><Check size={16} className="inline text-[#38BDF8] mr-2" /> Enable innovation through technology.</li>
 
             </ul>
 

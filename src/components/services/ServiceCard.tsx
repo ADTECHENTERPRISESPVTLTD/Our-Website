@@ -9,6 +9,8 @@ interface ServiceCardProps {
 export default function ServiceCard({
   service,
 }: ServiceCardProps) {
+  const IconComponent = service.icon;
+
   return (
     <Card className="group relative h-full overflow-hidden p-8 transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/60 hover:shadow-[0_0_40px_rgba(34,211,238,0.15)]">
 
@@ -18,8 +20,8 @@ export default function ServiceCard({
       <div className="relative z-10">
 
         {/* Icon */}
-        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-cyan-500/10 text-3xl transition-all duration-300 group-hover:scale-110 group-hover:bg-cyan-500/20">
-          {service.icon}
+        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400 transition-all duration-300 group-hover:scale-110 group-hover:bg-cyan-500/20">
+          <IconComponent size={32} />
         </div>
 
         {/* Title */}
@@ -45,3 +47,4 @@ export default function ServiceCard({
     </Card>
   );
 }
+

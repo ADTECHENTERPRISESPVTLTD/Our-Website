@@ -30,10 +30,13 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
-      <body className="min-h-screen flex flex-col bg-[#0B1120] text-[#F8FAFC]">
+    <body className="min-h-screen flex flex-col bg-[#0B1120] text-[#F8FAFC]">
+        {/* Background grid overlay visible on all pages */}
+        <div className="fixed inset-0 bg-grid pointer-events-none z-0" aria-hidden="true" />
+
         <Navbar />
 
-        <main className="flex-1">
+        <main className="flex-1 relative z-[1]">
           {children}
         </main>
 

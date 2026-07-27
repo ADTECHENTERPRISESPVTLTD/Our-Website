@@ -4,6 +4,8 @@ const connectDB = require("./src/db/db");
 const requirementRoutes = require("./src/routes/requirement.routes");
 const callbackRoutes = require("./src/routes/callback.routes");
 const careerRoutes = require("./src/routes/career.routes");
+const contactRoutes = require("./src/routes/contact.routes");
+const newsletterRoutes = require("./src/routes/newsletter.routes");
 
 const express = require("express");
 const cors = require("cors");
@@ -20,6 +22,8 @@ app.use(morgan("dev"));
 app.use("/api/requirements", requirementRoutes);
 app.use("/api/callback", callbackRoutes);
 app.use("/api/careers", careerRoutes);
+app.use("/api/contact", contactRoutes);
+app.use("/api/newsletter", newsletterRoutes);
 
 app.get("/", (req, res) => {
   res.json({

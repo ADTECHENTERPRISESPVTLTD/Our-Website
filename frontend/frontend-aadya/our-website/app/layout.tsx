@@ -13,8 +13,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-brand-primary-bg text-brand-primary-text min-h-screen">
-        {children}
+      <body className="bg-brand-primary-bg text-brand-primary-text min-h-screen relative">
+        {/* Background grid overlay visible on all pages */}
+        <div className="fixed inset-0 bg-grid pointer-events-none z-0" aria-hidden="true" />
+        <main className="relative z-[1]">{children}</main>
       </body>
     </html>
   );

@@ -21,7 +21,7 @@ export default function AboutHero() {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: .6 }}
-          className="mb-5 rounded-full border border-sky-400/30 bg-sky-400/10 px-5 py-2 uppercase tracking-[4px] text-sky-300 shadow-[0_0_20px_rgba(56,189,248,0.15)] backdrop-blur-md"
+          className="mb-5 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-2 uppercase tracking-[4px] text-cyan-300 shadow-[0_0_20px_rgba(56,189,248,0.15)] backdrop-blur-md"
         >
           ABOUT AD TECH
         </motion.p>
@@ -36,13 +36,6 @@ export default function AboutHero() {
             text="Building Intelligent Software"
             className="text-4xl font-extrabold leading-tight text-[#F8FAFC] md:text-6xl xl:text-7xl"
             tag="h1"
-            textAlign="center"
-          />
-          <AnimatedHeading
-            text="Empowering Businesses Through AI"
-            className="mt-4 text-4xl font-extrabold leading-tight text-sky-300 drop-shadow-[0_0_18px_rgba(125,211,252,0.25)] md:text-6xl xl:text-7xl"
-            tag="h2"
-            textAlign="center"
           />
         </motion.div>
 
@@ -66,14 +59,14 @@ export default function AboutHero() {
         >
           <Link
             href="/services"
-            className="rounded-xl bg-[#2563EB] px-8 py-4 font-semibold text-white transition hover:scale-105 hover:bg-blue-700"
+            className="rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-4 font-semibold text-white shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:scale-105 hover:shadow-xl"
           >
             Explore Services →
           </Link>
 
           <Link
             href="/contact"
-            className="rounded-xl border border-[#2A3648] bg-[#1A2233]/50 px-8 py-4 font-semibold text-white backdrop-blur-md transition hover:border-[#2563EB] hover:bg-[#2563EB]/20"
+            className="rounded-xl border border-[#2A3648] bg-[#1A2233]/50 px-8 py-4 font-semibold text-white backdrop-blur-md transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-400/10"
           >
             Contact Us
           </Link>
@@ -111,3 +104,4 @@ export default function AboutHero() {
     </section>
   );
 }
+
