@@ -29,6 +29,8 @@ export default function ChatWidget() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatWindowRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const savedScrollTopRef = useRef<number | null>(null);
 
   // Callback form states
   const [callbackForm, setCallbackForm] = useState({ name: '', phone: '', email: '', note: '' });
@@ -170,15 +172,37 @@ export default function ChatWidget() {
     }
   }, []);
 
-  // Sync scroll to bottom when chat opens/unminimized, messages update, or typing status changes
+  // Restore scroll position where user left off when un-minimizing / re-opening
   useEffect(() => {
     if (isOpen) {
       const timer = setTimeout(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 60);
+        if (messagesContainerRef.current) {
+          if (savedScrollTopRef.current !== null) {
+            messagesContainerRef.current.scrollTop = savedScrollTopRef.current;
+          } else {
+            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+          }
+        }
+      }, 50);
       return () => clearTimeout(timer);
     }
-  }, [isOpen, messages, isTyping]);
+  }, [isOpen]);
+
+  // Scroll to bottom when new messages arrive or typing status changes
+  useEffect(() => {
+    if (isOpen && messagesContainerRef.current) {
+      const timer = setTimeout(() => {
+        if (messagesContainerRef.current) {
+          messagesContainerRef.current.scrollTo({
+            top: messagesContainerRef.current.scrollHeight,
+            behavior: 'smooth'
+          });
+          savedScrollTopRef.current = messagesContainerRef.current.scrollHeight;
+        }
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [messages.length, isTyping]);
 
   // Save history helper
   const saveHistory = (newMessages: Message[]) => {
@@ -585,6 +609,8 @@ export default function ChatWidget() {
 
           {/* Messages Container */}
           <div 
+            ref={messagesContainerRef}
+            onScroll={(e) => { savedScrollTopRef.current = e.currentTarget.scrollTop; }}
             aria-live="polite"
             className={`flex-1 overflow-y-auto p-3 sm:p-4 md:pr-20 space-y-4 custom-scrollbar ${isLightMode ? 'bg-slate-50/50' : 'bg-[#0f172a]/20'}`}
           >
