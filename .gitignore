@@ -30,6 +30,38 @@ backend/uploads/*
 *.sln
 *.sw?
 
+# Dependency directories
+node_modules/
+
+# Next.js build outputs
+.next/
+out/
+
+# Production build outputs
+build/
+dist/
+
+# Env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Multer uploads directory
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# IDE and OS files
+.DS_Store
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 # Log files
 *.log
 npm-debug.log*
@@ -39,6 +71,6 @@ yarn-error.log*
 # Root prototype backup directory
 /src/
 
-
-# Build info
+# Next.js auto-generated types
+next-env.d.ts
 tsconfig.tsbuildinfo
