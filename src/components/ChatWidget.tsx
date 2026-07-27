@@ -210,9 +210,19 @@ export default function ChatWidget() {
     localStorage.setItem('adtech_chat_history', JSON.stringify(newMessages));
   };
 
-  // Toggle open/close
+  // Minimize chat (keeps current scroll position)
   const toggleChat = () => {
     setIsOpen(!isOpen);
+    setUnreadCount(0);
+  };
+
+  // Close chat (resets scroll position to top where chat starts)
+  const handleCloseChat = () => {
+    savedScrollTopRef.current = 0;
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = 0;
+    }
+    setIsOpen(false);
     setUnreadCount(0);
   };
 
@@ -597,7 +607,7 @@ export default function ChatWidget() {
 
               {/* Close */}
               <button 
-                onClick={toggleChat}
+                onClick={handleCloseChat}
                 aria-label="Close Chatbot Window"
                 className="flex h-10 w-10 items-center justify-center rounded-xl text-slate-400 hover:text-red-400 hover:bg-slate-800/60 transition-colors cursor-pointer touch-manipulation"
                 title="Close"
