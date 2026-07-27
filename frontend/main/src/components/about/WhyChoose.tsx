@@ -55,8 +55,8 @@ export default function WhyChoose() {
 
       {/* Background Glow */}
 
-      <div className="absolute -left-32 top-20 h-96 w-96 rounded-full bg-blue-600/10 blur-[150px]" />
-      <div className="absolute -right-20 bottom-0 h-[420px] w-[420px] rounded-full bg-cyan-500/10 blur-[170px]" />
+      <div className="bg-glow-blue absolute -left-32 top-20 h-96 w-96" />
+      <div className="bg-glow-cyan absolute -right-20 bottom-0 h-[420px] w-[420px]" />
 
       <div className="relative max-w-7xl mx-auto px-6">
 
@@ -72,7 +72,7 @@ export default function WhyChoose() {
             WHY CHOOSE US
           </p>
 
-          <h2 className="text-5xl md:text-6xl font-bold text-white mt-5">
+          <h2 className="mt-5 text-4xl font-bold text-white md:text-5xl">
             Why Choose AD TECH
           </h2>
 

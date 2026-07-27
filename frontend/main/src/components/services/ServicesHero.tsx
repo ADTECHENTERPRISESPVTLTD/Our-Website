@@ -1,29 +1,26 @@
 "use client";
 
 import Link from "next/link";
+import AnimatedHeading from "@/components/ui/AnimatedHeading";
 
 export default function ServicesHero() {
   return (
-    <section className="relative overflow-hidden bg-[#0B1120] pt-36 pb-24">
-      {/* Background Glow */}
-      <div className="absolute -top-40 -left-40 h-[450px] w-[450px] rounded-full bg-cyan-500/10 blur-[150px]" />
-      <div className="absolute -bottom-40 -right-40 h-[450px] w-[450px] rounded-full bg-blue-500/10 blur-[150px]" />
+    <section className="site-hero pt-36 pb-24">
+      <div className="bg-glow-cyan -top-40 -left-40 h-[450px] w-[450px]" />
+      <div className="bg-glow-blue -bottom-40 -right-40 h-[450px] w-[450px]" />
 
-      {/* Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
+      <div className="bg-grid compact" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 text-center lg:px-8">
         <span className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium tracking-wide text-cyan-400">
           OUR SERVICES
         </span>
 
-        <h1 className="mt-8 text-5xl font-extrabold leading-tight text-white md:text-6xl lg:text-7xl">
-          Smart Digital
-          <span className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-            Solutions
-          </span>
-          For Modern Businesses
-        </h1>
+        <AnimatedHeading
+          text={"Smart Digital Solutions For Modern Businesses"}
+          className="mt-8 text-5xl md:text-6xl lg:text-7xl"
+          tag="h1"
+        />
 
         <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-slate-400 md:text-xl">
           We build high-performance websites, intelligent AI solutions,

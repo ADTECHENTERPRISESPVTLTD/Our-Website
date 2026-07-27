@@ -2,20 +2,18 @@
 
 import Link from "next/link";
 import SplitText from "@/components/ui/SplitText";
+import AnimatedHeading from "@/components/ui/AnimatedHeading";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden min-h-screen flex items-center bg-[#0B1120]">
+    <section className="site-hero flex items-center">
 
       {/* Background Glow */}
-      <div className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-cyan-400/10 blur-[150px]" />
-
-      <div className="absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-[150px]" />
-
+      <div className="bg-glow-cyan -top-40 -left-40 h-[500px] w-[500px]" />
+      <div className="bg-glow-blue -bottom-40 -right-40 h-[500px] w-[500px]" />
 
       {/* Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:70px_70px]" />
-
+      <div className="bg-grid" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 grid lg:grid-cols-2 gap-16 items-center">
 
@@ -41,24 +39,10 @@ export default function Hero() {
 
           <div className="mt-8">
 
-            <SplitText
+            <AnimatedHeading
               text="AD TECH ENTERPRISES PVT. LTD."
-              className="
-              text-5xl
-              md:text-6xl
-              xl:text-7xl
-              font-extrabold
-              leading-tight
-              text-[#F8FAFC]
-              "
-              delay={50}
-              duration={1}
-              ease="power3.out"
-              splitType="chars"
-              from={{opacity:0,y:30}}
-              to={{opacity:1,y:0}}
-              threshold={0.1}
-              rootMargin="-100px"
+              className="text-5xl md:text-6xl xl:text-7xl leading-tight text-[#F8FAFC]"
+              tag="h1"
               textAlign="left"
             />
 

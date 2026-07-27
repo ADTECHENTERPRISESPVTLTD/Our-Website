@@ -1,11 +1,12 @@
 import { processSteps } from "@/data/services";
+import Card from "@/components/ui/Card";
 
 export default function Process() {
   return (
     <section className="relative overflow-hidden bg-[#0B1120] py-24">
       {/* Background Glow */}
-      <div className="absolute left-0 top-20 h-72 w-72 rounded-full bg-cyan-500/10 blur-[120px]" />
-      <div className="absolute right-0 bottom-20 h-72 w-72 rounded-full bg-blue-500/10 blur-[120px]" />
+      <div className="bg-glow-cyan absolute left-0 top-20 h-72 w-72" />
+      <div className="bg-glow-blue absolute right-0 bottom-20 h-72 w-72" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         {/* Heading */}
@@ -40,7 +41,7 @@ export default function Process() {
               >
                 {/* Card */}
                 <div className="w-full lg:w-5/12">
-                  <div className="rounded-2xl border border-slate-800 bg-[#111827] p-8 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)]">
+                  <Card className="p-8 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)]">
                     <h3 className="mb-4 text-2xl font-bold text-white">
                       {step.title}
                     </h3>
@@ -48,7 +49,7 @@ export default function Process() {
                     <p className="leading-7 text-slate-400">
                       {step.description}
                     </p>
-                  </div>
+                  </Card>
                 </div>
 
                 {/* Step Circle */}

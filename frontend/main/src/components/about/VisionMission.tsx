@@ -9,9 +9,9 @@ export default function VisionMission() {
 
       <div className="absolute inset-0">
 
-        <div className="absolute left-20 top-10 h-72 w-72 rounded-full bg-blue-600/10 blur-[120px]" />
+        <div className="bg-glow-blue absolute left-20 top-10 h-72 w-72" />
 
-        <div className="absolute right-10 bottom-10 h-96 w-96 rounded-full bg-cyan-500/10 blur-[140px]" />
+        <div className="bg-glow-cyan absolute right-10 bottom-10 h-96 w-96" />
 
       </div>
 
@@ -23,7 +23,7 @@ export default function VisionMission() {
             OUR PURPOSE
           </p>
 
-          <h2 className="text-5xl md:text-6xl font-bold mt-6 text-white">
+          <h2 className="mt-6 text-4xl font-bold text-white md:text-5xl">
             Vision & Mission
           </h2>
 

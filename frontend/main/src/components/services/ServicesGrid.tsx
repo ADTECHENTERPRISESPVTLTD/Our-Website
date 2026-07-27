@@ -5,8 +5,8 @@ export default function ServicesGrid() {
   return (
     <section className="relative bg-[#0B1120] py-24">
       {/* Background Glow */}
-      <div className="absolute top-0 left-0 h-80 w-80 rounded-full bg-cyan-500/10 blur-[120px]" />
-      <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-blue-500/10 blur-[120px]" />
+      <div className="bg-glow-cyan absolute top-0 left-0 h-80 w-80" />
+      <div className="bg-glow-blue absolute bottom-0 right-0 h-80 w-80" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         {/* Section Header */}

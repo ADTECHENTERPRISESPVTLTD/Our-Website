@@ -2,7 +2,7 @@ import RequirementForm from "@/components/requirement/RequirementForm";
 
 export default function SubmitRequirement() {
   return (
-    <main className="min-h-screen bg-[#0B1120] text-white">
+    <main className="page-shell min-h-screen">
 
       <section className="pt-32 pb-12 text-center">
         <h1 className="text-4xl md:text-5xl font-bold">

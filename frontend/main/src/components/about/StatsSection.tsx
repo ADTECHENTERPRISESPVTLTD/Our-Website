@@ -27,9 +27,9 @@ export default function StatsSection() {
 
       {/* Background Glow */}
 
-      <div className="absolute left-10 top-10 h-80 w-80 rounded-full bg-blue-600/10 blur-[140px]" />
+      <div className="bg-glow-blue absolute left-10 top-10 h-80 w-80" />
 
-      <div className="absolute right-10 bottom-10 h-96 w-96 rounded-full bg-cyan-500/10 blur-[160px]" />
+      <div className="bg-glow-cyan absolute right-10 bottom-10 h-96 w-96" />
 
       <div className="relative max-w-7xl mx-auto px-6">
 
@@ -39,7 +39,7 @@ export default function StatsSection() {
             OUR ACHIEVEMENTS
           </p>
 
-          <h2 className="text-5xl md:text-6xl font-bold text-white mt-6">
+          <h2 className="mt-6 text-4xl font-bold text-white md:text-5xl">
             Numbers That Matter
           </h2>
 
