@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   MessageSquare, X, Send, Phone, Briefcase, FileText, 
   Calendar, Info, HelpCircle, CheckCircle, Moon, Sun, 
-  Minus, Sparkles, SendHorizontal, Mic
+  Minus, Sparkles, SendHorizontal, Mic, Maximize2, Minimize2
 } from 'lucide-react';
 import { EMAIL, PHONE, KNOWLEDGE_BASE } from '@/data/knowledgeBase';
 
@@ -25,6 +25,8 @@ export default function ChatWidget() {
   const [isTyping, setIsTyping] = useState(false);
   const [isLightMode, setIsLightMode] = useState(false);
   const [unreadCount, setUnreadCount] = useState(1);
+  const [viewportHeight, setViewportHeight] = useState<string>('100dvh');
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatWindowRef = useRef<HTMLDivElement>(null);
 
@@ -35,6 +37,7 @@ export default function ChatWidget() {
 
   // Speech Recognition States
   const [isListening, setIsListening] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(true);
   const recognitionRef = useRef<any>(null);
 
   // Connection/API Status State
@@ -58,7 +61,44 @@ export default function ChatWidget() {
     verifyStatus();
   }, []);
 
-  // Initialize Speech Recognition
+  // Visual Viewport Adaptability (iOS / Android Mobile Soft Keyboard Resize)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleVisualViewportResize = () => {
+      if (window.visualViewport) {
+        setViewportHeight(`${window.visualViewport.height}px`);
+      }
+    };
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleVisualViewportResize);
+      window.visualViewport.addEventListener('scroll', handleVisualViewportResize);
+    }
+
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', handleVisualViewportResize);
+        window.visualViewport.removeEventListener('scroll', handleVisualViewportResize);
+      }
+    };
+  }, []);
+
+  // Background Body Scroll Lock on Mobile Fullscreen Mode
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const isMobile = window.innerWidth < 640;
+    if (isOpen && isMobile) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  // Initialize Speech Recognition with cross-browser detection
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -70,39 +110,53 @@ export default function ChatWidget() {
 
         rec.onstart = () => setIsListening(true);
         rec.onend = () => setIsListening(false);
+        rec.onerror = () => setIsListening(false);
         rec.onresult = (e: any) => {
           const transcript = e.results[0][0].transcript;
           setInputMessage(transcript);
         };
         recognitionRef.current = rec;
+      } else {
+        setSpeechSupported(false);
       }
     }
   }, []);
 
   const handleMicClick = () => {
-    if (!recognitionRef.current) {
-      alert("Speech recognition is not supported in this browser. Try Google Chrome or Microsoft Edge!");
+    if (!speechSupported || !recognitionRef.current) {
+      alert("Speech recognition is not supported in this browser. Try Google Chrome or Safari!");
       return;
     }
     if (isListening) {
       recognitionRef.current.stop();
     } else {
-      recognitionRef.current.start();
+      try {
+        recognitionRef.current.start();
+      } catch (err) {
+        console.error("Speech recognition error:", err);
+      }
     }
   };
 
-  // Initialize and load chat history
+  // Initialize and load chat history & auto theme detection
   useEffect(() => {
     const savedHistory = localStorage.getItem('adtech_chat_history');
     const savedTheme = localStorage.getItem('adtech_chat_theme');
     
-    if (savedTheme === 'light') {
+    if (savedTheme) {
+      setIsLightMode(savedTheme === 'light');
+    } else if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      // Auto-sync with system preference if user hasn't explicitly set a preference
       setIsLightMode(true);
     }
 
     if (savedHistory) {
-      setMessages(JSON.parse(savedHistory));
-      setUnreadCount(0);
+      try {
+        setMessages(JSON.parse(savedHistory));
+        setUnreadCount(0);
+      } catch (e) {
+        console.error('Failed to parse chat history:', e);
+      }
     } else {
       const welcomeMessage: Message = {
         id: 'welcome',
@@ -116,10 +170,15 @@ export default function ChatWidget() {
     }
   }, []);
 
-  // Sync scroll to bottom when messages or typing changes
+  // Sync scroll to bottom when chat opens/unminimized, messages update, or typing status changes
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isTyping]);
+    if (isOpen) {
+      const timer = setTimeout(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 60);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen, messages, isTyping]);
 
   // Save history helper
   const saveHistory = (newMessages: Message[]) => {
@@ -166,7 +225,6 @@ export default function ChatWidget() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: text,
-          // Map to format required by server endpoint
           history: updatedMessages.map(m => ({
             role: m.role,
             content: m.content
@@ -409,27 +467,31 @@ export default function ChatWidget() {
   };
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${isLightMode ? 'light' : ''}`}>
+    <div 
+      aria-label="AD TECH AI Chatbot Widget"
+      className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] transition-all duration-300 ${isLightMode ? 'light' : ''}`}
+    >
       
-      {/* 1. Chat Trigger Button */}
+      {/* 1. Chat Trigger Button (Cross-Device Touch Target Optimized: Min 56x56px) */}
       {!isOpen && (
         <button
           onClick={toggleChat}
-          className="group relative flex h-20 w-20 items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer overflow-visible animate-float"
+          aria-label="Open AD TECH AI Assistant Chat"
+          className="group relative flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer overflow-visible animate-float touch-manipulation"
           title="Talk to AD TECH Assistant"
         >
           {/* Futuristic Hologram Back-Glow */}
-          <div className="absolute h-12 w-12 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-600 opacity-40 blur-md group-hover:opacity-85 transition-opacity duration-300"></div>
+          <div className="absolute h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-600 opacity-40 blur-md group-hover:opacity-85 transition-opacity duration-300"></div>
           
           {/* Glowing ring */}
-          <div className="absolute inset-1.5 rounded-full border border-sky-400/30 group-hover:border-sky-400/80 transition-colors duration-300 animate-pulse-slow"></div>
+          <div className="absolute inset-1 sm:inset-1.5 rounded-full border border-sky-400/30 group-hover:border-sky-400/80 transition-colors duration-300 animate-pulse-slow"></div>
 
-          {/* Cute Robot Image Bubble with Green Online Indicator Dot at Upper Right */}
-          <div className="relative h-15 w-15 rounded-full overflow-visible shadow-2xl border border-slate-700/50">
+          {/* Robot Image Bubble with Green Online Indicator Dot */}
+          <div className="relative h-13 w-13 sm:h-15 sm:w-15 rounded-full overflow-visible shadow-2xl border border-slate-700/50">
             <img src="/bot-avatar.png" className="h-full w-full rounded-full object-cover avatar-wave transition-transform duration-300" alt="AD TECH Bot" />
             
-            {/* Green Active/Online Status Dot on Upper Right Hand Side */}
-            <span className="absolute top-0 right-0 h-4 w-4 rounded-full bg-emerald-500 border-2 border-[#0B1120] shadow-[0_0_10px_rgba(16,185,129,0.9)] z-20 animate-pulse"></span>
+            {/* Green Active/Online Status Dot */}
+            <span className="absolute top-0 right-0 h-3.5 w-3.5 sm:h-4 sm:w-4 rounded-full bg-emerald-500 border-2 border-[#0B1120] shadow-[0_0_10px_rgba(16,185,129,0.9)] z-20 animate-pulse"></span>
           </div>
           
           {/* Unread notification badge */}
@@ -439,8 +501,8 @@ export default function ChatWidget() {
             </span>
           )}
           
-          {/* Quick intro text on hover */}
-          <div className="absolute right-20 bottom-3 hidden md:group-hover:flex flex-col items-end">
+          {/* Quick intro text on desktop hover */}
+          <div className="absolute right-20 bottom-3 hidden lg:group-hover:flex flex-col items-end">
             <div className="bg-slate-900 border border-slate-700 text-slate-200 text-xs py-2 px-3.5 rounded-2xl rounded-br-none shadow-xl whitespace-nowrap animate-bounce flex items-center gap-1.5">
               <span>Hi there! 👋 Need help?</span>
             </div>
@@ -448,29 +510,32 @@ export default function ChatWidget() {
         </button>
       )}
 
-      {/* 2. Chat Window */}
+      {/* 2. Chat Window (Cross-Device Responsive: Mobile Fullscreen, iPad Drawer, PC Modal) */}
       {isOpen && (
         <div
           ref={chatWindowRef}
-          className={`relative flex h-[600px] w-[92vw] max-w-[400px] flex-col rounded-2xl border shadow-2xl transition-all duration-300 animate-slide-in overflow-hidden
+          role="dialog"
+          aria-modal="true"
+          aria-label="AD TECH Assistant Conversation Window"
+          style={{ height: typeof window !== 'undefined' && window.innerWidth < 640 ? viewportHeight : undefined }}
+          className={`fixed inset-0 w-full h-[100dvh] rounded-none sm:static sm:inset-auto sm:h-[85vh] sm:max-h-[640px] sm:w-[92vw] sm:max-w-[420px] flex flex-col border shadow-2xl transition-all duration-300 animate-slide-in overflow-hidden z-[9999]
             ${isLightMode 
               ? 'bg-white border-slate-200 text-slate-800' 
               : 'bg-[#0B1120] border-[#2A3648] text-slate-100'
             }`}
         >
-          {/* Circular Holographic Robot Mascot with Green Online Indicator Dot floating inside the right side */}
-          <div className="absolute right-1 bottom-24 z-30 h-20 w-20 rounded-full overflow-visible border-2 border-sky-400/50 bg-[#0B1120] shadow-[0_0_20px_rgba(56,189,248,0.25)] animate-float hidden md:block">
+          {/* Circular Mascot Avatar on iPad & PC */}
+          <div className="absolute right-2 bottom-24 z-30 h-16 w-16 lg:h-20 lg:w-20 rounded-full overflow-visible border-2 border-sky-400/50 bg-[#0B1120] shadow-[0_0_20px_rgba(56,189,248,0.25)] animate-float hidden md:block">
             <img 
               src="/bot-avatar.png" 
               className="h-full w-full rounded-full object-cover avatar-wave" 
               alt="AD TECH Mascot" 
             />
-            {/* Green Active/Online Status Dot on Upper Right Hand Side */}
-            <span className="absolute top-0 right-0 h-4.5 w-4.5 rounded-full bg-emerald-500 border-2 border-[#0B1120] shadow-[0_0_12px_rgba(16,185,129,0.95)] z-40 animate-pulse"></span>
+            <span className="absolute top-0 right-0 h-4 w-4 rounded-full bg-emerald-500 border-2 border-[#0B1120] shadow-[0_0_12px_rgba(16,185,129,0.95)] z-40 animate-pulse"></span>
           </div>
 
           {/* Chat Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-slate-900 via-[#111827] to-[#1A2233] border-b border-[#2A3648] text-white">
+          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-slate-900 via-[#111827] to-[#1A2233] border-b border-[#2A3648] text-white shrink-0">
             <div className="flex items-center gap-2.5">
               <div className="relative">
                 <img src="/adtech-logo.png" className="h-7 w-7 object-contain shrink-0 select-none" alt="AD TECH Logo" />
@@ -484,38 +549,45 @@ export default function ChatWidget() {
               </div>
             </div>
             
-            <div className="flex items-center gap-1.5">
+            {/* Header Controls (Touch Targets >= 44px) */}
+            <div className="flex items-center gap-1">
               {/* Theme Toggle */}
               <button 
                 onClick={toggleTheme}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors cursor-pointer"
+                aria-label={isLightMode ? "Switch to Dark Mode" : "Switch to Light Mode"}
+                className="flex h-10 w-10 items-center justify-center rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-colors cursor-pointer touch-manipulation"
                 title={isLightMode ? "Switch to Dark Mode" : "Switch to Light Mode"}
               >
-                {isLightMode ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+                {isLightMode ? <Moon className="h-4.5 w-4.5" /> : <Sun className="h-4.5 w-4.5" />}
               </button>
 
               {/* Minimize */}
               <button 
                 onClick={toggleChat}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors cursor-pointer"
+                aria-label="Minimize Chatbot Window"
+                className="flex h-10 w-10 items-center justify-center rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-colors cursor-pointer touch-manipulation"
                 title="Minimize"
               >
-                <Minus className="h-4 w-4" />
+                <Minus className="h-5 w-5" />
               </button>
 
               {/* Close */}
               <button 
                 onClick={toggleChat}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-slate-800 transition-colors cursor-pointer"
+                aria-label="Close Chatbot Window"
+                className="flex h-10 w-10 items-center justify-center rounded-xl text-slate-400 hover:text-red-400 hover:bg-slate-800/60 transition-colors cursor-pointer touch-manipulation"
                 title="Close"
               >
-                <X className="h-4 w-4" />
+                <X className="h-5 w-5" />
               </button>
             </div>
           </div>
 
           {/* Messages Container */}
-          <div className={`flex-1 overflow-y-auto p-4 md:pr-22 space-y-4 custom-scrollbar ${isLightMode ? 'bg-slate-50/50' : 'bg-[#0f172a]/20'}`}>
+          <div 
+            aria-live="polite"
+            className={`flex-1 overflow-y-auto p-3 sm:p-4 md:pr-20 space-y-4 custom-scrollbar ${isLightMode ? 'bg-slate-50/50' : 'bg-[#0f172a]/20'}`}
+          >
             {messages.map((msg) => (
               <div 
                 key={msg.id}
@@ -523,7 +595,7 @@ export default function ChatWidget() {
               >
                 {/* Bubble */}
                 <div 
-                  className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm shadow-sm leading-relaxed whitespace-pre-wrap break-words
+                  className={`max-w-[88%] sm:max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm shadow-sm leading-relaxed whitespace-pre-wrap break-words
                     ${msg.role === 'user' 
                       ? 'bg-slate-700 text-white rounded-br-none' 
                       : isLightMode
@@ -540,40 +612,40 @@ export default function ChatWidget() {
                   {msg.isForm === 'callback' && msg.formState === 'active' && (
                     <form onSubmit={(e) => handleCallbackSubmit(e, msg.id)} className={`mt-3 space-y-3 border-t pt-3 ${isLightMode ? 'border-slate-200' : 'border-[#374151]'}`}>
                       <div>
-                        <label className="form-label text-slate-400 block mb-1">Your Name *</label>
+                        <label className="form-label text-slate-400 block mb-1 text-xs">Your Name *</label>
                         <input 
                           type="text" 
                           required
                           value={callbackForm.name}
                           onChange={(e) => setCallbackForm({ ...callbackForm, name: e.target.value })}
-                          className={`w-full form-input px-3.5 py-2 rounded-lg focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          className={`w-full form-input px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="Soham"
                         />
                       </div>
                       <div>
-                        <label className="form-label text-slate-400 block mb-1">Phone Number *</label>
+                        <label className="form-label text-slate-400 block mb-1 text-xs">Phone Number *</label>
                         <input 
                           type="tel" 
                           required
                           value={callbackForm.phone}
                           onChange={(e) => setCallbackForm({ ...callbackForm, phone: e.target.value })}
-                          className={`w-full form-input px-3.5 py-2 rounded-lg focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          className={`w-full form-input px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="+91 83193 58568"
                         />
                       </div>
                       <div>
-                        <label className="form-label text-slate-400 block mb-1">Email Address</label>
+                        <label className="form-label text-slate-400 block mb-1 text-xs">Email Address</label>
                         <input 
                           type="email" 
                           value={callbackForm.email}
                           onChange={(e) => setCallbackForm({ ...callbackForm, email: e.target.value })}
-                          className={`w-full form-input px-3.5 py-2 rounded-lg focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          className={`w-full form-input px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="example@gmail.com"
                         />
                       </div>
                       <button 
                         type="submit" 
-                        className="w-full bg-btn-primary text-btn-primary-text btn-text py-2 rounded-lg transition-transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer block text-center border border-border"
+                        className="w-full bg-sky-600 hover:bg-sky-500 text-white font-medium py-2.5 rounded-lg transition-transform active:scale-[0.98] cursor-pointer block text-center touch-manipulation text-sm shadow-md"
                       >
                         Request Callback
                       </button>
@@ -584,43 +656,43 @@ export default function ChatWidget() {
                   {msg.isForm === 'requirements' && msg.formState === 'active' && (
                     <form onSubmit={(e) => handleReqSubmit(e, msg.id)} className={`mt-3 space-y-3 border-t pt-3 ${isLightMode ? 'border-slate-200' : 'border-[#374151]'}`}>
                       <div>
-                        <label className="form-label text-slate-400 block mb-1">Your Name *</label>
+                        <label className="form-label text-slate-400 block mb-1 text-xs">Your Name *</label>
                         <input 
                           type="text" 
                           required
                           value={reqForm.name}
                           onChange={(e) => setReqForm({ ...reqForm, name: e.target.value })}
-                          className={`w-full form-input px-3.5 py-2 rounded-lg focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          className={`w-full form-input px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="Soham Amne"
                         />
                       </div>
                       <div>
-                        <label className="form-label text-slate-400 block mb-1">Company Name</label>
+                        <label className="form-label text-slate-400 block mb-1 text-xs">Company Name</label>
                         <input 
                           type="text" 
                           value={reqForm.company}
                           onChange={(e) => setReqForm({ ...reqForm, company: e.target.value })}
-                          className={`w-full form-input px-3.5 py-2 rounded-lg focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          className={`w-full form-input px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-slate-500 placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="AD TECH"
                         />
                       </div>
                       <div>
-                        <label className="form-label text-slate-400 block mb-1">Project Scope / Requirements *</label>
+                        <label className="form-label text-slate-400 block mb-1 text-xs">Project Scope / Requirements *</label>
                         <textarea 
                           required
                           value={reqForm.scope}
                           onChange={(e) => setReqForm({ ...reqForm, scope: e.target.value })}
                           rows={2}
-                          className={`w-full form-input px-3.5 py-2 rounded-lg focus:outline-none focus:border-slate-500 resize-none placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          className={`w-full form-input px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-slate-500 resize-none placeholder-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                           placeholder="Brief description of the chatbot or site needed..."
                         />
                       </div>
                       <div>
-                        <label className="form-label text-slate-400 block mb-1">Budget Preference</label>
+                        <label className="form-label text-slate-400 block mb-1 text-xs">Budget Preference</label>
                         <select 
                           value={reqForm.budget}
                           onChange={(e) => setReqForm({ ...reqForm, budget: e.target.value })}
-                          className={`w-full form-input px-3 py-2 rounded-lg focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
+                          className={`w-full form-input px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-slate-500 ${isLightMode ? 'bg-slate-100 border border-slate-300 text-slate-900' : 'bg-[#0B1120] border border-[#2A3648] text-slate-100'}`}
                         >
                           <option value="1000-5000">$1,000 - $5,000</option>
                           <option value="5000-15000">$5,000 - $15,000</option>
@@ -629,7 +701,7 @@ export default function ChatWidget() {
                       </div>
                       <button 
                         type="submit" 
-                        className="w-full bg-btn-primary text-btn-primary-text btn-text py-2 rounded-lg transition-transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer block text-center border border-border"
+                        className="w-full bg-sky-600 hover:bg-sky-500 text-white font-medium py-2.5 rounded-lg transition-transform active:scale-[0.98] cursor-pointer block text-center touch-manipulation text-sm shadow-md"
                       >
                         Submit Scope
                       </button>
@@ -644,12 +716,13 @@ export default function ChatWidget() {
 
                 {/* Quick suggestions right below the bubble */}
                 {msg.suggestions && msg.suggestions.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mt-2 max-w-[90%]">
+                  <div className="flex flex-wrap gap-1.5 mt-2 max-w-[95%]">
                     {msg.suggestions.map((sug, index) => (
                       <button
                         key={index}
                         onClick={() => handleQuickAction(sug)}
-                        className={`text-[11px] px-2.5 py-1 rounded-full border transition-all cursor-pointer active:scale-95
+                        aria-label={`Quick suggestion: ${sug}`}
+                        className={`text-[11px] px-3 py-1.5 rounded-full border transition-all cursor-pointer active:scale-95 touch-manipulation
                           ${isLightMode 
                             ? 'border-slate-200 text-slate-600 bg-slate-100 hover:bg-slate-200 hover:text-slate-900' 
                             : 'border-slate-600/40 text-slate-300 bg-slate-800/40 hover:bg-slate-800 hover:text-white hover:border-slate-500'}`}
@@ -676,14 +749,15 @@ export default function ChatWidget() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Input Bar */}
-          <div className={`px-4 py-3 border-t bg-[#0B1120] ${isLightMode ? 'bg-white border-slate-200' : 'border-[#2A3648]'}`}>
-            <div className="flex gap-2">
+          {/* Quick Input Bar (Touch Target & Keyboard Adaptive) */}
+          <div className={`px-3 py-3 border-t shrink-0 ${isLightMode ? 'bg-white border-slate-200' : 'bg-[#0B1120] border-[#2A3648]'}`}>
+            <div className="flex items-center gap-2">
               {/* Mic Button */}
               <button
                 onClick={handleMicClick}
                 disabled={isTyping}
-                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed
+                aria-label={isListening ? "Listening... Click to stop" : "Voice Input"}
+                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all active:scale-95 cursor-pointer touch-manipulation disabled:opacity-40 disabled:cursor-not-allowed
                   ${isListening 
                     ? 'bg-red-500 text-white animate-pulse' 
                     : isLightMode
@@ -691,8 +765,9 @@ export default function ChatWidget() {
                       : 'bg-[#1a2233] border border-[#2a3648] text-slate-400 hover:text-slate-200'}`}
                 title={isListening ? "Listening... Click to stop" : "Voice Input"}
               >
-                <Mic className={`h-4.5 w-4.5 ${isListening ? 'animate-bounce' : ''}`} />
+                <Mic className={`h-5 w-5 ${isListening ? 'animate-bounce' : ''}`} />
               </button>
+
               <input
                 type="text"
                 value={inputMessage}
@@ -705,15 +780,18 @@ export default function ChatWidget() {
                     ? 'bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400' 
                     : 'bg-[#1A2233] border border-[#2A3648] text-slate-100 placeholder-slate-500'}`}
               />
+
               <button
                 onClick={() => handleSendMessage()}
                 disabled={isTyping || !inputMessage.trim()}
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-700 hover:bg-slate-600 hover:text-white transition-all active:scale-95 text-slate-200 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                aria-label="Send Message"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-600 hover:bg-sky-500 active:scale-95 text-white transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer touch-manipulation shadow-md"
                 title="Send Message"
               >
-                <SendHorizontal className="h-4.5 w-4.5" />
+                <SendHorizontal className="h-5 w-5" />
               </button>
             </div>
+
             <div className="mt-2 text-[10px] text-center text-slate-500 flex items-center justify-center gap-1.5">
               <img src="/adtech-logo.png" className="h-3.5 w-3.5 object-contain shrink-0 select-none" alt="AD TECH Logo" />
               <span>Powered by AD TECH Generative Engine</span>
