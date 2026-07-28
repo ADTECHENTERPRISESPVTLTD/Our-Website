@@ -60,7 +60,9 @@ npm run install:all
 ```
 
 ### 2. Environment Configuration
-Create a `.env` file inside the `backend/` folder and populate the variables:
+
+#### Backend Config:
+Create a `.env` file inside the `backend/` folder and populate the following variables:
 ```env
 PORT=5000
 MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/adtech
@@ -68,6 +70,15 @@ CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
+
+#### Frontend Chatbot Config:
+Create a `.env.local` file inside BOTH the `frontend/main/` and `frontend/intern-portal/` directories:
+```env
+GEMINI_API_KEY=your_google_gemini_api_key
+```
+> [!NOTE]
+> If `GEMINI_API_KEY` is not provided or is invalid, the chatbot will automatically fall back to an offline mode using local vector database keyword matching.
+
 
 ### 3. Running in Development
 Start all frontends and the backend concurrently with a single command from the root folder:
