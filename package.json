@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend/main\" \"npm run dev --prefix frontend/intern-portal\"",
+    "dev": "concurrently \"npm run dev --prefix frontend/main\" \"npm run dev --prefix frontend/intern-portal\"",
+    "dev:main": "npm run dev --prefix frontend/main",
+    "dev:all": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend/main\" \"npm run dev --prefix frontend/intern-portal\"",
+    "dev:intern": "npm run dev --prefix frontend/intern-portal",
     "install:all": "npm install --legacy-peer-deps && npm install --prefix backend --legacy-peer-deps && npm install --prefix frontend/main --legacy-peer-deps && npm install --prefix frontend/intern-portal --legacy-peer-deps",
     "build:main": "npm run build --prefix frontend/main",
     "build:intern": "npm run build --prefix frontend/intern-portal",
