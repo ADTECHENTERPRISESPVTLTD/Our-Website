@@ -1,6 +1,9 @@
 "use client";
+import api from "@/lib/api";
+
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -73,20 +76,78 @@ const itemVariants = {
 };
 
 export default function DashboardPage() {
-  const [tasks] = useState<Task[]>(initialTasks);
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(null);
   const [greeting, setGreeting] = useState("");
+  const [isOnline, setIsOnline] = useState(false);
+  const [attendancePercentage, setAttendancePercentage] = useState(0);
+  const router = useRouter();
+
+  const handleLogout = () => {
+  localStorage.removeItem("token");
+  router.push("/login");
+  };
 
   useEffect(() => {
-    const hour = new Date().getHours();
-    if (hour < 12) setGreeting("Good Morning");
-    else if (hour < 18) setGreeting("Good Afternoon");
-    else setGreeting("Good Evening");
-  }, []);
+  // Check if token exists
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    router.push("/login");
+    return;
+  }
+
+  const hour = new Date().getHours();
+
+  if (hour < 12) setGreeting("Good Morning");
+  else if (hour < 18) setGreeting("Good Afternoon");
+  else setGreeting("Good Evening");
+
+  const fetchData = async () => {
+    try {
+      const userRes = await api.get("/auth/me");
+      setUser(userRes.data.data);
+
+      const internId = userRes.data.data._id || userRes.data.data.id;
+
+      const taskRes = await api.get(`/tasks?internId=${internId}`);
+      setTasks(taskRes.data.data);
+
+      const attendanceRes = await api.get(`/attendance/${internId}`);
+
+      if (attendanceRes.data.data.length > 0) {
+        const latest = attendanceRes.data.data[0];
+        setIsOnline(!latest.logoutTime);
+
+        const history = attendanceRes.data.data;
+
+        if (history.length > 0) {
+          const present = history.filter((item: any) => item.loginTime).length;
+          const percentage = Math.round((present / history.length) * 100);
+          setAttendancePercentage(percentage);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      router.push("/login");
+    }
+  };
+
+  fetchData();
+}, [router]);
 
   const totalTasks = tasks.length;
-  const pendingCount = tasks.filter((t) => t.status === "Pending").length;
-  const inProgressCount = tasks.filter((t) => t.status === "In Progress").length;
-  const completedCount = tasks.filter((t) => t.status === "Completed").length;
+  const pendingCount = tasks.filter(
+  (t) => t.currentStatus === "Pending"
+).length;
+
+const inProgressCount = tasks.filter(
+  (t) => t.currentStatus === "In Progress"
+).length;
+
+const completedCount = tasks.filter(
+  (t) => t.currentStatus === "Completed"
+).length;
 
   return (
     <main className="page-shell">
@@ -109,11 +170,11 @@ export default function DashboardPage() {
               </span>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-[#F8FAFC] flex items-center gap-3">
-              Welcome back, Yuragi
+              Welcome back, {user?.fullName || "Intern"}
               <span className="inline-flex w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
             </h1>
             <p className="text-[#94A3B8] mt-1">
-              Full Stack Developer Intern
+              {user?.role}
             </p>
           </div>
 
@@ -125,13 +186,12 @@ export default function DashboardPage() {
               <ListChecks size={16} />
               My Tasks
             </Link>
-            <Link
-              href="/login"
-              className="inline-flex items-center gap-2 text-[#94A3B8] hover:text-red-400 border border-[#2A3648] px-5 py-2.5 rounded-xl text-sm font-semibold hover:border-red-400/30 transition-all duration-300"
-            >
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center gap-2 text-[#94A3B8] hover:text-red-400 border border-[#2A3648] px-5 py-2.5 rounded-xl text-sm font-semibold hover:border-red-400/30 transition-all duration-300">
               <LogOut size={16} />
               Logout
-            </Link>
+            </button>
           </div>
         </motion.div>
 
@@ -242,10 +302,10 @@ export default function DashboardPage() {
 
             <div className="space-y-3">
               {tasks.map((task) => {
-                const colors = statusColors[task.status];
+                const colors = statusColors[task.currentStatus as TaskStatus];
                 return (
                   <motion.div
-                    key={task.id}
+                    key={task._id.slice(-6)}
                     whileHover={{ x: 4 }}
                     className="group flex items-center justify-between p-4 rounded-xl bg-[#111827] border border-[#2A3648] hover:border-cyan-400/20 transition-all duration-300 cursor-pointer"
                   >
@@ -253,9 +313,11 @@ export default function DashboardPage() {
                       <div className={`w-2.5 h-2.5 rounded-full ${colors.dot} shrink-0`} />
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="text-xs font-mono text-[#64748B]">{task.id}</span>
+                          <span className="text-xs font-mono text-cyan-400">
+                            Task #{task._id.slice(-6)}
+                          </span>
                           <h3 className="text-sm font-semibold text-[#F8FAFC] truncate">
-                            {task.title}
+                            {task.taskTitle}
                           </h3>
                         </div>
                         <p className="text-xs text-[#64748B] mt-0.5 truncate max-w-md">
@@ -268,13 +330,17 @@ export default function DashboardPage() {
                       {task.deadline && (
                         <span className="text-[10px] text-[#64748B] hidden sm:flex items-center gap-1">
                           <Calendar size={10} />
-                          {task.deadline}
+                          {new Date(task.deadline).toLocaleDateString("en-IN", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                          })}
                         </span>
                       )}
                       <span
                         className={`text-[10px] font-semibold px-2.5 py-1 rounded-full ${colors.bg} ${colors.text} border border-current/20`}
                       >
-                        {task.status}
+                        {task.currentStatus}
                       </span>
                     </div>
                   </motion.div>
@@ -308,8 +374,13 @@ export default function DashboardPage() {
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-[#F8FAFC]">Online</p>
-                  <p className="text-xs text-[#64748B]">Active now</p>
+                  <p className="text-sm font-semibold text-[#F8FAFC]">
+                  {isOnline ? "Online" : "Offline"}
+                  </p>
+
+                  <p className="text-xs text-[#64748B]">
+                  {isOnline ? "Active now" : "Not Active"}
+                  </p>
                 </div>
               </div>
             </div>
@@ -327,10 +398,12 @@ export default function DashboardPage() {
               </div>
 
               <div className="text-center p-6 rounded-xl bg-[#111827] border border-[#2A3648]">
-                <p className="text-4xl font-bold text-emerald-400">100%</p>
+                <p className="text-4xl font-bold text-emerald-400">
+                      {attendancePercentage}%
+                </p>
                 <p className="text-sm text-[#94A3B8] mt-2">Active Attendance</p>
                 <div className="mt-4 h-2 w-full rounded-full bg-[#1A2233] overflow-hidden">
-                  <div className="h-full w-full rounded-full bg-gradient-to-r from-emerald-400 to-green-500" />
+                  <div className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-green-500"style={{ width: `${attendancePercentage}%` }}/>
                 </div>
               </div>
             </div>

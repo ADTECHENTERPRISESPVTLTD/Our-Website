@@ -1,5 +1,6 @@
 "use client";
 
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -7,6 +8,7 @@ import { motion } from "framer-motion";
 import { Eye, EyeOff, LogIn, Sparkles } from "lucide-react";
 
 import logoPic from "../assets/ad.png";
+import api from "@/lib/api";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -15,14 +17,28 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    // Simulate login delay
-    setTimeout(() => {
-      router.push("/dashboard");
-    }, 800);
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsLoading(true);
+
+  try {
+    const response = await api.post("/auth/login", {
+      email,
+      password,
+    });
+
+    // Save JWT
+    localStorage.setItem("token", response.data.token);
+
+    alert("Login Successful!");
+
+    router.push("/dashboard");
+  } catch (error: any) {
+    alert(error.response?.data?.message || "Invalid email or password");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <main className="page-shell min-h-screen flex items-center justify-center relative overflow-hidden">

@@ -1,6 +1,7 @@
 "use client";
+import api from "@/lib/api";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -123,62 +124,75 @@ const taskVariants = {
 };
 
 export default function TasksPage() {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(null);
   const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
   const [activeDrawers, setActiveDrawers] = useState<Record<string, { attachment?: boolean; comment?: boolean }>>({});
-  const [statusFilter, setStatusFilter] = useState<TaskStatus | "All">("All");
+  const [statusFilter, setStatusFilter] =
+  useState<TaskStatus | "All">("All");
 
-  const handleStatusChange = (taskId: string, newStatus: TaskStatus) => {
-    setTasks((prev) =>
-      prev.map((t) => (t.id === taskId ? { ...t, status: newStatus } : t))
-    );
-  };
+useEffect(() => {
+  const fetchTasks = async () => {
+    try {
+      const userRes = await api.get("/auth/me");
 
-  const toggleDrawer = (taskId: string, drawer: "attachment" | "comment") => {
-    setActiveDrawers((prev) => ({
-      ...prev,
-      [taskId]: {
-        ...prev[taskId],
-        [drawer]: !prev[taskId]?.[drawer],
-      },
-    }));
-  };
+      setUser(userRes.data.data);
 
-  const handleAddComment = (taskId: string) => {
-    const text = commentInputs[taskId]?.trim();
-    if (!text) return;
+      const internId =
+        userRes.data.data._id || userRes.data.data.id;
 
-    const newComment: Comment = {
-      id: Date.now().toString(),
-      author: "Yuragi (You)",
-      text,
-      timestamp: "Just now",
-    };
+      const taskRes = await api.get(
+        `/tasks?internId=${internId}`
+      );
 
-    setTasks((prev) =>
-      prev.map((t) =>
-        t.id === taskId ? { ...t, comments: [...t.comments, newComment] } : t
-      )
-    );
-    setCommentInputs((prev) => ({ ...prev, [taskId]: "" }));
-  };
-
-  const handleFileUpload = (taskId: string, file: File | null) => {
-    if (!file) return;
-    if (!file.name.endsWith(".zip")) {
-      alert("Only .zip files are allowed");
-      return;
+      setTasks(taskRes.data.data);
+    } catch (err) {
+      console.error(err);
     }
+  };
+
+  fetchTasks();
+}, []);
+
+const handleStatusChange = async (
+  taskId: string,
+  status: TaskStatus
+) => {
+  try {
+    const res = await api.put(`/tasks/${taskId}`, {
+      currentStatus: status,
+    });
+
     setTasks((prev) =>
-      prev.map((t) =>
-        t.id === taskId ? { ...t, attachedFile: file.name } : t
+      prev.map((task) =>
+        task._id === taskId ? res.data.data : task
       )
     );
-  };
+  } catch (error) {
+    console.error("Failed to update task:", error);
+  }
+};
+
+const toggleDrawer = (
+  taskId: string,
+  type: "attachment" | "comment"
+) => {
+  setActiveDrawers((prev) => ({
+    ...prev,
+    [taskId]: {
+      ...prev[taskId],
+      [type]: !prev[taskId]?.[type],
+    },
+  }));
+};
 
   const filteredTasks = tasks
-    .filter((t) => statusFilter === "All" || t.status === statusFilter)
-    .sort((a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime());
+    .filter((t) => statusFilter === "All" || t.currentStatus === statusFilter)
+    .sort(
+    (a, b) =>
+    new Date(b.assignedDate).getTime() -
+    new Date(a.assignedDate).getTime()
+    );
 
   const filters: (TaskStatus | "All")[] = ["All", "Pending", "In Progress", "Completed"];
 
@@ -245,14 +259,14 @@ export default function TasksPage() {
             </div>
           ) : (
             filteredTasks.map((task) => {
-              const status = statusConfig[task.status];
+              const status = statusConfig[task.currentStatus as TaskStatus];
               const StatusIcon = status.icon;
-              const isAttachmentOpen = activeDrawers[task.id]?.attachment ?? false;
-              const isCommentOpen = activeDrawers[task.id]?.comment ?? false;
+              const isAttachmentOpen = activeDrawers[task._id]?.attachment ?? false;
+              const isCommentOpen = activeDrawers[task._id]?.comment ?? false;
 
               return (
                 <motion.div
-                  key={task.id}
+                  key={task._id}
                   variants={taskVariants}
                   layout
                   className="portal-card p-6 md:p-8 overflow-hidden"
@@ -261,11 +275,15 @@ export default function TasksPage() {
                   <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#2A3648]/60 pb-5">
                     <div className="flex items-center gap-3">
                       <span className="text-xs font-mono font-bold text-cyan-400 bg-cyan-400/10 px-3 py-1.5 rounded-lg border border-cyan-400/20">
-                        {task.id}
+                        {task._id.slice(-6)}
                       </span>
                       <span className="text-xs text-[#64748B] flex items-center gap-1">
                         <Calendar size={12} />
-                        {task.uploadedAtDisplay}
+                        {new Date(task.assignedDate).toLocaleDateString("en-IN", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                        })}
                       </span>
                     </div>
 
@@ -276,7 +294,7 @@ export default function TasksPage() {
                       </span>
 
                       <button
-                        onClick={() => toggleDrawer(task.id, "attachment")}
+                        onClick={() => toggleDrawer(task._id, "attachment")}
                         className={`text-xs font-medium px-3 py-1.5 rounded-lg border transition cursor-pointer ${
                           isAttachmentOpen || task.attachedFile
                             ? "bg-cyan-500/20 text-cyan-300 border-cyan-400/30"
@@ -288,7 +306,7 @@ export default function TasksPage() {
                       </button>
 
                       <button
-                        onClick={() => toggleDrawer(task.id, "comment")}
+                        onClick={() => toggleDrawer(task._id, "comment")}
                         className={`text-xs font-medium px-3 py-1.5 rounded-lg border transition cursor-pointer ${
                           isCommentOpen
                             ? "bg-cyan-500/20 text-cyan-300 border-cyan-400/30"
@@ -296,7 +314,7 @@ export default function TasksPage() {
                         }`}
                       >
                         <MessageSquare size={12} className="inline mr-1" />
-                        Query ({task.comments.length})
+                        Query ({(task.comments || []).length})
                       </button>
                     </div>
                   </div>
@@ -304,7 +322,7 @@ export default function TasksPage() {
                   {/* Content */}
                   <div className="flex flex-col md:flex-row justify-between items-start gap-6 pt-5">
                     <div className="flex-1 space-y-2">
-                      <h3 className="text-xl font-bold text-[#F8FAFC]">{task.title}</h3>
+                      <h3 className="text-xl font-bold text-[#F8FAFC]">{task.taskTitle}</h3>
                       <p className="text-sm md:text-base text-[#CBD5E1] leading-relaxed">
                         {task.description}
                       </p>
@@ -322,7 +340,7 @@ export default function TasksPage() {
                             <label
                               key={st}
                               className={`flex items-center gap-2 text-xs px-3 py-2 rounded-lg border cursor-pointer transition-all duration-200 ${
-                                task.status === st
+                                task.currentStatus === st
                                   ? `${sc.bg} ${sc.color} ${sc.border}`
                                   : "text-[#64748B] border-transparent hover:text-[#CBD5E1] hover:bg-[#1A2233]"
                               }`}
@@ -331,8 +349,8 @@ export default function TasksPage() {
                                 type="radio"
                                 name={`status-${task.id}`}
                                 value={st}
-                                checked={task.status === st}
-                                onChange={() => handleStatusChange(task.id, st)}
+                                checked={task.currentStatus === st}
+                                onChange={() => handleStatusChange(task._id, st)}
                                 className="accent-cyan-500 cursor-pointer"
                               />
                               {st}
@@ -350,7 +368,12 @@ export default function TasksPage() {
                       Due Date / Deadline:
                     </span>
                     <span className="text-xs font-semibold text-red-400 bg-red-500/10 border border-red-400/20 px-3 py-1.5 rounded-lg">
-                      ⌛ {task.deadline}
+                      ⌛{" "}
+                      {new Date(task.deadline).toLocaleDateString("en-IN", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                      })}
                     </span>
                   </div>
 
@@ -378,7 +401,7 @@ export default function TasksPage() {
                           <input
                             type="file"
                             accept=".zip"
-                            onChange={(e) => handleFileUpload(task.id, e.target.files?.[0] || null)}
+                            onChange={(e) => handleFileUpload(task._id, e.target.files?.[0] || null)}
                             className="block w-full text-xs text-[#CBD5E1] file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-[#1A2233] file:text-cyan-400 hover:file:bg-[#2A3648] cursor-pointer"
                           />
                         </div>
@@ -398,10 +421,10 @@ export default function TasksPage() {
                       >
                         <div className="mt-4 bg-[#111827] border border-cyan-400/20 p-4 rounded-xl space-y-4">
                           <h4 className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">
-                            Task Discussion ({task.comments.length})
+                            Task Discussion ({(task.comments || []).length})
                           </h4>
 
-                          {task.comments.length > 0 ? (
+                          {(task.comments || []).length > 0 ? (
                             <div className="space-y-2.5 max-h-40 overflow-y-auto pr-2">
                               {task.comments.map((c) => (
                                 <div
@@ -424,15 +447,18 @@ export default function TasksPage() {
                             <input
                               type="text"
                               placeholder="Ask a question or leave a comment..."
-                              value={commentInputs[task.id] || ""}
+                              value={commentInputs[task._id] || ""}
                               onChange={(e) =>
-                                setCommentInputs({ ...commentInputs, [task.id]: e.target.value })
+                                setCommentInputs({
+                                ...commentInputs,
+                                [task._id]: e.target.value,
+                                })
                               }
-                              onKeyDown={(e) => { if (e.key === "Enter") handleAddComment(task.id); }}
+                              onKeyDown={(e) => { if (e.key === "Enter") handleAddComment(task._id); }}
                               className="flex-1 bg-[#1A2233] border border-[#2A3648] text-xs text-[#F8FAFC] rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 transition-all placeholder:text-[#64748B]"
                             />
                             <button
-                              onClick={() => handleAddComment(task.id)}
+                              onClick={() => handleAddComment(task._id)}
                               className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-lg hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 cursor-pointer"
                             >
                               <Send size={14} />
