@@ -1,13 +1,18 @@
 # Dependency directories
 node_modules/
+**/node_modules/
 
 # Next.js build outputs
 .next/
+**/.next/
 out/
+**/out/
 
 # Production build outputs
 build/
+**/build/
 dist/
+**/dist/
 
 # Env files
 .env
@@ -15,38 +20,8 @@ dist/
 .env.development.local
 .env.test.local
 .env.production.local
-
-# Multer uploads directory
-backend/uploads/*
-!backend/uploads/.gitkeep
-
-# IDE and OS files
-.DS_Store
-.idea/
-.vscode/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Dependency directories
-node_modules/
-
-# Next.js build outputs
-.next/
-out/
-
-# Production build outputs
-build/
-dist/
-
-# Env files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+*.env
+*.env.*
 
 # Multer uploads directory
 backend/uploads/*
