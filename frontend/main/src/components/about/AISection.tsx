@@ -33,7 +33,7 @@ const features = [
 
 export default function AISection() {
   return (
-    <section className="relative py-32 bg-[#0B1120] overflow-hidden">
+    <section className="relative py-32 bg-transparent overflow-hidden">
 
       {/* Background Glow */}
 

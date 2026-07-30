@@ -6,7 +6,7 @@ import Card from "@/components/ui/Card";
 
 export default function ContactInfo() {
   return (
-    <section className="bg-[#0B1120] py-20">
+    <section className="bg-transparent py-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid gap-6 md:grid-cols-2">
           {contactInfo.map((item, index) => {

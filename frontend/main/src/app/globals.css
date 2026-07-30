@@ -53,7 +53,7 @@ body {
 }
 
 main.page-shell {
-  background: var(--background);
+  background: transparent;
   color: var(--foreground);
   overflow-x: hidden;
 }
@@ -313,7 +313,7 @@ p {
 /* Site-wide hero/background utilities */
 .site-hero {
   min-height: 100vh;
-  background: var(--background);
+  background: transparent;
   position: relative;
   overflow: hidden;
 }
@@ -849,4 +849,41 @@ p {
   .hero-title {
     font-size: 3rem;
   }
+}
+
+/* ---- Intern Portal Utilities ---- */
+.portal-card {
+  background: linear-gradient(135deg, rgba(26, 34, 51, 0.95), rgba(17, 24, 39, 0.9));
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(2, 6, 23, 0.3);
+  transition: all 0.3s ease;
+}
+
+.portal-card:hover {
+  border-color: rgba(6, 182, 212, 0.3);
+  box-shadow: 0 12px 40px rgba(6, 182, 212, 0.08);
+}
+
+.bg-glow-cyan {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(150px);
+  pointer-events: none;
+  background: rgba(6,182,212,0.12);
+}
+
+.bg-glow-blue {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(150px);
+  pointer-events: none;
+  background: rgba(59,130,246,0.10);
+}
+
+.float-anim {
+  animation: float 6s ease-in-out infinite;
 }

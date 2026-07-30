@@ -51,7 +51,7 @@ const servicesList = [
 
 export default function Services() {
   return (
-    <section className="bg-[#111827] py-24 px-6 overflow-hidden">
+    <section className="bg-transparent py-24 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Heading Animation */}
         <motion.div

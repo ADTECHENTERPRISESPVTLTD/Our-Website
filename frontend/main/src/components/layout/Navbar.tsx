@@ -62,7 +62,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <ul className="hidden lg:flex items-center gap-8 text-[#CBD5E1] font-medium">
+        <ul className="hidden lg:flex items-center gap-6 text-[#CBD5E1] font-medium">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
@@ -75,21 +75,17 @@ export default function Navbar() {
             </li>
           ))}
           <li>
-            <Link href="/careers" className="hover:text-white transition">
-              Careers
+            <Link
+              href="/login"
+              className="rounded-xl border border-cyan-500/40 bg-cyan-500/10 px-3.5 py-2 text-sm font-medium text-cyan-300 transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-500/20 hover:text-white"
+            >
+              Intern Portal
             </Link>
           </li>
-
-          <li>
-            <Link href="/faq" className="hover:text-white transition">
-              FAQ
-            </Link>
-          </li>
-
           <li>
             <Link
               href="/requirement"
-              className="rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:shadow-xl hover:scale-105"
+              className="rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:shadow-xl hover:scale-105"
             >
               Submit Requirement
             </Link>
@@ -137,7 +133,15 @@ export default function Navbar() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
+                className="space-y-3"
               >
+                <Link
+                  href="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="block rounded-xl border border-cyan-500/40 bg-cyan-500/10 px-5 py-3 text-center text-cyan-300 font-semibold transition-all duration-300 hover:bg-cyan-500/20 hover:text-white"
+                >
+                  Intern Portal
+                </Link>
                 <Link
                   href="/requirement"
                   onClick={() => setIsOpen(false)}

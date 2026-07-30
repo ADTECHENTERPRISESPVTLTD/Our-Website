@@ -29,7 +29,7 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <section className="section-shell bg-[#0B1120] py-20">
+      <section className="section-shell bg-transparent py-20">
         <div className="mx-auto max-w-3xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -66,7 +66,7 @@ export default function ContactForm() {
   }
 
   return (
-    <section className="section-shell bg-[#0B1120] py-20">
+    <section className="section-shell bg-transparent py-20">
       <div className="mx-auto max-w-3xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
