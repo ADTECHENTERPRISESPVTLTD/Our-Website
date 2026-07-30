@@ -1,6 +1,7 @@
 "use client";
+import React, { useState, useEffect } from "react";
+import api from "@/lib/api";
 
-import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -17,9 +18,11 @@ import {
 } from "lucide-react";
 
 export default function AttendancePage() {
-  const [status, setStatus] = useState<"Online" | "Offline">("Online");
-  const [lastLogin, setLastLogin] = useState("July 24, 2026 - 09:30 AM");
-  const [lastLogout, setLastLogout] = useState("July 23, 2026 - 06:00 PM");
+  const [status, setStatus] = useState<"Online" | "Offline">("Offline");
+  const [lastLogin, setLastLogin] = useState("");
+  const [lastLogout, setLastLogout] = useState("");
+  const [history, setHistory] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const today = new Date();
@@ -28,23 +31,76 @@ export default function AttendancePage() {
     minute: "2-digit",
   });
 
-  const handleMarkOnline = () => {
-    setIsAnimating(true);
-    setTimeout(() => {
-      setStatus("Online");
-      setLastLogin(`${today.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} - ${currentTime}`);
-      setIsAnimating(false);
-    }, 600);
+useEffect(() => {
+  const loadAttendance = async () => {
+    try {
+      const userRes = await api.get("/auth/me");
+
+      setUser(userRes.data.data);
+
+      const internId = userRes.data.data._id;
+
+      const res = await api.get(`/attendance/${internId}`);
+
+      setHistory(res.data.data);
+
+      if (res.data.data.length > 0) {
+        const latest = res.data.data[0];
+
+        if (latest.logoutTime) {
+          setStatus("Offline");
+          setLastLogout(
+            new Date(latest.logoutTime).toLocaleString("en-IN")
+          );
+        } else {
+          setStatus("Online");
+        }
+
+        setLastLogin(
+          new Date(latest.loginTime).toLocaleString("en-IN")
+        );
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const handleMarkOffline = () => {
+  loadAttendance();
+}, []);
+
+const handleMarkOnline = async () => {
+  try {
     setIsAnimating(true);
-    setTimeout(() => {
-      setStatus("Offline");
-      setLastLogout(`${today.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} - ${currentTime}`);
-      setIsAnimating(false);
-    }, 600);
-  };
+
+    await api.post("/attendance/online", {
+      internId: user._id,
+    });
+
+    setStatus("Online");
+    setLastLogin(new Date().toLocaleString("en-IN"));
+    setIsAnimating(false);
+  } catch (err) {
+    console.error(err);
+    setIsAnimating(false);
+  }
+};
+
+const handleMarkOffline = async () => {
+  try {
+    setIsAnimating(true);
+
+    await api.put("/attendance/offline", {
+      internId: user._id,
+    });
+
+    setStatus("Offline");
+    setLastLogout(new Date().toLocaleString("en-IN"));
+    setIsAnimating(false);
+  } catch (err) {
+    console.error(err);
+    setIsAnimating(false);
+  }
+};
 
   // Mock attendance data for the month
   const daysInMonth = 24;

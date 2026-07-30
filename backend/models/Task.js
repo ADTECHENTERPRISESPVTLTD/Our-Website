@@ -24,6 +24,10 @@ const taskSchema = new mongoose.Schema(
       enum: ["Low", "Medium", "High"],
       default: "Medium",
     },
+    taskCode: {
+      type: String,
+      unique: true,
+    },
     assignedIntern: {
       type: mongoose.Schema.ObjectId,
       ref: "Intern",
