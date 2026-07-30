@@ -8,19 +8,18 @@ const {
   deleteIntern,
 } = require("../controllers/internController");
 
-const { protect } = require("../middleware/authMiddleware");
-
+const { protect, admin } = require("../middleware/authMiddleware");
 const router = express.Router();
 
 router
   .route("/")
-  .get(protect, getInterns)
-  .post(createIntern);
+  .get(protect, admin, getInterns)
+  .post(protect, admin, createIntern);
 
 router
   .route("/:id")
-  .get(protect, getIntern)
-  .put(protect, updateIntern)
-  .delete(protect, deleteIntern);
+  .get(protect, admin, getIntern)
+  .put(protect, admin, updateIntern)
+  .delete(protect, admin, deleteIntern);
 
 module.exports = router;

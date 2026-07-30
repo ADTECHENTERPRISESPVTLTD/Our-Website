@@ -1,4 +1,5 @@
 const express = require("express");
+const { protect, admin } = require("../middleware/authMiddleware");
 
 const {
   subscribeNewsletter,
@@ -11,7 +12,7 @@ const router = express.Router();
 router.post("/", subscribeNewsletter);
 
 // GET /api/newsletter
-router.get("/", getSubscribers);
+router.get("/", protect, admin, getSubscribers);
 
 module.exports = router;
 

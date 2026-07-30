@@ -21,25 +21,6 @@ import {
 
 type TaskStatus = "Pending" | "In Progress" | "Completed";
 
-interface Comment {
-  id: string;
-  author: string;
-  text: string;
-  timestamp: string;
-}
-
-interface Task {
-  id: string;
-  title: string;
-  description: string;
-  uploadedAt: string;
-  uploadedAtDisplay: string;
-  deadline: string;
-  status: TaskStatus;
-  comments: Comment[];
-  attachedFile?: string | null;
-}
-
 const statusConfig: Record<TaskStatus, { label: string; color: string; bg: string; border: string; icon: any }> = {
   Pending: {
     label: "Pending",
@@ -63,52 +44,6 @@ const statusConfig: Record<TaskStatus, { label: string; color: string; bg: strin
     icon: CheckCircle2,
   },
 };
-
-const initialTasks: Task[] = [
-  {
-    id: "TASK-01",
-    title: "Database Schema & API Foundation",
-    description:
-      "Designed PostgreSQL schemas for hospital cms and configured initial Express.js route controllers for real-time synchronization.",
-    uploadedAt: "2026-07-15T10:00:00",
-    uploadedAtDisplay: "15 July, 10:00 AM IST",
-    deadline: "18 July, 6:00 PM IST",
-    status: "Completed",
-    comments: [
-      {
-        id: "c1",
-        author: "Lead Architect",
-        text: "Schemas look solid. Proceed with API route protection.",
-        timestamp: "15 July, 02:00 PM",
-      },
-    ],
-    attachedFile: "database_schema_v1.zip",
-  },
-  {
-    id: "TASK-02",
-    title: "Multilingual Chatbot Logic Integration",
-    description:
-      "Implemented bilingual fallback logic (Hindi/English) for automated client interaction and error handling.",
-    uploadedAt: "2026-07-19T14:30:00",
-    uploadedAtDisplay: "19 July, 2:30 PM IST",
-    deadline: "21 July, 8:00 PM IST",
-    status: "Completed",
-    comments: [],
-    attachedFile: null,
-  },
-  {
-    id: "TASK-03",
-    title: "Intern Portal Frontend & Authentication Flow",
-    description:
-      "Develop responsive Next.js dashboard, integrate routing state, and finalize glassmorphic dark-theme UI components.",
-    uploadedAt: "2026-07-22T09:15:00",
-    uploadedAtDisplay: "22 July, 9:15 AM IST",
-    deadline: "24 July, Friday, 7:00 PM IST",
-    status: "In Progress",
-    comments: [],
-    attachedFile: null,
-  },
-];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -137,15 +72,13 @@ useEffect(() => {
       const userRes = await api.get("/auth/me");
 
       setUser(userRes.data.data);
-
       const internId =
-        userRes.data.data._id || userRes.data.data.id;
+      userRes.data.data._id || userRes.data.data.id;
 
-      const taskRes = await api.get(
-        `/tasks?internId=${internId}`
-      );
+        const taskRes = await api.get(`/tasks?internId=${internId}`);
 
-      setTasks(taskRes.data.data);
+
+    setTasks(taskRes.data.data);
     } catch (err) {
       console.error(err);
     }
@@ -170,6 +103,63 @@ const handleStatusChange = async (
     );
   } catch (error) {
     console.error("Failed to update task:", error);
+  }
+};
+
+const handleAddComment = async (taskId: string) => {
+  const text = commentInputs[taskId]?.trim();
+
+  if (!text) return;
+
+  try {
+    const res = await api.put(`/tasks/${taskId}/comment`, {
+      author: user?.fullName || "Intern",
+      text,
+    });
+
+    setTasks((prev) =>
+      prev.map((task) =>
+        task._id === taskId ? res.data.data : task
+      )
+    );
+
+    setCommentInputs((prev) => ({
+      ...prev,
+      [taskId]: "",
+    }));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const handleFileUpload = async (
+  taskId: string,
+  file: File | null
+) => {
+  if (!file) return;
+
+  try {
+    const formData = new FormData();
+
+    formData.append("file", file);
+
+    const res = await api.put(
+      `/tasks/${taskId}/attachment`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    setTasks((prev) =>
+      prev.map((task) =>
+        task._id === taskId ? res.data.data : task
+      )
+    );
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -347,7 +337,7 @@ const toggleDrawer = (
                             >
                               <input
                                 type="radio"
-                                name={`status-${task.id}`}
+                                name={`status-${task._id}`}
                                 value={st}
                                 checked={task.currentStatus === st}
                                 onChange={() => handleStatusChange(task._id, st)}
@@ -426,18 +416,25 @@ const toggleDrawer = (
 
                           {(task.comments || []).length > 0 ? (
                             <div className="space-y-2.5 max-h-40 overflow-y-auto pr-2">
-                              {task.comments.map((c) => (
-                                <div
-                                  key={c.id}
-                                  className="bg-[#1A2233] border border-[#2A3648] p-3 rounded-lg text-xs space-y-1"
-                                >
-                                  <div className="flex justify-between items-center">
-                                    <span className="font-semibold text-[#F8FAFC]">{c.author}</span>
-                                    <span className="text-[10px] text-[#64748B]">{c.timestamp}</span>
-                                  </div>
-                                  <p className="text-[#CBD5E1]">{c.text}</p>
-                                </div>
-                              ))}
+                            {task.comments.map((c: any, index: number) => {
+  console.log("Comment", index, c);
+
+  return (
+    <div
+      key={String(c._id || index)}
+      className="bg-[#1A2233] border border-[#2A3648] p-3 rounded-lg text-xs space-y-1"
+    >
+      <div className="flex justify-between items-center">
+        <span className="font-semibold text-[#F8FAFC]">{c.author}</span>
+        <span className="text-[10px] text-[#64748B]">
+          {c.timestamp}
+        </span>
+      </div>
+
+      <p className="text-[#CBD5E1]">{c.text}</p>
+    </div>
+  );
+})}
                             </div>
                           ) : (
                             <p className="text-xs text-[#64748B] italic">No queries yet. Start a discussion!</p>

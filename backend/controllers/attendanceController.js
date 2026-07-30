@@ -98,8 +98,30 @@ const getAttendanceHistory = async (req, res) => {
   }
 };
 
+const getAllAttendance = async (req, res) => {
+  try {
+    const attendance = await Attendance.find()
+      .populate("internId", "fullName email")
+      .sort({ date: -1 });
+
+      console.log(JSON.stringify(attendance, null, 2));
+
+    res.status(200).json({
+      success: true,
+      count: attendance.length,
+      data: attendance,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   markOnline,
   markOffline,
   getAttendanceHistory,
+  getAllAttendance,
 };

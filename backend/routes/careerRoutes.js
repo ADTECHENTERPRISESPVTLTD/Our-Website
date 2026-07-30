@@ -1,4 +1,6 @@
 const express = require("express");
+const { protect, admin } = require("../middleware/authMiddleware");
+
 const upload = require("../middleware/uploadMiddleware");
 const {
     createCareer,
@@ -11,6 +13,6 @@ const router = express.Router();
 router.post("/", upload.single("resume"), createCareer);
 
 // GET /api/careers
-router.get("/", getCareers);
+router.get("/", protect, admin, getCareers);
 
 module.exports = router;

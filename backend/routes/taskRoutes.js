@@ -1,27 +1,38 @@
 const express = require("express");
+const upload = require("../middleware/uploadMiddleware");
 
 const {
   createTask,
   getTasks,
   assignTask,
   updateTask,
+  addComment,
+  uploadAttachment,
   deleteTask,
 } = require("../controllers/taskController");
 
-const { protect } = require("../middleware/authMiddleware");
+const { protect, admin } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 router
   .route("/")
   .get(protect, getTasks)
-  .post(protect, createTask);
+  .post(protect, admin, createTask);
 
 router
   .route("/:id")
-  .put(protect, updateTask)
-  .delete(protect, deleteTask);
+  .put(protect, admin, updateTask)
+  .delete(protect, admin, deleteTask);
 
-router.put("/:id/assign", protect, assignTask);
+  router.put("/:id/comment", protect, addComment);
+  router.put(
+  "/:id/attachment",
+  protect,
+  upload.single("file"),
+  uploadAttachment
+);
+
+router.put("/:id/assign", protect, admin, assignTask);
 
 module.exports = router;

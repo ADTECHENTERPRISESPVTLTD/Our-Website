@@ -1,4 +1,7 @@
 const express = require("express");
+
+const { protect, admin } = require("../middleware/authMiddleware");
+
 const {
   createRequirement,
   getRequirements,
@@ -10,6 +13,6 @@ const router = express.Router();
 router.post("/", createRequirement);
 
 // GET /api/requirements
-router.get("/", getRequirements);
+router.get("/", protect, admin, getRequirements);
 
 module.exports = router;
