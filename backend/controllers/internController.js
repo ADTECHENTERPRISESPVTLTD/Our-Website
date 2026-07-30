@@ -2,7 +2,15 @@ const Intern = require("../models/Intern");
 
 const createIntern = async (req, res) => {
   try {
+    console.log("Request Body:", req.body);
+    console.log("Password Received:", req.body.password);
+
     const intern = await Intern.create(req.body);
+
+    console.log("Saved Password:", intern.password);
+
+    // Hide password before sending response
+    intern.password = undefined;
 
     res.status(201).json({
       success: true,

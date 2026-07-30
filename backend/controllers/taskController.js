@@ -2,6 +2,10 @@ const Task = require("../models/Task");
 
 const createTask = async (req, res) => {
   try {
+    const count = await Task.countDocuments();
+
+    req.body.taskCode = `TASK-${String(count + 1).padStart(3, "0")}`;
+
     const task = await Task.create(req.body);
 
     res.status(201).json({

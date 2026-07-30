@@ -6,10 +6,12 @@ const {
   getAttendanceHistory,
 } = require("../controllers/attendanceController");
 
+const { protect } = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
-router.post("/online", markOnline);
-router.put("/offline", markOffline);
-router.get("/:internId", getAttendanceHistory);
+router.post("/online", protect, markOnline);
+router.put("/offline", protect, markOffline);
+router.get("/:internId", protect, getAttendanceHistory);
 
 module.exports = router;
