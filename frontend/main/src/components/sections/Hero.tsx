@@ -194,11 +194,9 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center bg-[#0B1120] overflow-hidden"
+      className="relative min-h-screen flex items-center bg-transparent overflow-hidden"
       aria-label="Hero section"
     >
-      {/* ─── Animated Background ─── */}
-      <HeroBackground />
 
       {/* ─── Gradient Overlays ─── */}
       <div

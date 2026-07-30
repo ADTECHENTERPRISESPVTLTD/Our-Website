@@ -10,7 +10,7 @@ const points = [
 
 export default function CompanyOverview() {
   return (
-    <section className="section-shell bg-[#0B1120] px-6 py-24">
+    <section className="section-shell bg-transparent px-6 py-24">
       <div className="mx-auto grid max-w-7xl items-start gap-10 lg:grid-cols-[1.05fr_0.95fr]">
         <motion.div
           initial={{ opacity: 0, x: -40 }}

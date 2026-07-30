@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function FinalCTA() {
   return (
-    <section className="section-shell bg-[#111827] px-6 py-24">
+    <section className="section-shell bg-transparent px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 40 }}

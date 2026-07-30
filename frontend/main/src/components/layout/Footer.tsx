@@ -9,6 +9,7 @@ const quickLinks = [
   { label: "About Us", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Careers", href: "/careers" },
+  { label: "Intern Portal", href: "/login" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];

@@ -4,7 +4,7 @@
 // API Configuration
 // ============================================
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
 
 // ============================================
 // Company Information
@@ -53,6 +53,8 @@ export const SOCIAL_LINKS = [
   { label: "GitHub", href: "#", icon: "gh" },
 ] as const;
 
+export const INTERN_PORTAL_URL = "/login";
+
 // ============================================
 // Route Paths
 // ============================================
@@ -67,6 +69,7 @@ export const ROUTES = {
   REQUIREMENT: "/requirement",
   SUBMIT_REQUIREMENT: "/submit-requirement",
   LOGIN: "/login",
+  INTERN_PORTAL: "/login",
   DASHBOARD: "/dashboard",
   ATTENDANCE: "/attendance",
   TASKS: "/tasks",

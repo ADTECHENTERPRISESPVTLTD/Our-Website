@@ -3,7 +3,7 @@ import Card from "@/components/ui/Card";
 
 export default function Process() {
   return (
-    <section className="relative overflow-hidden bg-[#0B1120] py-24">
+    <section className="relative overflow-hidden bg-transparent py-24">
       {/* Background Glow */}
       <div className="bg-glow-cyan absolute left-0 top-20 h-72 w-72" />
       <div className="bg-glow-blue absolute right-0 bottom-20 h-72 w-72" />

@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function AboutCTA() {
   return (
-    <section className="relative overflow-hidden py-32 bg-[#0B1120]">
+    <section className="relative overflow-hidden py-32 bg-transparent">
 
       {/* Background Glow */}
 

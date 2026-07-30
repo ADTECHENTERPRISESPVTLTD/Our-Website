@@ -1,6 +1,6 @@
 // Base API client using fetch with consistent error handling
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
 
 export interface ApiResponse<T = any> {
   success: boolean;

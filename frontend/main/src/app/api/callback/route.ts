@@ -3,7 +3,7 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     // Forward the request to the Express backend
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
     const response = await fetch(`${backendUrl}/api/callback`, {
       method: "POST",
       headers: {
