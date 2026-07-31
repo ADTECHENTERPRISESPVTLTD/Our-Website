@@ -1,141 +1,109 @@
 # AD TECH Enterprises Workspace
 
-Welcome to the unified workspace for **AD TECH Enterprises**. This repository is structured as a multi-app repository, organizing both frontends and the backend into clear, standardized directories, run concurrently from the root.
+Welcome to the consolidated workspace for **AD TECH Enterprises**. The repository is organized as a unified monorepo hosting a single Next.js frontend application and an Express backend API.
 
 ---
 
-## 📁 Directory Structure
+## 📁 Repository Directory Structure
 
-```
+```text
 Our-Website/
-├── backend/                         # Unified Express & Mongoose API
-│   ├── config/                      # Cloudinary & MongoDB configurations
+│
+├── backend/                         # Unified Express & Mongoose API (Port 5000)
+│   ├── config/                      # Cloudinary & MongoDB database connections
 │   ├── controllers/                 # Callback, Career, and Intern management controllers
-│   ├── middleware/                  # Multer file upload middleware
-│   ├── models/                      # Database schemas (Attendance, Callback, Career, Intern, Task, Requirement)
+│   ├── middleware/                  # Multer file upload and auth guard middlewares
+│   ├── models/                      # Mongoose models (Attendance, Callback, Career, Intern, Task)
 │   ├── routes/                      # Route bindings for API endpoints
-│   ├── uploads/                     # Temp storage directory for resume uploads
-│   ├── server.js                    # Unified Express application
+│   ├── server.js                    # Express application entrypoint
 │   └── package.json                 # Backend dependencies & dev scripts
 │
-├── frontend/                        # Frontend applications
-│   ├── main/                        # Main AD TECH Next.js website (Port 3000)
-│   │   ├── src/                     # App Router pages and styled section components
-│   │   │   ├── app/                 # about, contact, requirement, services, careers, faq
-│   │   │   └── components/          # navbar, footer, sections, ui controls
-│   │   ├── public/                  # Main site static assets
-│   │   └── package.json             # Next.js configurations
+├── frontend/                        # Consolidated Next.js App Router Project (Port 3000)
+│   ├── public/                      # Static assets (including bot-avatar and company logo)
+│   ├── src/
+│   │   ├── app/                     # App Router pages and styled section components
+│   │   │   ├── layout.tsx           # Base HTML shell and global font/theme configurations
+│   │   │   ├── globals.css          # Global stylesheet containing core design tokens
+│   │   │   │
+│   │   │   ├── (marketing)/         # Route group for corporate marketing pages (with Navbar/Footer)
+│   │   │   │   ├── page.tsx         # Corporate Homepage landing page
+│   │   │   │   ├── about/           # About Us and responsive Core Values section
+│   │   │   │   ├── careers/         # Job opportunities and validation hooks
+│   │   │   │   ├── contact/         # Contact Info cards and responsive form elements
+│   │   │   │   └── ...
+│   │   │   │
+│   │   │   └── intern/              # Route group for the functional Intern Management Portal
+│   │   │       ├── page.tsx         # Root redirect to the Portal login page
+│   │   │       ├── login/           # Intern Portal Login page
+│   │   │       ├── dashboard/       # Intern dashboard (fetches tasks & attendance from backend)
+│   │   │       ├── tasks/           # Assigned tasks list with responsive inline updates
+│   │   │       └── attendance/      # Attendance marking page
+│   │   │
+│   │   ├── components/              # Shared layouts, visual sections, and interactive UI components
+│   │   └── lib/                     # Global client side tools (Axios client, validators, state hooks)
 │   │
-│   └── intern-portal/               # Intern Management Portal Next.js app (Port 3001)
-│       ├── src/                     # Login, Dashboard, Attendance tracking pages
-│       ├── public/                  # Intern portal assets
-│       └── package.json             # Next.js configurations
+│   └── package.json                 # Unified Next.js dependencies & scripts
 │
-├── package.json                     # Root npm commands and workspace runners
-├── README.md                        # Project documentation
-└── .gitignore                       # Git ignore rules for node_modules, builds, and envs
+├── package.json                     # Workspace script aggregator
+└── .gitignore                       # Global monorepo rules for node_modules, builds, and envs
 ```
 
 ---
 
 ## 🔌 Port Mapping
 
-| Service | Technology | Port | Access URL |
+| Service | Port | Technology | URL |
 | :--- | :--- | :--- | :--- |
-| **Backend API** | Node.js / Express | `5000` | [http://localhost:5000](http://localhost:5000) |
-| **Main Website** | Next.js / Tailwind | `3000` | [http://localhost:3000](http://localhost:3000) |
-| **Intern Portal** | Next.js / Tailwind | `3001` | [http://localhost:3001](http://localhost:3001) |
+| **Backend API** | `5000` | Node.js / Express / Mongoose | [http://localhost:5000](http://localhost:5000) |
+| **Consolidated Frontend** | `3000` | Next.js / Tailwind CSS | [http://localhost:3000](http://localhost:3000) |
+
+*All endpoints and pages are consolidated into these two services. The legacy `frontend/intern-portal` (previously on port `3001`) has been successfully merged under `/intern/*` routes in the main frontend.*
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) installed (v18 or higher recommended).
-
 ### 1. Installation
-Install all dependencies across the backend and frontends using the custom workspace command:
+Install all dependencies across the workspace using the aggregated setup runner:
 ```bash
 npm run install:all
 ```
 
 ### 2. Environment Configuration
 
-#### Backend Config:
-Create a `.env` file inside the `backend/` folder and populate the following variables:
+#### Backend Config (`backend/.env`):
+Create/verify the `.env` file in the `backend/` folder:
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/adtech
+MONGODB_URI=mongodb://<username>:<password>@cluster.mongodb.net/adtech
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+JWT_SECRET=adtech_secret_key_jwt_token_signing_123
 ```
 
-#### Frontend Chatbot Config:
-Create a `.env.local` file inside BOTH the `frontend/main/` and `frontend/intern-portal/` directories:
+#### Frontend Config (`frontend/.env.local`):
+Create/verify the `.env.local` file in the `frontend/` folder:
 ```env
 GEMINI_API_KEY=your_google_gemini_api_key
 ```
-> [!NOTE]
-> If `GEMINI_API_KEY` is not provided or is invalid, the chatbot will automatically fall back to an offline mode using local vector database keyword matching.
-
 
 ### 3. Running in Development
-Start all frontends and the backend concurrently with a single command from the root folder:
+Start both servers concurrently from the workspace root:
 ```bash
-npm run dev
+npm run dev:all
 ```
 
-This will spin up:
-- Backend nodemon dev server on `http://localhost:5000`
-- Main website Next.js server on `http://localhost:3000`
-- Intern portal Next.js server on `http://localhost:3001`
+This command runs:
+- Backend Express dev server on `http://localhost:5000`
+- Combined Frontend Next.js server on `http://localhost:3000`
 
 ---
 
-## 🛠️ Build & Production commands
+## 🛠️ Monorepo Workspace Command Reference
 
-You can build the production-ready bundles for the frontend applications individually or all at once:
-
-- **Build Main Website:**
-  ```bash
-  npm run build:main
-  ```
-- **Build Intern Portal:**
-  ```bash
-  npm run build:intern
-  ```
-- **Build Both Apps:**
-  ```bash
-  npm run build:all
-  ```
-
----
-
-## ✨ UI & Animation Components
-
-The repository includes a modern, high-performance UI library using GSAP and Framer Motion located under `frontend/main/src/components/ui/`:
-
-- **`SplitText`**: Smooth, scroll-triggered text-reveal animations.
-- **`LogoLoop`**: Endlessly looping, GPU-accelerated typed carousel.
-- **`BorderGlow`**: Interactive card wrappers with colorful hover glow borders.
-- **`SpotlightCard`**: Interactive cards featuring custom cursor-following spotlights.
-- **`AnimatedHeading`**: Component combining `SplitText` and custom scroll triggers.
-
----
-
-## ⚡ Backend REST APIs
-
-The unified API server connects to MongoDB and binds the following endpoints:
-
-| Domain | Route | HTTP Method | Action |
-| :--- | :--- | :--- | :--- |
-| **Requirements** | `/api/requirements` | `POST` | Submit software requirements |
-| **Callbacks** | `/api/callback` | `POST` / `GET` | Request / retrieve callback schedules |
-| **Careers** | `/api/careers` | `POST` | Submit job/intern application (with resume upload) |
-| **Contacts** | `/api/contact` | `POST` / `GET` | Submit / retrieve contact inquiries |
-| **Newsletters** | `/api/newsletter` | `POST` / `GET` | Subscribe / retrieve newsletter emails |
-| **Attendance** | `/api/attendance` | `POST` / `PUT` / `GET` | Mark intern online, offline, or view history |
-| **Tasks** | `/api/tasks` | `POST` / `PUT` / `GET` | Create, update, or assign task lists |
-| **Dashboard** | `/api/dashboard` | `GET` | Fetch monorepo system performance summaries |
-
+Run these commands from the root directory:
+- `npm run dev`: Starts only the Next.js frontend development server.
+- `npm run dev:all`: Starts the frontend development server AND Express backend concurrently.
+- `npm run install:all`: Performs a clean installation of all dependencies for workspace root, backend, and frontend.
+- `npm run build:all`: Compiles the Next.js production build under `frontend/`.
