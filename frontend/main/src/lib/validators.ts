@@ -99,6 +99,10 @@ export function validateCareerForm(data: {
   phone: string;
   college: string;
   skills: string;
+  // Added optional fields for career form validation
+  portfolio?: string;
+  linkedin?: string;
+  resume?: File | null; // For client-side validation of file presence/size
 }): ValidationResult {
   const errors: Record<string, string> = {};
 
@@ -120,6 +124,14 @@ export function validateCareerForm(data: {
 
   if (!data.skills || !data.skills.trim()) {
     errors.skills = "Skills are required";
+  }
+
+  // Client-side specific validation for resume file
+  if (data.resume === undefined) { // Only validate if explicitly passed (e.g., from client-side hook)
+    // This means the resume field is not being validated for presence here,
+    // which is fine if the client-side hook handles it.
+  } else if (!data.resume) {
+    errors.resume = "Resume file is required";
   }
 
   return {
@@ -177,4 +189,3 @@ export function validateRequirementForm(data: {
     errors,
   };
 }
-

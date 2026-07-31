@@ -1,4 +1,5 @@
 "use client";
+import { validateContactForm } from "@/lib/validators"; // Import the centralized validator
 
 import { useState, useCallback } from "react";
 
@@ -48,34 +49,10 @@ export function useContactForm(
   const [submitted, setSubmitted] = useState(false);
   const [apiError, setApiError] = useState("");
 
-  const validate = useCallback((): boolean => {
-    const newErrors: ContactFormErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
-    } else if (formData.name.trim().length < 2) {
-      newErrors.name = "Name must be at least 2 characters";
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!emailRegex.test(formData.email.trim())) {
-      newErrors.email = "Please enter a valid email address";
-    }
-
-    if (!formData.subject.trim()) {
-      newErrors.subject = "Subject is required";
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = "Message is required";
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = "Message must be at least 10 characters";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const validate = useCallback(() => {
+    const validationResult = validateContactForm(formData);
+    setErrors(validationResult.errors);
+    return validationResult.valid;
   }, [formData]);
 
   const handleChange = useCallback(
@@ -135,4 +112,3 @@ export function useContactForm(
     resetForm,
   };
 }
-

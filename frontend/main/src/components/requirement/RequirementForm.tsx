@@ -1,4 +1,3 @@
-﻿"use client";
 
 import { motion } from "framer-motion";
 import Card from "@/components/ui/Card";
@@ -209,8 +208,8 @@ export default function RequirementForm() {
                 name="businessType"
                 value={formData.businessType}
                 onChange={handleChange}
-                className={`w-full rounded-xl border bg-[#0b1322] px-5 py-4 text-white outline-none transition focus:border-cyan-400 ${
-                  errors.businessType ? "border-red-400" : "border-white/10"
+                className={`w-full rounded-xl border bg-[#0b1322] px-5 py-4 text-white outline-none transition focus:border-cyan-400 appearance-none ${ // Added appearance-none
+                  errors.businessType ? "border-red-400" : "border-white/10" 
                 }`}
               >
                 <option value="" disabled>
@@ -284,4 +283,3 @@ export default function RequirementForm() {
     </section>
   );
 }
-

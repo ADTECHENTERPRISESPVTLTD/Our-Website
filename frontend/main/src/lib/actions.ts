@@ -5,6 +5,7 @@
 import { revalidatePath } from "next/cache";
 import {
   validateCallbackForm,
+  validateCareerForm,
   validateContactForm,
   validateRequirementForm,
 } from "./validators";
@@ -55,6 +56,58 @@ export async function submitCallbackAction(formData: FormData) {
       success: false,
       message: error.message || "Something went wrong. Please try again.",
     };
+  }
+}
+
+/**
+ * Server action to submit a career application.
+ * Handles file upload for resume.
+ */
+export async function submitCareerAction(formData: FormData) {
+  const data = {
+    name: formData.get("name") as string,
+    email: formData.get("email") as string,
+    phone: formData.get("phone") as string,
+    college: formData.get("college") as string,
+    skills: formData.get("skills") as string,
+    portfolio: (formData.get("portfolio") as string) || "",
+    linkedin: (formData.get("linkedin") as string) || "",
+  };
+
+  const resumeFile = formData.get("resume") as File;
+
+  // Server-side validation
+  // Note: For file validation (size/type), it's often done client-side for better UX,
+  // but server-side is crucial for security. Here, we'll just check for presence.
+  const validation = validateCareerForm({ ...data, resume: resumeFile });
+  if (!validation.valid) {
+    return { success: false, errors: validation.errors };
+  }
+
+  // Create a new FormData for the actual API call, as the original might contain
+  // fields not directly mapped to the backend or need specific formatting.
+  const apiFormData = new FormData();
+  for (const key in data) {
+    apiFormData.append(key, (data as any)[key]);
+  }
+  apiFormData.append("resume", resumeFile);
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/careers`, {
+      method: "POST",
+      body: apiFormData, // No 'Content-Type' header for FormData, browser sets it
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      return { success: false, message: result.message || "Failed to submit career application" };
+    }
+
+    revalidatePath("/careers");
+    return { success: true, message: "Career application submitted successfully" };
+  } catch (error: any) {
+    return { success: false, message: error.message || "Something went wrong. Please try again." };
   }
 }
 
@@ -145,4 +198,3 @@ export async function submitRequirementAction(formData: FormData) {
     };
   }
 }
-

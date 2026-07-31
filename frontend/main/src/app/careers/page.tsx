@@ -486,7 +486,7 @@ export default function CareerRoute() {
                       name="resume"
                       onChange={handleResumeChange}
                       type="file" 
-                      accept=".pdf,.doc,.docx"
+                      accept=".pdf" // Typically, only PDF is preferred for resumes
                       className={`w-full bg-[#111827] border ${
                         errors.resume ? "border-red-400" : "border-[#2A3648]"
                       } rounded-lg px-4 py-2.5 text-[#F8FAFC] text-sm focus:outline-none focus:border-[#06B6D4] transition-all file:mr-3 file:rounded-md file:border-0 file:bg-cyan-500/20 file:px-3 file:py-1 file:text-sm file:text-cyan-300`}
@@ -517,4 +517,3 @@ export default function CareerRoute() {
     </main>
   );
 }
-

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -17,22 +17,31 @@ import {
 } from "lucide-react";
 
 export default function AttendancePage() {
-  const [status, setStatus] = useState<"Online" | "Offline">("Online");
-  const [lastLogin, setLastLogin] = useState("July 24, 2026 - 09:30 AM");
-  const [lastLogout, setLastLogout] = useState("July 23, 2026 - 06:00 PM");
+  const [status, setStatus] = useState<"Online" | "Offline">("Offline");
+  const [lastLogin, setLastLogin] = useState("N/A");
+  const [lastLogout, setLastLogout] = useState("N/A");
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const today = new Date();
-  const currentTime = today.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  // Load state from localStorage on initial render
+  useEffect(() => {
+    const savedStatus = localStorage.getItem("attendance_status") as "Online" | "Offline";
+    const savedLogin = localStorage.getItem("attendance_lastLogin");
+    const savedLogout = localStorage.getItem("attendance_lastLogout");
+
+    if (savedStatus) setStatus(savedStatus);
+    if (savedLogin) setLastLogin(savedLogin);
+    if (savedLogout) setLastLogout(savedLogout);
+  }, []);
 
   const handleMarkOnline = () => {
     setIsAnimating(true);
     setTimeout(() => {
+      const now = new Date();
+      const newLoginTime = `${now.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} - ${now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}`;
       setStatus("Online");
-      setLastLogin(`${today.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} - ${currentTime}`);
+      setLastLogin(newLoginTime);
+      localStorage.setItem("attendance_status", "Online");
+      localStorage.setItem("attendance_lastLogin", newLoginTime);
       setIsAnimating(false);
     }, 600);
   };
@@ -40,13 +49,18 @@ export default function AttendancePage() {
   const handleMarkOffline = () => {
     setIsAnimating(true);
     setTimeout(() => {
+      const now = new Date();
+      const newLogoutTime = `${now.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} - ${now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}`;
       setStatus("Offline");
-      setLastLogout(`${today.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} - ${currentTime}`);
+      setLastLogout(newLogoutTime);
+      localStorage.setItem("attendance_status", "Offline");
+      localStorage.setItem("attendance_lastLogout", newLogoutTime);
       setIsAnimating(false);
     }, 600);
   };
 
-  // Mock attendance data for the month
+  // NOTE: The following attendance data is for demonstration purposes.
+  // In a real application, this would be fetched from a backend API.
   const daysInMonth = 24;
   const presentDays = 22;
   const absentDays = 0;

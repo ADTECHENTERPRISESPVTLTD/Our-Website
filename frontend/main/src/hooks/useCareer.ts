@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { careerService, CareerFormData } from "@/services/career.service";
+import { validateCareerForm } from "@/lib/validators"; // Import the centralized validator
+import { submitCareerAction } from "@/lib/actions"; // Import the server action
 
 export interface CareerFormState {
   name: string;
@@ -61,43 +62,24 @@ export function useCareer(): UseCareerReturn {
   const [submitted, setSubmitted] = useState(false);
   const [apiError, setApiError] = useState("");
 
-  const validate = useCallback((): boolean => {
-    const newErrors: CareerFormErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = "Full name is required";
+  const validate = useCallback(() => {
+    const validationResult = validateCareerForm({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      college: formData.college,
+      skills: formData.skills,
+      portfolio: formData.portfolio,
+      linkedin: formData.linkedin,
+      resume: resumeFile, // Pass resumeFile for client-side presence/size validation
+    });
+    setErrors(validationResult.errors);
+    if (resumeFile && resumeFile.size > 5 * 1024 * 1024) {
+      validationResult.valid = false;
+      setErrors((prev) => ({ ...prev, resume: "Resume file must be under 5MB" }));
     }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!emailRegex.test(formData.email.trim())) {
-      newErrors.email = "Please enter a valid email address";
-    }
-
-    const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\./0-9]*$/;
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else if (formData.phone.trim().replace(/\D/g, "").length < 10) {
-      newErrors.phone = "Phone number must have at least 10 digits";
-    }
-
-    if (!formData.college.trim()) {
-      newErrors.college = "College/University name is required";
-    }
-
-    if (!formData.skills.trim()) {
-      newErrors.skills = "Skills are required";
-    }
-
-    if (!resumeFile) {
-      newErrors.resume = "Resume file is required";
-    } else if (resumeFile.size > 5 * 1024 * 1024) {
-      newErrors.resume = "Resume file must be under 5MB";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    
+    return validationResult.valid;
   }, [formData, resumeFile]);
 
   const handleChange = useCallback(
@@ -130,25 +112,27 @@ export function useCareer(): UseCareerReturn {
       setApiError("");
 
       if (!validate()) return;
-
       setIsSubmitting(true);
 
       try {
-        const data: CareerFormData = {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          college: formData.college,
-          skills: formData.skills,
-          portfolio: formData.portfolio,
-          linkedin: formData.linkedin,
-        };
-
         if (!resumeFile) {
           throw new Error("Resume file is required");
         }
+        
+        const formPayload = new FormData();
+        formPayload.append("name", formData.name);
+        formPayload.append("email", formData.email);
+        formPayload.append("phone", formData.phone);
+        formPayload.append("college", formData.college);
+        formPayload.append("skills", formData.skills);
+        formPayload.append("portfolio", formData.portfolio);
+        formPayload.append("linkedin", formData.linkedin);
+        formPayload.append("resume", resumeFile);
 
-        await careerService.create(data, resumeFile);
+        const result = await submitCareerAction(formPayload); // Use the server action
+        if (!result.success) {
+          throw new Error(result.message || "Failed to submit career application");
+        }
         setSubmitted(true);
       } catch (error: any) {
         setApiError(
@@ -182,4 +166,3 @@ export function useCareer(): UseCareerReturn {
     resetForm,
   };
 }
-

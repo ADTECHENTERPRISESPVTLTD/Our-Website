@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import {
-  requirementService,
-  RequirementFormData,
-} from "@/services/requirement.service";
+import { submitRequirementAction } from "@/lib/actions";
+import { validateRequirementForm } from "@/lib/validators";
 
 export interface RequirementFormState {
   companyName: string;
@@ -67,45 +65,9 @@ export function useRequirement(): UseRequirementReturn {
   const [apiError, setApiError] = useState("");
 
   const validate = useCallback((): boolean => {
-    const newErrors: RequirementFormErrors = {};
-
-    if (!formData.companyName.trim()) {
-      newErrors.companyName = "Company name is required";
-    }
-
-    if (!formData.contactPerson.trim()) {
-      newErrors.contactPerson = "Contact person name is required";
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!emailRegex.test(formData.email.trim())) {
-      newErrors.email = "Please enter a valid email";
-    }
-
-    const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\./0-9]*$/;
-    if (!formData.phoneNumber.trim()) {
-      newErrors.phoneNumber = "Phone number is required";
-    } else if (
-      formData.phoneNumber.trim().replace(/\D/g, "").length < 10
-    ) {
-      newErrors.phoneNumber = "Phone number must have at least 10 digits";
-    }
-
-    if (!formData.businessType.trim()) {
-      newErrors.businessType = "Business type is required";
-    }
-
-    if (!formData.projectRequirement.trim()) {
-      newErrors.projectRequirement = "Project requirement description is required";
-    } else if (formData.projectRequirement.trim().length < 20) {
-      newErrors.projectRequirement =
-        "Please provide a detailed description (at least 20 characters)";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    const validationResult = validateRequirementForm(formData);
+    setErrors(validationResult.errors);
+    return validationResult.valid;
   }, [formData]);
 
   const handleChange = useCallback(
@@ -133,18 +95,16 @@ export function useRequirement(): UseRequirementReturn {
       setIsSubmitting(true);
 
       try {
-        const data: RequirementFormData = {
-          companyName: formData.companyName,
-          contactPerson: formData.contactPerson,
-          email: formData.email,
-          phoneNumber: formData.phoneNumber,
-          businessType: formData.businessType,
-          projectRequirement: formData.projectRequirement,
-          budget: formData.budget,
-          timeline: formData.timeline,
-        };
+        const formPayload = new FormData();
+        for (const key in formData) {
+          formPayload.append(key, (formData as any)[key]);
+        }
 
-        await requirementService.create(data);
+        const result = await submitRequirementAction(formPayload);
+        if (!result.success) {
+          if (result.errors) setErrors(result.errors);
+          throw new Error(result.message || "Failed to submit requirement");
+        }
         setSubmitted(true);
       } catch (error: any) {
         setApiError(
@@ -154,7 +114,7 @@ export function useRequirement(): UseRequirementReturn {
         setIsSubmitting(false);
       }
     },
-    [formData, validate]
+    [formData, validate],
   );
 
   const resetForm = useCallback(() => {
@@ -175,4 +135,3 @@ export function useRequirement(): UseRequirementReturn {
     resetForm,
   };
 }
-

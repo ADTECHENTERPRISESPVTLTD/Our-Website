@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { callbackService, CallbackFormData } from "@/services/callback.service";
+import { validateCallbackForm } from "@/lib/validators"; // Import the centralized validator
+import { submitCallbackAction } from "@/lib/actions"; // Import the server action
 
 export interface CallbackFormState {
   name: string;
@@ -57,46 +58,15 @@ export function useCallbackForm(): UseCallbackFormReturn {
 
   const today = new Date().toISOString().split("T")[0];
 
-  const validate = useCallback((): boolean => {
-    const newErrors: CallbackFormErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = "Full name is required";
-    } else if (formData.name.trim().length < 2) {
-      newErrors.name = "Name must be at least 2 characters";
+  const validate = useCallback(() => {
+    const validationResult = validateCallbackForm(formData);
+    // Additional client-side check for preferredDate against today
+    if (formData.preferredDate && formData.preferredDate < today) {
+      validationResult.valid = false;
+      validationResult.errors.preferredDate = "Date must be today or a future date";
     }
-
-    if (!formData.company.trim()) {
-      newErrors.company = "Company name is required";
-    }
-
-    const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\./0-9]*$/;
-    if (!formData.phoneNumber.trim()) {
-      newErrors.phoneNumber = "Phone number is required";
-    } else if (!phoneRegex.test(formData.phoneNumber.trim())) {
-      newErrors.phoneNumber = "Please enter a valid phone number";
-    } else if (formData.phoneNumber.trim().replace(/\D/g, "").length < 10) {
-      newErrors.phoneNumber = "Phone number must have at least 10 digits";
-    }
-
-    if (!formData.preferredDate) {
-      newErrors.preferredDate = "Preferred date is required";
-    } else if (formData.preferredDate < today) {
-      newErrors.preferredDate = "Date must be today or a future date";
-    }
-
-    if (!formData.preferredTime) {
-      newErrors.preferredTime = "Preferred time is required";
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = "Message is required";
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = "Message must be at least 10 characters";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    setErrors(validationResult.errors);
+    return validationResult.valid;
   }, [formData, today]);
 
   const handleChange = useCallback(
@@ -118,20 +88,20 @@ export function useCallbackForm(): UseCallbackFormReturn {
       setApiError("");
 
       if (!validate()) return;
-
       setIsSubmitting(true);
 
       try {
-        const data: CallbackFormData = {
-          name: formData.name,
-          company: formData.company,
-          phoneNumber: formData.phoneNumber,
-          preferredDate: formData.preferredDate,
-          preferredTime: formData.preferredTime,
-          message: formData.message,
-        };
+        const formPayload = new FormData();
+        for (const key in formData) {
+          formPayload.append(key, (formData as any)[key]);
+        }
 
-        await callbackService.create(data);
+        const result = await submitCallbackAction(formPayload); // Use the server action
+        if (!result.success) {
+          // If server-side validation returns errors, update client-side errors
+          if (result.errors) setErrors(result.errors);
+          throw new Error(result.message || "Failed to submit callback request");
+        }
         setSubmitted(true);
       } catch (error: any) {
         setApiError(
@@ -163,4 +133,3 @@ export function useCallbackForm(): UseCallbackFormReturn {
     today,
   };
 }
-
