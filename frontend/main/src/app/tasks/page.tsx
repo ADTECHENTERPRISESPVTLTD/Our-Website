@@ -253,7 +253,7 @@ export default function TasksPage() {
                   key={task.id}
                   variants={taskVariants}
                   layout
-                  className="portal-card p-6 md:p-8 overflow-hidden"
+                  className="portal-card p-4 sm:p-6 md:p-8 overflow-hidden"
                 >
                   {/* Top Bar */}
                   <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#2A3648]/60 pb-5">
@@ -267,7 +267,7 @@ export default function TasksPage() {
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full ${status.bg} ${status.color} ${status.border} border`}>
                         <StatusIcon size={12} className={status.color === "text-amber-400" ? "animate-spin" : ""} />
                         {status.label}
@@ -313,7 +313,7 @@ export default function TasksPage() {
                       <span className="block text-[10px] text-[#64748B] font-semibold uppercase tracking-wider mb-3">
                         Update Status
                       </span>
-                      <div className="flex md:flex-col gap-2">
+                      <div className="flex flex-wrap md:flex-col gap-2">
                         {(["Pending", "In Progress", "Completed"] as TaskStatus[]).map((st) => {
                           const sc = statusConfig[st];
                           return (
@@ -342,12 +342,12 @@ export default function TasksPage() {
                   </div>
 
                   {/* Deadline */}
-                  <div className="mt-5 bg-[#111827] border border-[#2A3648] p-4 rounded-xl flex items-center justify-between">
+                  <div className="mt-5 bg-[#111827] border border-[#2A3648] p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <span className="text-xs text-[#64748B] flex items-center gap-1">
                       <Clock size={12} />
                       Due Date / Deadline:
                     </span>
-                    <span className="text-xs font-semibold text-red-400 bg-red-500/10 border border-red-400/20 px-3 py-1.5 rounded-lg">
+                    <span className="text-xs font-semibold text-red-400 bg-red-500/10 border border-red-400/20 px-3 py-1.5 rounded-lg w-fit">
                       ⌛ {task.deadline}
                     </span>
                   </div>
