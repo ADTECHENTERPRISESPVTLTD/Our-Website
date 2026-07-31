@@ -60,7 +60,9 @@ npm run install:all
 ```
 
 ### 2. Environment Configuration
-Create a `.env` file inside the `backend/` folder and populate the variables:
+
+#### Backend Config:
+Create a `.env` file inside the `backend/` folder and populate the following variables:
 ```env
 PORT=5000
 MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/adtech
@@ -68,6 +70,15 @@ CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
+
+#### Frontend Chatbot Config:
+Create a `.env.local` file inside BOTH the `frontend/main/` and `frontend/intern-portal/` directories:
+```env
+GEMINI_API_KEY=your_google_gemini_api_key
+```
+> [!NOTE]
+> If `GEMINI_API_KEY` is not provided or is invalid, the chatbot will automatically fall back to an offline mode using local vector database keyword matching.
+
 
 ### 3. Running in Development
 Start all frontends and the backend concurrently with a single command from the root folder:
@@ -98,3 +109,33 @@ You can build the production-ready bundles for the frontend applications individ
   ```bash
   npm run build:all
   ```
+
+---
+
+## ✨ UI & Animation Components
+
+The repository includes a modern, high-performance UI library using GSAP and Framer Motion located under `frontend/main/src/components/ui/`:
+
+- **`SplitText`**: Smooth, scroll-triggered text-reveal animations.
+- **`LogoLoop`**: Endlessly looping, GPU-accelerated typed carousel.
+- **`BorderGlow`**: Interactive card wrappers with colorful hover glow borders.
+- **`SpotlightCard`**: Interactive cards featuring custom cursor-following spotlights.
+- **`AnimatedHeading`**: Component combining `SplitText` and custom scroll triggers.
+
+---
+
+## ⚡ Backend REST APIs
+
+The unified API server connects to MongoDB and binds the following endpoints:
+
+| Domain | Route | HTTP Method | Action |
+| :--- | :--- | :--- | :--- |
+| **Requirements** | `/api/requirements` | `POST` | Submit software requirements |
+| **Callbacks** | `/api/callback` | `POST` / `GET` | Request / retrieve callback schedules |
+| **Careers** | `/api/careers` | `POST` | Submit job/intern application (with resume upload) |
+| **Contacts** | `/api/contact` | `POST` / `GET` | Submit / retrieve contact inquiries |
+| **Newsletters** | `/api/newsletter` | `POST` / `GET` | Subscribe / retrieve newsletter emails |
+| **Attendance** | `/api/attendance` | `POST` / `PUT` / `GET` | Mark intern online, offline, or view history |
+| **Tasks** | `/api/tasks` | `POST` / `PUT` / `GET` | Create, update, or assign task lists |
+| **Dashboard** | `/api/dashboard` | `GET` | Fetch monorepo system performance summaries |
+

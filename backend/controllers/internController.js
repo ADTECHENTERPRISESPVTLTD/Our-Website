@@ -2,7 +2,15 @@ const Intern = require("../models/Intern");
 
 const createIntern = async (req, res) => {
   try {
+    console.log("Request Body:", req.body);
+    console.log("Password Received:", req.body.password);
+
     const intern = await Intern.create(req.body);
+
+    console.log("Saved Password:", intern.password);
+
+    // Hide password before sending response
+    intern.password = undefined;
 
     res.status(201).json({
       success: true,
@@ -58,10 +66,7 @@ const getIntern = async (req, res) => {
 
 const updateIntern = async (req, res) => {
   try {
-    const intern = await Intern.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const intern = await Intern.findById(req.params.id);
 
     if (!intern) {
       return res.status(404).json({
@@ -69,6 +74,14 @@ const updateIntern = async (req, res) => {
         error: "Intern not found",
       });
     }
+
+    Object.keys(req.body).forEach((key) => {
+      intern[key] = req.body[key];
+    });
+
+    await intern.save();
+
+    intern.password = undefined;
 
     res.status(200).json({
       success: true,
@@ -84,7 +97,7 @@ const updateIntern = async (req, res) => {
 
 const deleteIntern = async (req, res) => {
   try {
-    const intern = await Intern.findByIdAndDelete(req.params.id);
+    const intern = await Intern.findById(req.params.id);
 
     if (!intern) {
       return res.status(404).json({
@@ -93,9 +106,11 @@ const deleteIntern = async (req, res) => {
       });
     }
 
+    await intern.deleteOne();
+
     res.status(200).json({
       success: true,
-      data: {},
+      message: "Intern deleted successfully",
     });
   } catch (error) {
     res.status(500).json({

@@ -1,4 +1,7 @@
 const express = require("express");
+
+const { protect, admin } = require("../middleware/authMiddleware");
+
 const {
     createCallback,
     getCallbacks,
@@ -10,6 +13,6 @@ const router = express.Router();
 router.post("/", createCallback);
 
 // GET /api/callback
-router.get("/", getCallbacks);
+router.get("/", protect, admin, getCallbacks);
 
 module.exports = router;

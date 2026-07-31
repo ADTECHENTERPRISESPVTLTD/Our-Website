@@ -1,106 +1,54 @@
 "use client";
 
-import LogoLoop from "@/components/ui/LogoLoop";
+import {
+  GraduationCap,
+  School,
+  HeartPulse,
+  Factory,
+  ShoppingBag,
+  Rocket,
+  Building2,
+  CreditCard,
+} from "lucide-react";
 
-const logos = [
-  {
-    node: (
-      <div className="rounded-full border border-[#2A3648] bg-[#1A2233] px-8 py-4 text-white">
-        🎓 Schools
-      </div>
-    ),
-    title: "Schools",
-    href: "#",
-  },
-  {
-    node: (
-      <div className="rounded-full border border-[#2A3648] bg-[#1A2233] px-8 py-4 text-white">
-        🏫 Colleges
-      </div>
-    ),
-    title: "Colleges",
-    href: "#",
-  },
-  {
-    node: (
-      <div className="rounded-full border border-[#2A3648] bg-[#1A2233] px-8 py-4 text-white">
-        🏥 Healthcare
-      </div>
-    ),
-    title: "Healthcare",
-    href: "#",
-  },
-  {
-    node: (
-      <div className="rounded-full border border-[#2A3648] bg-[#1A2233] px-8 py-4 text-white">
-        🏭 Manufacturing
-      </div>
-    ),
-    title: "Manufacturing",
-    href: "#",
-  },
-  {
-    node: (
-      <div className="rounded-full border border-[#2A3648] bg-[#1A2233] px-8 py-4 text-white">
-        🛍 Retail
-      </div>
-    ),
-    title: "Retail",
-    href: "#",
-  },
-  {
-    node: (
-      <div className="rounded-full border border-[#2A3648] bg-[#1A2233] px-8 py-4 text-white">
-        🚀 Startups
-      </div>
-    ),
-    title: "Startups",
-    href: "#",
-  },
-  {
-    node: (
-      <div className="rounded-full border border-[#2A3648] bg-[#1A2233] px-8 py-4 text-white">
-        🏢 MSMEs
-      </div>
-    ),
-    title: "MSMEs",
-    href: "#",
-  },
-  {
-    node: (
-      <div className="rounded-full border border-[#2A3648] bg-[#1A2233] px-8 py-4 text-white">
-        💳 Financial Services
-      </div>
-    ),
-    title: "Financial Services",
-    href: "#",
-  },
+const industries = [
+  { name: "Schools", icon: GraduationCap },
+  { name: "Colleges", icon: School },
+  { name: "Healthcare", icon: HeartPulse },
+  { name: "Manufacturing", icon: Factory },
+  { name: "Retail", icon: ShoppingBag },
+  { name: "Startups", icon: Rocket },
+  { name: "MSMEs", icon: Building2 },
+  { name: "Financial Services", icon: CreditCard },
 ];
 
 export default function Industries() {
   return (
-    <section className="bg-[#0B1120] py-20">
-      <div className="mx-auto max-w-7xl px-6">
-        <p className="text-center uppercase tracking-[4px] text-[#94A3B8]">
-          Industries We Serve
-        </p>
+    <section className="section-shell bg-transparent px-6 py-24">
+      <div className="mx-auto max-w-7xl">
+        <div className="text-center">
+          <p className="section-eyebrow">Industries We Serve</p>
+          <h2 className="mt-4 text-4xl font-bold text-[#F8FAFC] sm:text-5xl">
+            Empowering Businesses Across Industries
+          </h2>
+          <p className="mx-auto mt-5 max-w-3xl text-lg text-[#94A3B8]">
+            Our solutions are tailored to help organizations across sectors modernize with clarity and confidence.
+          </p>
+        </div>
 
-        <h2 className="mt-4 mb-12 text-center text-4xl font-bold text-white">
-          Empowering Businesses Across Industries
-        </h2>
-
-        <LogoLoop
-          logos={logos}
-          speed={90}
-          direction="left"
-          pauseOnHover
-          fadeOut
-          fadeOutColor="#0B1120"
-          gap={30}
-          logoHeight={24}
-          scaleOnHover
-        />
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {industries.map((industry) => {
+            const Icon = industry.icon;
+            return (
+              <div key={industry.name} className="section-card rounded-full px-6 py-4 text-center text-lg font-semibold text-[#F8FAFC] flex items-center justify-center gap-3">
+                <Icon size={22} className="text-cyan-400 shrink-0" />
+                <span>{industry.name}</span>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 }
+

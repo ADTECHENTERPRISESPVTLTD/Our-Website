@@ -49,12 +49,12 @@ const process = [
 
 export default function ProcessSection() {
   return (
-    <section className="relative py-32 bg-[#0B1120] overflow-hidden">
+    <section className="relative py-32 bg-transparent overflow-hidden">
 
       {/* Background Glow */}
 
-      <div className="absolute left-10 top-20 h-96 w-96 rounded-full bg-blue-600/10 blur-[180px]" />
-      <div className="absolute right-10 bottom-20 h-96 w-96 rounded-full bg-cyan-500/10 blur-[180px]" />
+      <div className="bg-glow-blue absolute left-10 top-20 h-96 w-96" />
+      <div className="bg-glow-cyan absolute right-10 bottom-20 h-96 w-96" />
 
       <div className="relative max-w-7xl mx-auto px-6">
 
@@ -64,7 +64,7 @@ export default function ProcessSection() {
             OUR PROCESS
           </p>
 
-          <h2 className="text-5xl md:text-6xl font-bold text-white mt-6">
+          <h2 className="mt-6 text-4xl font-bold text-white md:text-5xl">
             From Idea to Innovation
           </h2>
 

@@ -7,14 +7,15 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/database");
 
 // Intern Portal Routes
-const contactRoutes = require("./routes/contactRoutes");
+const contactRoutes = require("./routes/contact.routes");
 const internshipRoutes = require("./routes/internshipRoutes");
-const newsletterRoutes = require("./routes/newsletterRoutes");
+const newsletterRoutes = require("./routes/newsletter.routes");
 const internRoutes = require("./routes/internRoutes");
 const attendanceRoutes = require("./routes/attendanceRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const workStatusRoutes = require("./routes/workStatusRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 // Main Website Routes
 const requirementRoutes = require("./routes/requirementRoutes");
@@ -29,9 +30,10 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(helmet());
+app.use(helmet()); 
 app.use(morgan("dev"));
 app.use(express.json());
+app.use("/api/auth", authRoutes);
 
 // Main Website Route Bindings
 app.use("/api/requirements", requirementRoutes);

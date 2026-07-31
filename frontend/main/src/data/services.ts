@@ -1,6 +1,14 @@
 // src/data/services.ts
 
 import { Service, ProcessStep } from "@/types";
+import {
+  Monitor,
+  Smartphone,
+  Palette,
+  Bot,
+  Cloud,
+  Wrench,
+} from "lucide-react";
 
 export const services: Service[] = [
   {
@@ -8,42 +16,42 @@ export const services: Service[] = [
     title: "Web Development",
     description:
       "Modern, responsive and scalable websites built with the latest technologies.",
-    icon: "💻" as any,
+    icon: Monitor,
   },
   {
     id: 2,
     title: "Mobile App Development",
     description:
       "High-performance Android and iOS applications tailored to your business.",
-    icon: "📱" as any,
+    icon: Smartphone,
   },
   {
     id: 3,
     title: "UI / UX Design",
     description:
       "Beautiful, intuitive interfaces focused on user experience and conversion.",
-    icon: "🎨" as any,
+    icon: Palette,
   },
   {
     id: 4,
     title: "AI Solutions",
     description:
       "AI chatbots, automation and intelligent solutions for modern businesses.",
-    icon: "🤖" as any,
+    icon: Bot,
   },
   {
     id: 5,
     title: "Cloud Solutions",
     description:
       "Secure cloud infrastructure, deployment and scalable hosting services.",
-    icon: "☁️" as any,
+    icon: Cloud,
   },
   {
     id: 6,
     title: "Maintenance & Support",
     description:
       "Continuous monitoring, updates and technical support for your applications.",
-    icon: "🛠️" as any,
+    icon: Wrench,
   },
 ];
 

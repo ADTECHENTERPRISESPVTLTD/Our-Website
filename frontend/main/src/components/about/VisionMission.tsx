@@ -1,17 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Eye, Target } from "lucide-react";
+import { Eye, Target, Check } from "lucide-react";
 
 export default function VisionMission() {
   return (
-    <section className="relative bg-[#0B1120] py-24 overflow-hidden">
+    <section className="relative bg-transparent py-24 overflow-hidden">
 
       <div className="absolute inset-0">
 
-        <div className="absolute left-20 top-10 h-72 w-72 rounded-full bg-blue-600/10 blur-[120px]" />
+        <div className="bg-glow-blue absolute left-20 top-10 h-72 w-72" />
 
-        <div className="absolute right-10 bottom-10 h-96 w-96 rounded-full bg-cyan-500/10 blur-[140px]" />
+        <div className="bg-glow-cyan absolute right-10 bottom-10 h-96 w-96" />
 
       </div>
 
@@ -23,7 +23,7 @@ export default function VisionMission() {
             OUR PURPOSE
           </p>
 
-          <h2 className="text-5xl md:text-6xl font-bold mt-6 text-white">
+          <h2 className="mt-6 text-4xl font-bold text-white md:text-5xl">
             Vision & Mission
           </h2>
 
@@ -166,15 +166,15 @@ export default function VisionMission() {
             leading-7
             ">
 
-              <li>✓ Build high-quality software solutions.</li>
+              <li><Check size={16} className="inline text-[#38BDF8] mr-2" /> Build high-quality software solutions.</li>
 
-              <li>✓ Help organizations adopt AI responsibly.</li>
+              <li><Check size={16} className="inline text-[#38BDF8] mr-2" /> Help organizations adopt AI responsibly.</li>
 
-              <li>✓ Reduce operational inefficiencies.</li>
+              <li><Check size={16} className="inline text-[#38BDF8] mr-2" /> Reduce operational inefficiencies.</li>
 
-              <li>✓ Deliver scalable digital products.</li>
+              <li><Check size={16} className="inline text-[#38BDF8] mr-2" /> Deliver scalable digital products.</li>
 
-              <li>✓ Enable innovation through technology.</li>
+              <li><Check size={16} className="inline text-[#38BDF8] mr-2" /> Enable innovation through technology.</li>
 
             </ul>
 
