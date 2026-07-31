@@ -45,7 +45,7 @@ export default function LoginPage() {
           >
             <div className="relative w-64 h-24 flex items-center justify-center">
               <Image
-                src="/AD tech logo.png"
+                src="/Ad tech logo.png"
                 alt="AdTech Logo"
                 fill
                 className="object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.3)]"

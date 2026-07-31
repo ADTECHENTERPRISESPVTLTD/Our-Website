@@ -76,7 +76,7 @@ export default function Footer() {
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-3">
               <img
-                src="/AD tech logo.png"
+                src="/Ad tech logo.png"
                 alt="AD Tech Logo"
                 className="h-12 w-12 object-contain"
               />

@@ -48,7 +48,7 @@ export default function Navbar() {
             className="relative"
           >
             <img
-              src="/AD tech logo.png"
+              src="/Ad tech logo.png"
               alt="AD Tech Logo"
               className="h-14 w-14 object-contain transition-transform duration-300 group-hover:scale-105"
             />
