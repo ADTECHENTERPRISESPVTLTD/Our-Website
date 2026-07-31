@@ -1,4 +1,5 @@
 const express = require("express");
+const { protect, admin } = require("../middleware/authMiddleware");
 
 const {
   createContact,
@@ -11,6 +12,6 @@ const router = express.Router();
 router.post("/", createContact);
 
 // GET /api/contact
-router.get("/", getContacts);
+router.get("/", protect, admin, getContacts);
 
 module.exports = router;

@@ -38,6 +38,27 @@ const taskSchema = new mongoose.Schema(
       enum: ["Pending", "In Progress", "Completed"],
       default: "Pending",
     },
+    comments: [
+  {
+    author: {
+      type: String,
+      required: true,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
+    timestamp: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+],
+
+  attachedFile: {
+  type: String,
+  default: null,
+},
   },
   {
     timestamps: true,

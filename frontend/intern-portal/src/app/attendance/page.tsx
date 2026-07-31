@@ -77,6 +77,9 @@ const handleMarkOnline = async () => {
     });
 
     setStatus("Online");
+    const internId = user._id;
+    const res = await api.get(`/attendance/${internId}`);
+    setHistory(res.data.data);
     setLastLogin(new Date().toLocaleString("en-IN"));
     setIsAnimating(false);
   } catch (err) {
@@ -94,6 +97,9 @@ const handleMarkOffline = async () => {
     });
 
     setStatus("Offline");
+    const internId = user._id;
+    const res = await api.get(`/attendance/${internId}`);
+    setHistory(res.data.data);
     setLastLogout(new Date().toLocaleString("en-IN"));
     setIsAnimating(false);
   } catch (err) {
@@ -103,11 +109,22 @@ const handleMarkOffline = async () => {
 };
 
   // Mock attendance data for the month
-  const daysInMonth = 24;
-  const presentDays = 22;
-  const absentDays = 0;
-  const leaveDays = 2;
-  const attendancePercent = Math.round((presentDays / daysInMonth) * 100);
+ // Attendance statistics
+
+const daysInMonth = new Date(
+  today.getFullYear(),
+  today.getMonth() + 1,
+  0
+).getDate();
+
+const presentDays = history.length;
+
+const absentDays = Math.max(daysInMonth - presentDays, 0);
+
+// Leave feature is not implemented in backend yet
+const leaveDays = 0;
+
+const attendancePercent = daysInMonth > 0 ? Math.round((presentDays / daysInMonth) * 100) : 0;
 
   const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 

@@ -32,30 +32,6 @@ interface Task {
   deadline?: string;
 }
 
-const initialTasks: Task[] = [
-  {
-    id: "TASK-01",
-    title: "Database Schema & API Foundation",
-    description: "Designed PostgreSQL schemas for hospital cms...",
-    status: "Completed",
-    deadline: "18 Jul",
-  },
-  {
-    id: "TASK-02",
-    title: "Multilingual Chatbot Logic Integration",
-    description: "Implemented bilingual fallback logic...",
-    status: "Completed",
-    deadline: "21 Jul",
-  },
-  {
-    id: "TASK-03",
-    title: "Intern Portal Frontend & Authentication Flow",
-    description: "Develop responsive Next.js dashboard...",
-    status: "In Progress",
-    deadline: "24 Jul",
-  },
-];
-
 const statusColors: Record<TaskStatus, { bg: string; text: string; dot: string }> = {
   Pending: { bg: "bg-red-500/10", text: "text-red-400", dot: "bg-red-400" },
   "In Progress": { bg: "bg-amber-500/10", text: "text-amber-400", dot: "bg-amber-400" },
@@ -121,11 +97,22 @@ export default function DashboardPage() {
 
         const history = attendanceRes.data.data;
 
-        if (history.length > 0) {
-          const present = history.filter((item: any) => item.loginTime).length;
-          const percentage = Math.round((present / history.length) * 100);
-          setAttendancePercentage(percentage);
-        }
+        const today = new Date();
+
+        const daysInMonth = new Date(
+        today.getFullYear(),
+        today.getMonth() + 1, 0).getDate();
+
+        const presentDays = new Set(
+        history.map((item: any) => new Date(item.date).toDateString())
+        ).size;
+
+const percentage =
+  daysInMonth > 0
+    ? Math.round((presentDays / daysInMonth) * 100)
+    : 0;
+
+setAttendancePercentage(percentage);
       }
     } catch (err) {
       console.error(err);
