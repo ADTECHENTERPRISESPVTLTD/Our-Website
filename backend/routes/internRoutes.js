@@ -6,6 +6,7 @@ const {
   getIntern,
   updateIntern,
   deleteIntern,
+  updatePresence,
 } = require("../controllers/internController");
 
 const { protect, admin } = require("../middleware/authMiddleware");
@@ -15,6 +16,8 @@ router
   .route("/")
   .get(protect, admin, getInterns)
   .post(protect, admin, createIntern);
+
+router.put("/presence/heartbeat", protect, updatePresence);
 
 router
   .route("/:id")

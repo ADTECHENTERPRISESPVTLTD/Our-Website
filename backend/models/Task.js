@@ -38,6 +38,10 @@ const taskSchema = new mongoose.Schema(
       enum: ["Pending", "In Progress", "Completed"],
       default: "Pending",
     },
+    category: {
+      type: String,
+      default: "General",
+    },
     comments: [
   {
     author: {

@@ -16,6 +16,7 @@ const taskRoutes = require("./routes/taskRoutes");
 const workStatusRoutes = require("./routes/workStatusRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const authRoutes = require("./routes/authRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 
 // Main Website Routes
 const requirementRoutes = require("./routes/requirementRoutes");
@@ -49,6 +50,7 @@ app.use("/api/attendance", attendanceRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/work-status", workStatusRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/messages", messageRoutes);
 
 // Root / Health API
 app.get("/", (req, res) => {

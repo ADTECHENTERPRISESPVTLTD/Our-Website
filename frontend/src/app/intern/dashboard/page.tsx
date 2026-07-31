@@ -3,9 +3,9 @@ import api from "@/lib/api";
 
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
   CheckCircle2,
@@ -57,7 +57,10 @@ export default function DashboardPage() {
   const [greeting, setGreeting] = useState("");
   const [isOnline, setIsOnline] = useState(false);
   const [attendancePercentage, setAttendancePercentage] = useState(0);
+  const [messages, setMessages] = useState<any[]>([]);
+  const [isMsgOpen, setIsMsgOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLogout = () => {
   localStorage.removeItem("token");
@@ -123,6 +126,42 @@ setAttendancePercentage(percentage);
   fetchData();
 }, [router]);
 
+  // Presence heartbeat & message fetch
+  useEffect(() => {
+    if (!user) return;
+
+    const sendHeartbeat = async () => {
+      try {
+        await api.put("/interns/presence/heartbeat", {
+          presenceStatus: "Online",
+          currentPage: "Dashboard",
+        });
+      } catch (err) {
+        console.error("Failed to send presence heartbeat:", err);
+      }
+    };
+
+    const fetchMessages = async () => {
+      try {
+        const res = await api.get("/messages");
+        setMessages(res.data.data || []);
+      } catch (err) {
+        console.error("Failed to fetch messages:", err);
+      }
+    };
+
+    sendHeartbeat();
+    fetchMessages();
+
+    const heartbeatInterval = setInterval(sendHeartbeat, 20000);
+    const messagesInterval = setInterval(fetchMessages, 20000);
+
+    return () => {
+      clearInterval(heartbeatInterval);
+      clearInterval(messagesInterval);
+    };
+  }, [user]);
+
   const totalTasks = tasks.length;
   const pendingCount = tasks.filter(
   (t) => t.currentStatus === "Pending"
@@ -173,9 +212,77 @@ const completedCount = tasks.filter(
               <ListChecks size={16} />
               My Tasks
             </Link>
+
+            {/* Admin Announcements Notification Bell */}
+            <div className="relative">
+              <button
+                onClick={() => setIsMsgOpen(!isMsgOpen)}
+                className="inline-flex items-center gap-2 text-[#94A3B8] hover:text-cyan-400 border border-[#2A3648] p-2.5 rounded-xl transition-all duration-300 relative cursor-pointer"
+                title="Admin Messages"
+              >
+                <Bell size={18} />
+                {messages.filter(m => m.status === "Unread").length > 0 && (
+                  <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                )}
+              </button>
+
+              <AnimatePresence>
+                {isMsgOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    className="absolute right-0 mt-3 w-80 bg-[#0e1628]/95 border border-[#1e293b] rounded-2xl p-4 shadow-2xl backdrop-blur-lg z-50 text-left"
+                  >
+                    <div className="flex items-center justify-between pb-3 border-b border-[#1e293b] mb-3">
+                      <span className="font-bold text-sm text-[#F8FAFC]">Admin Announcements</span>
+                      <span className="text-[10px] bg-cyan-500/10 text-cyan-400 px-2 py-0.5 rounded-full font-semibold font-mono">
+                        {messages.filter(m => m.status === "Unread").length} Unread
+                      </span>
+                    </div>
+
+                    <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
+                      {messages.map((item) => (
+                        <div
+                          key={item._id}
+                          onClick={async () => {
+                            if (item.status === "Unread") {
+                              try {
+                                await api.put(`/messages/${item._id}/read`);
+                                setMessages(prev => prev.map(m => m._id === item._id ? { ...m, status: "Read" } : m));
+                              } catch (err) {
+                                console.error(err);
+                              }
+                            }
+                          }}
+                          className={`p-3 rounded-xl border transition-all duration-300 cursor-pointer ${
+                            item.status === "Unread"
+                              ? "bg-cyan-500/5 border-cyan-500/20 hover:bg-cyan-500/10"
+                              : "bg-[#111827]/80 border-[#1e293b]/70 opacity-75"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-xs font-bold text-slate-200">{item.subject}</span>
+                            <span className="text-[9px] text-slate-500">{new Date(item.createdAt).toLocaleDateString()}</span>
+                          </div>
+                          <p className="text-[10px] text-slate-400 mt-1 leading-relaxed">{item.message}</p>
+                          {item.status === "Unread" && (
+                            <p className="text-[9px] text-cyan-400 mt-2 font-semibold">Click to mark as read</p>
+                          )}
+                        </div>
+                      ))}
+                      {messages.length === 0 && (
+                        <p className="text-xs text-[#64748B] text-center py-4">No announcements received</p>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             <button
               onClick={handleLogout}
-              className="inline-flex items-center gap-2 text-[#94A3B8] hover:text-red-400 border border-[#2A3648] px-5 py-2.5 rounded-xl text-sm font-semibold hover:border-red-400/30 transition-all duration-300">
+              className="inline-flex items-center gap-2 text-[#94A3B8] hover:text-red-400 border border-[#2A3648] px-5 py-2.5 rounded-xl text-sm font-semibold hover:border-red-400/30 transition-all duration-300 cursor-pointer">
               <LogOut size={16} />
               Logout
             </button>

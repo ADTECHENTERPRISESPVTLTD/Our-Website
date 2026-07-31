@@ -52,6 +52,22 @@ const internSchema = new mongoose.Schema(
       enum: ["Active", "Inactive"],
       default: "Active",
     },
+    presenceStatus: {
+      type: String,
+      enum: ["Online", "Idle", "Offline"],
+      default: "Offline",
+    },
+    lastActive: {
+      type: Date,
+      default: Date.now,
+    },
+    currentPage: {
+      type: String,
+      default: "",
+    },
+    lastLogin: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

@@ -28,10 +28,24 @@ const getInterns = async (req, res) => {
   try {
     const interns = await Intern.find();
 
+    // Dynamically mark interns as Offline if no heartbeat in the last 1 minute
+    const updatedInterns = await Promise.all(
+      interns.map(async (intern) => {
+        const offlineThreshold = 60 * 1000; // 1 minute
+        const timeDiff = Date.now() - new Date(intern.lastActive).getTime();
+
+        if (intern.presenceStatus !== "Offline" && timeDiff > offlineThreshold) {
+          intern.presenceStatus = "Offline";
+          await intern.save();
+        }
+        return intern;
+      })
+    );
+
     res.status(200).json({
       success: true,
-      count: interns.length,
-      data: interns,
+      count: updatedInterns.length,
+      data: updatedInterns,
     });
   } catch (error) {
     res.status(500).json({
@@ -120,10 +134,40 @@ const deleteIntern = async (req, res) => {
   }
 };
 
+const updatePresence = async (req, res) => {
+  try {
+    const { presenceStatus, currentPage } = req.body;
+    const intern = await Intern.findById(req.user._id);
+
+    if (!intern) {
+      return res.status(404).json({
+        success: false,
+        error: "Intern not found",
+      });
+    }
+
+    intern.presenceStatus = presenceStatus || "Online";
+    intern.currentPage = currentPage || "Unknown";
+    intern.lastActive = new Date();
+    await intern.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Presence updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createIntern,
   getInterns,
   getIntern,
   updateIntern,
   deleteIntern,
+  updatePresence,
 };

@@ -43,6 +43,12 @@ const login = async (req, res) => {
       });
     }
 
+    // Update presenceStatus and lastLogin
+    intern.presenceStatus = "Online";
+    intern.lastLogin = new Date();
+    intern.lastActive = new Date();
+    await intern.save();
+
     const token = generateToken(intern._id);
 
     res.status(200).json({
