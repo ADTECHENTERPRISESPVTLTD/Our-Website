@@ -9,6 +9,7 @@ import {
   validateContactForm,
   validateRequirementForm,
 } from "./validators";
+import { sendTelegramNotification } from "./telegram";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
@@ -47,6 +48,23 @@ export async function submitCallbackAction(formData: FormData) {
         success: false,
         message: result.message || "Failed to submit callback request",
       };
+    }
+
+    // Trigger Telegram notification after successful database save
+    try {
+      await sendTelegramNotification({
+        title: "📞 New Callback Request",
+        name: data.name,
+        company: data.company,
+        phone: data.phoneNumber,
+        message: data.message,
+        additionalDetails: {
+          "Preferred Date": data.preferredDate,
+          "Preferred Time": data.preferredTime,
+        },
+      });
+    } catch (telegramError) {
+      console.error("[Server Action] Telegram notification failed for Callback:", telegramError);
     }
 
     revalidatePath("/callback");
@@ -141,6 +159,17 @@ export async function submitContactAction(formData: FormData) {
         success: false,
         message: result.message || "Failed to send message",
       };
+    }
+
+    // Trigger Telegram notification after successful database save
+    try {
+      await sendTelegramNotification({
+        name: data.name,
+        email: data.email,
+        message: data.subject ? `Subject: ${data.subject}\n\n${data.message}` : data.message,
+      });
+    } catch (telegramError) {
+      console.error("[Server Action] Telegram notification failed:", telegramError);
     }
 
     revalidatePath("/contact");

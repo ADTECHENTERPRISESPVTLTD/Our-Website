@@ -16,10 +16,23 @@ export interface Contact extends ContactFormData {
 
 export const contactService = {
   /**
-   * Submit a contact form message
+   * Submit a contact form message via local Next.js API route to trigger Telegram notification
    */
   send(data: ContactFormData) {
-    return post<Contact>("/contact", data);
+    return fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then(async (res) => {
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result.message || "Failed to submit contact form");
+      }
+      return result;
+    });
   },
 };
+
 

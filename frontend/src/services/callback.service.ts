@@ -18,10 +18,22 @@ export interface Callback extends CallbackFormData {
 
 export const callbackService = {
   /**
-   * Submit a new callback request
+   * Submit a new callback request via local Next.js API route to trigger Telegram notification
    */
   create(data: CallbackFormData) {
-    return post<Callback>("/callback", data);
+    return fetch("/api/callback", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then(async (res) => {
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result.message || "Failed to submit callback request");
+      }
+      return result;
+    });
   },
 
   /**
