@@ -18,6 +18,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "adtech-workspace": "file:..",
     "bcryptjs": "^3.0.3",
     "cloudinary": "^2.5.1",
     "cors": "^2.8.6",
