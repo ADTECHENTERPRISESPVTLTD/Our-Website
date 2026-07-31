@@ -39,7 +39,7 @@ export default function RootLayout({
 
         <Navbar />
 
-        <main className="flex-1 relative z-[1]">
+        <main className="flex-1 relative z-[1] overflow-x-hidden">
           {children}
         </main>
 

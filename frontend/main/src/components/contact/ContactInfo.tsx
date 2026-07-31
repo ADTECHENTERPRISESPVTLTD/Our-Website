@@ -20,20 +20,20 @@ export default function ContactInfo() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="p-6 transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/50 hover:shadow-[0_0_35px_rgba(34,211,238,0.15)]">
-                  <div className="flex items-start gap-5">
+                <Card className="p-4 sm:p-6 transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/50 hover:shadow-[0_0_35px_rgba(34,211,238,0.15)]">
+                  <div className="flex items-center gap-4 sm:gap-5 min-w-0 w-full">
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: 5 }}
-                      className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 text-cyan-400"
+                      className="flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 text-cyan-400"
                     >
-                      <Icon size={26} />
+                      <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
                     </motion.div>
 
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-base sm:text-lg font-semibold text-white leading-snug">{item.title}</h3>
                       <a
                         href={item.link}
-                        className="mt-2 block text-slate-400 transition hover:text-cyan-400"
+                        className="mt-1 sm:mt-2 block text-xs sm:text-sm md:text-base text-slate-400 transition hover:text-cyan-400 break-all sm:break-words leading-normal"
                       >
                         {item.value}
                       </a>
