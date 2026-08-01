@@ -6,7 +6,7 @@ import AnimatedHeading from "@/components/ui/AnimatedHeading";
 
 export default function AboutHero() {
   return (
-    <section className="site-hero relative overflow-hidden py-28">
+    <section className="site-hero relative overflow-hidden pt-16 pb-20 sm:pt-24 sm:pb-24">
 
       {/* Background Glow */}
       <div className="absolute inset-0 overflow-hidden">
