@@ -195,7 +195,7 @@ export default function ChatWidget() {
         if (messagesContainerRef.current) {
           messagesContainerRef.current.scrollTo({
             top: messagesContainerRef.current.scrollHeight,
-            behavior: 'smooth'
+            
           });
           savedScrollTopRef.current = messagesContainerRef.current.scrollHeight;
         }
@@ -552,11 +552,11 @@ export default function ChatWidget() {
           aria-modal="true"
           aria-label="AD TECH Assistant Conversation Window"
           style={{ height: typeof window !== 'undefined' && window.innerWidth < 640 ? viewportHeight : undefined }}
-          className={`fixed inset-0 w-full h-[100dvh] rounded-none sm:static sm:inset-auto sm:h-[85vh] sm:max-h-[640px] sm:w-[92vw] sm:max-w-[420px] flex flex-col border shadow-2xl transition-all duration-300 animate-slide-in overflow-hidden z-[9999]
-            ${isLightMode 
-              ? 'bg-white border-slate-200 text-slate-800' 
-              : 'bg-[#0B1120] border-[#2A3648] text-slate-100'
-            }`}
+          className={`fixed inset-x-0 bottom-0 w-full h-[100dvh] max-h-[100dvh] sm:static sm:inset-auto sm:h-[85vh] sm:max-h-[640px] sm:w-[92vw] sm:max-w-[420px] flex flex-col border shadow-2xl transition-all duration-300 animate-slide-in overflow-hidden z-[9999]
+  ${isLightMode 
+    ? 'bg-white border-slate-200 text-slate-800' 
+    : 'bg-[#0B1120] border-[#2A3648] text-slate-100'
+  }`}
         >
           {/* Circular Mascot Avatar on iPad & PC */}
           <div className="absolute right-2 bottom-24 z-30 h-16 w-16 lg:h-20 lg:w-20 rounded-full overflow-visible border-2 border-sky-400/50 bg-[#0B1120] shadow-[0_0_20px_rgba(56,189,248,0.25)] animate-float hidden md:block">
