@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import { 
   MessageSquare, X, Send, Phone, Briefcase, FileText, 
   Calendar, Info, HelpCircle, CheckCircle, Moon, Sun, 
@@ -19,6 +20,9 @@ interface Message {
 }
 
 export default function ChatWidget() {
+  const router = useRouter();
+  const pathname = usePathname() || '/';
+
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -233,12 +237,30 @@ export default function ChatWidget() {
     localStorage.setItem('adtech_chat_theme', newTheme ? 'light' : 'dark');
   };
 
-  // Handle Text Submission
+  // Handle Text Submission (Dynamically opens relevant section & answers question!)
   const handleSendMessage = async (textToSend?: string) => {
     const text = (textToSend || inputMessage).trim();
     if (!text) return;
 
     if (!textToSend) setInputMessage('');
+
+    // Dynamic Website Link: Automatically navigate to relevant page/section based on question topic!
+    const lower = text.toLowerCase();
+    if (/\b(service|services|web dev|android|ios|lms|ev|software|tech stack|solution|products)\b/i.test(lower)) {
+      router.push('/services');
+    } else if (/\b(intern|internship|career|careers|hiring|job|apply|sprint|stipend)\b/i.test(lower)) {
+      router.push('/careers');
+    } else if (/\b(contact|email|phone|call us|reach|location|office|address)\b/i.test(lower)) {
+      router.push('/contact');
+    } else if (/\b(faq|question|frequently)\b/i.test(lower)) {
+      router.push('/faq');
+    } else if (/\b(about|company|vision|mission|values|who are you|adtech)\b/i.test(lower)) {
+      router.push('/about');
+    } else if (/\b(callback|schedule call|book call|phone call)\b/i.test(lower)) {
+      router.push('/callback');
+    } else if (/\b(requirement|submit requirement|scope|quote|hire us)\b/i.test(lower)) {
+      router.push('/submit-requirement');
+    }
 
     // Add user message
     const userMsg: Message = {
@@ -305,11 +327,10 @@ export default function ChatWidget() {
     }
   };
 
-  // Handle Quick Actions
+  // Handle Quick Actions (Dynamically linked with website page navigation!)
   const handleQuickAction = (action: string) => {
     if (action === 'Our Services') {
-      const el = document.getElementById('services');
-      el?.scrollIntoView({ behavior: 'smooth' });
+      router.push('/services');
       
       const userMsg: Message = {
         id: `action-${Date.now()}-u`,
@@ -320,15 +341,14 @@ export default function ChatWidget() {
       const assistantMsg: Message = {
         id: `action-${Date.now()}-a`,
         role: 'assistant',
-        content: `We offer premium web development, database scaling, and bespoke artificial intelligence integrations:\n\n1. 💻 **Frontend Web Development**: Beautiful, high-converting interfaces built with Next.js, React, and Tailwind CSS.\n2. ⚙️ **Backend APIs & Database scaling**: Production-ready, secure services using Node.js, Express, and database clusters.\n3. 🤖 **AI Automations & Agents**: Seamlessly integrated chatbot widgets, custom LLM solutions (Gemini/OpenAI), and vector retrieval databases.`,
+        content: `Opening AD TECH Services page.\n\nWe offer tailored web development, mobile applications, and artificial intelligence solutions:\n\n1. 💻 **Web Application Development**: Responsive sites, enterprise dashboards & SaaS platforms.\n2. 📱 **Android & iOS Mobile Apps**: Native high-performance mobile apps.\n3. 🤖 **AI Automations & Agents**: Custom chatbots, Gemini AI integrations, and RAG pipelines.\n4. 🎓 **Learning Management Systems (LMS)**: Student & teacher portals with progress analytics.\n5. ⚡ **EV Installment Software**: Financing, EMI tracking, and inventory dashboards.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         suggestions: ['Book a Callback', 'Submit Requirements']
       };
       saveHistory([...messages, userMsg, assistantMsg]);
     } 
     else if (action === 'Apply for Internship') {
-      const el = document.getElementById('careers');
-      el?.scrollIntoView({ behavior: 'smooth' });
+      router.push('/careers');
 
       const userMsg: Message = {
         id: `action-${Date.now()}-u`,
@@ -339,13 +359,15 @@ export default function ChatWidget() {
       const assistantMsg: Message = {
         id: `action-${Date.now()}-a`,
         role: 'assistant',
-        content: `Our **Talent Development Program** places interns in real-world environments. You can apply for open positions such as AI Lead, Frontend Intern, or Backend Intern.\n\nTo apply, please submit your resume and active Github projects portfolio to our HR email: **${EMAIL}** or reach us via phone at **${PHONE}**.\n\nI have scrolled down to the Careers section of our page where you can see open slots!`,
+        content: `Opening Internship & Career Opportunities page.\n\nOur Developer Internship Program places candidates in real-world 5-day evaluation sprints across AI, Frontend, and Backend roles.\n\nTo apply, please submit your resume and GitHub portfolio to: **${EMAIL}** or call **${PHONE}**.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         suggestions: ['Hiring Process FAQ', 'Contact Us']
       };
       saveHistory([...messages, userMsg, assistantMsg]);
     }
     else if (action === 'Book a Callback') {
+      router.push('/callback');
+
       const userMsg: Message = {
         id: `action-${Date.now()}-u`,
         role: 'user',
@@ -363,6 +385,8 @@ export default function ChatWidget() {
       saveHistory([...messages, userMsg, formMsg]);
     }
     else if (action === 'Submit Requirements') {
+      router.push('/submit-requirement');
+
       const userMsg: Message = {
         id: `action-${Date.now()}-u`,
         role: 'user',
@@ -380,6 +404,8 @@ export default function ChatWidget() {
       saveHistory([...messages, userMsg, formMsg]);
     }
     else if (action === 'Hiring Process FAQ') {
+      router.push('/faq');
+
       const userMsg: Message = {
         id: `action-${Date.now()}-u`,
         role: 'user',
@@ -397,8 +423,7 @@ export default function ChatWidget() {
       saveHistory([...messages, userMsg, assistantMsg]);
     }
     else if (action === 'Contact Us') {
-      const el = document.getElementById('contact');
-      el?.scrollIntoView({ behavior: 'smooth' });
+      router.push('/contact');
 
       const userMsg: Message = {
         id: `action-${Date.now()}-u`,

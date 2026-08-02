@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import ChatWidget from "@/components/ChatWidget";
+import AshaVoiceAssistant from "@/components/AshaVoiceAssistant";
 import GlobalBackground from "@/components/layout/GlobalBackground";
 
 const geistSans = Geist({
@@ -38,6 +39,7 @@ export default function RootLayout({
         {children}
 
         <ChatWidget />
+        <AshaVoiceAssistant />
       </body>
     </html>
   );

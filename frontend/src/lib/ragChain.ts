@@ -225,7 +225,7 @@ function handleConversationalIntents(query: string): string | null {
   });
 
   if (isGenericDefinitionQuery) {
-    return `Hahaha 😊 I'm an AI assistant! I am trained to answer questions about ${COMPANY_NAME}'s software services, projects, and developer internship programs. Unnecessary or general dictionary definitions like that aren't my field. Would you like to contact our team at ${EMAIL} or call ${PHONE}?`;
+    return `I am AD TECH's AI Assistant and I am trained to answer questions about ${COMPANY_NAME}'s software services, projects, and developer internship programs. Unnecessary or general topics like that aren't my field. Would you like to contact our team at ${EMAIL} or call ${PHONE}?`;
   }
 
   // 2. Company Role / Purpose / Mission Intent ("companys role", "company role", "role of company", "company mission", "company vision")
@@ -356,7 +356,7 @@ function handleConversationalIntents(query: string): string | null {
     'house', 'actor', 'actress', 'news', 'politics', 'music', 'funny', 'president', 'how to make', 'how to cook'
   ];
   if (unnecessaryKeywords.some(kw => q.includes(kw))) {
-    return `Hahaha 😊 I'm an AI assistant! I am trained to answer questions about ${COMPANY_NAME}'s software services, projects, and developer internship programs. Unnecessary or general topics like that aren't my field. Would you like to contact our team at ${EMAIL} or call ${PHONE}?`;
+    return `I am AD TECH's AI Assistant and I am trained to answer questions about ${COMPANY_NAME}'s software services, projects, and developer internship programs. Unnecessary or general topics like that aren't my field. Would you like to contact our team at ${EMAIL} or call ${PHONE}?`;
   }
 
   return null;
@@ -396,7 +396,7 @@ export async function runLangChainRAG(
   // Strict Fallback for unnecessary / out-of-scope queries
   if (maxScore === 0 || retrievedDocs.length === 0) {
     return {
-      response: `Hahaha 😊 I'm not sure about that. I am AD TECH's AI Assistant and I am trained to answer questions about our company, core services, and developer internship programs. Unnecessary or general topics like that aren't my field. Would you like to contact our team at ${EMAIL} or call ${PHONE}?`,
+      response: `I am AD TECH's AI Assistant and I am trained to answer questions about our company, core services, and developer internship programs. Unnecessary or general topics like that aren't my field. Would you like to contact our team at ${EMAIL} or call ${PHONE}?`,
       mode: 'online',
       source: 'langchain_out_of_scope_fallback',
       retrievedDocs: []
