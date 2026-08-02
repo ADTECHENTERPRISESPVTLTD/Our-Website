@@ -117,11 +117,11 @@ export default function Hero() {
     "AI-Driven Solutions For Tomorrow's Challenges",
   ];
 
-  // Rotating tagline effect
+  // Rotating tagline effect - 15 seconds per tagline so visitors can read them
   useEffect(() => {
     const interval = setInterval(() => {
       setSubtitleIndex((prev) => (prev + 1) % taglines.length);
-    }, 4000);
+    }, 15000);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -134,11 +134,11 @@ export default function Hero() {
     }
   };
 
-  return (
+return (
     <section
       ref={sectionRef}
       onMouseMove={handleSpotMove}
-      className="relative min-h-screen flex items-start lg:items-center justify-center bg-transparent overflow-hidden"
+      className="relative min-h-screen flex flex-col bg-transparent overflow-hidden"
       aria-label="Hero section"
     >
       {/* ─── Animated Canvas Background ─── */}
@@ -191,101 +191,103 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* ─── Main Content ─── */}
-      <div
-        ref={contentRef}
-        className="hero-content-wrapper w-full z-10 mx-auto max-w-7xl px-6 pt-12 pb-24 sm:pt-24 sm:pb-28 lg:py-28"
-      >
-        <motion.div
-          variants={heroContainer}
-          initial="hidden"
-          animate={isContentInView ? "visible" : "hidden"}
-          className="mx-auto max-w-5xl text-center"
+      {/* ─── Main Content Area (flex-1 to push scroll indicator to bottom) ─── */}
+      <div className="flex-1 flex items-start lg:items-center justify-center">
+        <div
+          ref={contentRef}
+          className="hero-content-wrapper w-full z-10 mx-auto max-w-7xl px-6 pt-12 pb-8 sm:pt-24 sm:pb-8 lg:py-28"
         >
-          {/* Eyebrow */}
-          <motion.p
-            variants={heroItem}
-            className="hero-eyebrow"
-          >
-            <span className="hero-eyebrow-dot" />
-            AD TECH ENTERPRISES PVT. LTD.
-          </motion.p>
-
-          {/* Rotating Main Heading (SplitText char animation) */}
           <motion.div
-            variants={heroItem}
-            className="mt-8 flex items-center justify-center"
+            variants={heroContainer}
+            initial="hidden"
+            animate={isContentInView ? "visible" : "hidden"}
+            className="mx-auto max-w-5xl text-center"
           >
-            <AnimatedHeading
-              key={subtitleIndex}
-              text={taglines[subtitleIndex]}
-              className="hero-tagline text-center text-[#F8FAFC]"
-              tag="h1"
-            />
-          </motion.div>
+            {/* Eyebrow */}
+            <motion.p
+              variants={heroItem}
+              className="hero-eyebrow"
+            >
+              <span className="hero-eyebrow-dot" />
+              AD TECH ENTERPRISES PVT. LTD.
+            </motion.p>
 
-          {/* Description */}
-          <motion.p
-            variants={heroItem}
-            className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-[#94A3B8] sm:text-xl"
-          >
-            We help organizations unlock growth with tailored AI, software, cloud
-            and automation solutions built for performance, security and scale.
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            variants={heroItem}
-            className="mt-12 flex flex-wrap items-center justify-center gap-4"
-          >
-            <MagneticButton href="/services" className="hero-cta hero-cta-primary group">
-              <span className="hero-cta-shine" aria-hidden="true" />
-              Explore Services
-              <ArrowRight
-                size={18}
-                className="transition-transform duration-300 group-hover:translate-x-1"
+            {/* Rotating Main Heading (SplitText char animation) */}
+            <motion.div
+              variants={heroItem}
+              className="mt-8 flex items-center justify-center"
+            >
+              <AnimatedHeading
+                key={subtitleIndex}
+                text={taglines[subtitleIndex]}
+                className="hero-tagline text-center text-[#F8FAFC]"
+                tag="h1"
               />
-            </MagneticButton>
+            </motion.div>
 
-            <MagneticButton href="/contact" className="hero-cta hero-cta-secondary group">
-              Contact Us
-            </MagneticButton>
+            {/* Description */}
+            <motion.p
+              variants={heroItem}
+              className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-[#94A3B8] sm:text-xl"
+            >
+              We help organizations unlock growth with tailored AI, software, cloud
+              and automation solutions built for performance, security and scale.
+            </motion.p>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 w-full sm:w-auto">
-              <MagneticButton href="/careers" className="hero-cta hero-cta-ghost group">
-                <Users size={16} />
-                Careers
+            {/* CTA Buttons */}
+            <motion.div
+              variants={heroItem}
+              className="mt-12 flex flex-wrap items-center justify-center gap-4"
+            >
+              <MagneticButton href="/services" className="hero-cta hero-cta-primary group">
+                <span className="hero-cta-shine" aria-hidden="true" />
+                Explore Services
+                <ArrowRight
+                  size={18}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                />
               </MagneticButton>
 
-              <MagneticButton href="/login" className="hero-cta hero-cta-gradient group">
+              <MagneticButton href="/contact" className="hero-cta hero-cta-secondary group">
+                Contact Us
+              </MagneticButton>
+
+              <div className="flex flex-wrap items-center justify-center gap-3 w-full sm:w-auto">
+                <MagneticButton href="/careers" className="hero-cta hero-cta-ghost group">
+                  <Users size={16} />
+                  Careers
+                </MagneticButton>
+
+<MagneticButton href="/intern/login" className="hero-cta hero-cta-gradient group">
                 <Cpu size={16} />
                 Intern Dashboard
               </MagneticButton>
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
 
-          {/* Highlights Pills */}
-          <motion.div
-            variants={heroItem}
-            className="mt-12 flex flex-wrap items-center justify-center gap-3"
-          >
-            {highlights.map((item) => {
-              const Icon = item.icon;
-              return (
-                <span
-                  key={item.label}
-                  className="hero-highlight-pill"
-                >
-                  <Icon size={14} className="text-cyan-400" />
-                  {item.label}
-                </span>
-              );
-            })}
+            {/* Highlights Pills */}
+            <motion.div
+              variants={heroItem}
+              className="mt-12 flex flex-wrap items-center justify-center gap-3"
+            >
+              {highlights.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <span
+                    key={item.label}
+                    className="hero-highlight-pill"
+                  >
+                    <Icon size={14} className="text-cyan-400" />
+                    {item.label}
+                  </span>
+                );
+              })}
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
 
-      {/* ─── Scroll Indicator ─── */}
+      {/* ─── Scroll Indicator (in flow, centered at bottom) ─── */}
       <div
         className="scroll-indicator"
         onClick={scrollToNext}
