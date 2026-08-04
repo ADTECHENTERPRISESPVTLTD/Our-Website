@@ -510,8 +510,8 @@ export default function ChatWidget() {
   };
 
   // Speak Asha's response — ElevenLabs premium voice first, browser TTS as silent fallback only
-  const speakAshaResponse = async (rawText: string, onStart?: () => void) => {
-    if (!isVoiceEnabled) {
+  const speakAshaResponse = async (rawText: string, onStart?: () => void, isFromVoice: boolean = true) => {
+    if (!isVoiceEnabled || !isFromVoice) {
       if (onStart) onStart();
       return;
     }
@@ -1108,7 +1108,7 @@ export default function ChatWidget() {
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages(prev => [...prev, userMsg, assistantMsg]);
-      speakAshaResponse(reply);
+      speakAshaResponse(reply, undefined, isFromVoice);
       window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
       return;
     }
@@ -1131,7 +1131,7 @@ export default function ChatWidget() {
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages(prev => [...prev, userMsg, assistantMsg]);
-      speakAshaResponse(reply);
+      speakAshaResponse(reply, undefined, isFromVoice);
       setTimeout(() => {
         if (typeof window !== 'undefined') {
           sessionStorage.setItem('adtech_asha_open', 'true');
@@ -1262,7 +1262,9 @@ export default function ChatWidget() {
 
       setPopText(`🚀 "${matchingRedirectText}"`);
       setShowPopBubble(true);
-      setVoiceStatus('speaking');
+      if (isFromVoice) {
+        setVoiceStatus('speaking');
+      }
 
       const userMsg: Message = {
         id: `msg-${Date.now()}-user`, role: 'user', content: rawText,
@@ -1275,7 +1277,7 @@ export default function ChatWidget() {
 
       speakAshaResponse(matchingRedirectText, () => {
         saveHistory([...messages, userMsg, assistantMsg]);
-      });
+      }, isFromVoice);
 
       const targetPath = matchingRoute;
       setTimeout(() => {
@@ -1315,7 +1317,7 @@ export default function ChatWidget() {
       
       speakAshaResponse(greetingReply, () => {
         saveHistory([...messages, userMsg, assistantMsg]);
-      });
+      }, isFromVoice);
       return;
     }
 
@@ -1384,7 +1386,7 @@ export default function ChatWidget() {
         saveHistory([...updatedMessages, assistantMsg]);
         setPopText("🌸 \"Welcome! I'm Asha! How can I help you?\"");
         setShowPopBubble(true);
-      });
+      }, isFromVoice);
 
       // DUAL ACTION: If question matches a specific page destination (e.g. Services page for 'what services you provide'), open page immediately!
       if (matchingRoute) {
@@ -1411,7 +1413,7 @@ export default function ChatWidget() {
         saveHistory([...updatedMessages, errorMsg]);
         setPopText(`🌸 "${errorContent.slice(0, 100)}..."`);
         setShowPopBubble(true);
-      });
+      }, isFromVoice);
     }
   };
 
@@ -1451,7 +1453,7 @@ export default function ChatWidget() {
       speakAshaResponse(textContent, () => {
         setIsTyping(false);
         saveHistory([...historyWithUser, assistantMsg]);
-      });
+      }, false);
     } 
     else if (action === 'Apply for Internship') {
       sessionStorage.setItem('adtech_asha_open', 'true');
@@ -1480,7 +1482,7 @@ export default function ChatWidget() {
       speakAshaResponse(textContent, () => {
         setIsTyping(false);
         saveHistory([...historyWithUser, assistantMsg]);
-      });
+      }, false);
     }
     else if (action === 'Book a Callback') {
       sessionStorage.setItem('adtech_asha_open', 'true');
@@ -1509,7 +1511,7 @@ export default function ChatWidget() {
       speakAshaResponse("Please provide your details below so that our tech advisory team can schedule a callback for you.", () => {
         setIsTyping(false);
         saveHistory([...historyWithUser, formMsg]);
-      });
+      }, false);
     }
     else if (action === 'Submit Requirements') {
       sessionStorage.setItem('adtech_asha_open', 'true');
@@ -1538,7 +1540,7 @@ export default function ChatWidget() {
       speakAshaResponse("Please fill out our Project Scope Form below to receive a custom quote.", () => {
         setIsTyping(false);
         saveHistory([...historyWithUser, formMsg]);
-      });
+      }, false);
     }
     else if (action === 'Hiring Process FAQ') {
       sessionStorage.setItem('adtech_asha_open', 'true');
@@ -1568,7 +1570,7 @@ export default function ChatWidget() {
       speakAshaResponse(textContent, () => {
         setIsTyping(false);
         saveHistory([...historyWithUser, assistantMsg]);
-      });
+      }, false);
     }
     else if (action === 'Contact Us') {
       sessionStorage.setItem('adtech_asha_open', 'true');
@@ -1598,7 +1600,7 @@ export default function ChatWidget() {
       speakAshaResponse(textContent, () => {
         setIsTyping(false);
         saveHistory([...historyWithUser, assistantMsg]);
-      });
+      }, false);
     }
     else {
       handleSendMessage(action);
@@ -1643,7 +1645,7 @@ export default function ChatWidget() {
 
     saveHistory([...updated, successMsg]);
     setCallbackForm({ name: '', phone: '', email: '', note: '' });
-    speakAshaResponse(`Thank you ${callbackForm.name}, your callback request has been submitted successfully.`);
+    speakAshaResponse(`Thank you ${callbackForm.name}, your callback request has been submitted successfully.`, undefined, false);
   };
 
   // Submit Requirements Form
@@ -1685,7 +1687,7 @@ export default function ChatWidget() {
 
     saveHistory([...updated, successMsg]);
     setReqForm({ name: '', company: '', scope: '', budget: '1000-5000' });
-    speakAshaResponse(`Thank you ${reqForm.name}, your project scope has been submitted successfully.`);
+    speakAshaResponse(`Thank you ${reqForm.name}, your project scope has been submitted successfully.`, undefined, false);
   };
 
   return (
