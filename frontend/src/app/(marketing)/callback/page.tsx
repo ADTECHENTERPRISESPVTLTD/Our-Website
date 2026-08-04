@@ -12,7 +12,7 @@ export default function CallbackPage() {
       <div className="pointer-events-none absolute -left-28 bottom-16 h-[360px] w-[360px] rounded-full bg-blue-500/10 blur-3xl" />
 
       {/* Hero Section */}
-      <section className="relative z-10 pt-32 pb-12 text-center">
+      <section className="relative z-10 pt-16 pb-12 text-center sm:pt-24">
         <motion.span
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}

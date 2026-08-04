@@ -85,7 +85,14 @@ export default function DashboardPage() {
   const fetchData = async () => {
     try {
       const userRes = await api.get("/auth/me");
-      setUser(userRes.data.data);
+      const me = userRes.data.data;
+      setUser(me);
+
+      // If an admin somehow lands on the intern dashboard, route them to the admin panel
+      if (me && me.role === "Admin") {
+        router.push("/intern/admin");
+        return;
+      }
 
       const internId = userRes.data.data._id || userRes.data.data.id;
 

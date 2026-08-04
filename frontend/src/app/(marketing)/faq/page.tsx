@@ -9,7 +9,7 @@ export default function FAQPage() {
   return (
     <main className="page-shell min-h-screen">
       {/* Hero Section */}
-      <section className="site-hero relative overflow-hidden py-24">
+      <section className="site-hero relative overflow-hidden pt-16 pb-16 sm:pt-24 sm:pb-20">
         <div className="absolute inset-0 overflow-hidden">
           <div className="bg-glow-cyan -left-20 top-10 h-[400px] w-[400px] opacity-60" />
           <div className="bg-glow-blue -bottom-20 right-0 h-[400px] w-[400px] opacity-70" />

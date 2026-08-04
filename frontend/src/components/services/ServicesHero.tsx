@@ -5,7 +5,7 @@ import AnimatedHeading from "@/components/ui/AnimatedHeading";
 
 export default function ServicesHero() {
   return (
-    <section className="site-hero pt-36 pb-24">
+    <section className="site-hero pt-16 pb-24 sm:pt-24">
       <div className="bg-glow-cyan -top-40 -left-40 h-[450px] w-[450px]" />
       <div className="bg-glow-blue -bottom-40 -right-40 h-[450px] w-[450px]" />
 
