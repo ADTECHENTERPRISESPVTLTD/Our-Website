@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -116,6 +116,16 @@ export default function Navbar() {
                 transition={{ delay: 0.4 }}
                 className="space-y-3 pt-2"
               >
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    window.dispatchEvent(new CustomEvent("open-asha-voice"));
+                  }}
+                  className="w-full flex items-center justify-center gap-2 rounded-xl border border-cyan-400/50 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 px-5 py-3 text-cyan-300 font-semibold transition-all duration-300 hover:bg-cyan-500/30 hover:text-white"
+                >
+                  <Sparkles size={18} className="text-cyan-400 animate-pulse" />
+                  <span>Talk with Asha (AI Voice)</span>
+                </button>
                 <Link
                   href="/intern/login"
                   onClick={() => setIsOpen(false)}
@@ -181,6 +191,17 @@ export default function Navbar() {
             </li>
           ))}
           <li>
+            <button
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent("open-asha-voice"));
+              }}
+              className="flex items-center gap-2 rounded-xl border border-cyan-400/50 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 px-3.5 py-2 text-sm font-semibold text-cyan-300 transition-all duration-300 hover:border-cyan-300 hover:bg-cyan-500/30 hover:text-white shadow-lg shadow-cyan-500/10"
+            >
+              <Sparkles size={16} className="text-cyan-400 animate-pulse" />
+              <span>Talk with Asha</span>
+            </button>
+          </li>
+          <li>
             <Link
               href="/intern/login"
               className="rounded-xl border border-cyan-500/40 bg-cyan-500/10 px-3.5 py-2 text-sm font-medium text-cyan-300 transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-500/20 hover:text-white"
@@ -214,4 +235,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
