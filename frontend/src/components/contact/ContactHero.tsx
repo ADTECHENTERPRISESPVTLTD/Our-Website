@@ -55,7 +55,7 @@ export default function ContactHero() {
           className="mt-12 flex flex-wrap justify-center gap-5"
         >
           <Link
-            href="mailto:hradtechenterpriseschepvtltd@gmail.com"
+            href="mailto:ad.tech.enterprises.pvt.ltd@gmail.com"
             className="rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-4 font-semibold text-white shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:scale-105 hover:shadow-xl"
           >
             Send an Email →

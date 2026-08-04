@@ -10,17 +10,20 @@ export async function POST(request: Request) {
       .replace(/https?:\/\/\S+/g, '')
       .trim();
 
-    // Specific phonetic formatting for email addresses (e.g. hradtechenterpriseschepvtltd@gmail.com -> H R A D Tech Enterprises Private Limited at gmail dot com)
-    cleanText = cleanText.replace(/(\w+)@([a-zA-Z0-9.\-]+)/gi, (match: string, username: string, domain: string) => {
+    // Specific phonetic formatting for email addresses (e.g. ad.tech.enterprises.pvt.ltd@gmail.com -> A D Tech Enterprises Private Limited at gmail dot com)
+    cleanText = cleanText.replace(/([a-zA-Z0-9.\-_]+)@([a-zA-Z0-9.\-_]+)/gi, (match: string, username: string, domain: string) => {
       let cleanUser = username
+        .replace(/\./g, ' ')
         .replace(/hradtech/gi, 'H R A D Tech ')
         .replace(/adtech/gi, 'A D Tech ')
-        .replace(/enterprises/gi, 'Enterprises ')
+        .replace(/\bad\b/gi, 'A D')
+        .replace(/\btech\b/gi, 'Tech')
+        .replace(/enterprises/gi, 'Enterprises')
         .replace(/che/gi, ' ')
-        .replace(/pvtltd/gi, ' Private Limited ')
-        .replace(/pvt/gi, ' Private ')
-        .replace(/ltd/gi, ' Limited ')
-        .replace(/hr/gi, 'H R ');
+        .replace(/pvtltd/gi, 'Private Limited')
+        .replace(/\bpvt\b/gi, 'Private')
+        .replace(/\bltd\b/gi, 'Limited')
+        .replace(/\bhr\b/gi, 'H R');
 
       let cleanDomain = domain.replace(/\./g, ' dot ');
       return `${cleanUser} at ${cleanDomain}`;
@@ -50,8 +53,7 @@ export async function POST(request: Request) {
       .replace(/[*_#`~•]/g, ' ')
       .replace(/https?:\/\/\S+/g, ' ')
       .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '')
-      .replace(/hradtechenterpriseschepvtltd@gmail\.com/gi, 'H R AD TECH Enterprises at Gmail dot com')
-      .replace(/adtechenterpriseschepvtltd@gmail\.com/gi, 'AD TECH Enterprises at Gmail dot com')
+      .replace(/ad\.tech\.enterprises\.pvt\.ltd@gmail\.com/gi, 'A D Tech Enterprises Private Limited at Gmail dot com')
       .replace(/info@adtech\.com/gi, 'info at AD TECH dot com')
       .replace(/contact@adtech\.com/gi, 'contact at AD TECH dot com')
       .replace(/support@adtech\.com/gi, 'support at AD TECH dot com')

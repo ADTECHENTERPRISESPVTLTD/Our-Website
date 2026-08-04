@@ -20,7 +20,7 @@ export interface QAItem {
 }
 
 export const COMPANY_NAME = "AD TECH ENTERPRISES PVT. LTD.";
-export const EMAIL = "hradtechenterpriseschepvtltd@gmail.com";
+export const EMAIL = "ad.tech.enterprises.pvt.ltd@gmail.com";
 export const PHONE = "+91 83193 58568";
 export const TAGLINE = "Building Future Tech Talent";
 
@@ -142,7 +142,7 @@ export const KNOWLEDGE_BASE: QAItem[] = [
     category: 'internship',
     keywords: ['internship', 'talent development', 'building future tech talent', 'intern program', '5-day sprint', 'apply for internship', 'careers'],
     question: "What is the AD TECH Internship & Talent Development Program?",
-    answer: "Reflecting our tagline \"Building Future Tech Talent\", our Internship Program nurtures the next generation of tech professionals through hands-on mentorship, structured developer roles (e.g. AI Lead, Frontend, Backend, QA), and real-world 5-day evaluation sprint project deliverables. Interns apply by sending resumes to hradtechenterpriseschepvtltd@gmail.com."
+    answer: "Reflecting our tagline \"Building Future Tech Talent\", our Internship Program nurtures the next generation of tech professionals through hands-on mentorship, structured developer roles (e.g. AI Lead, Frontend, Backend, QA), and real-world 5-day evaluation sprint project deliverables. Interns apply by sending resumes to ad.tech.enterprises.pvt.ltd@gmail.com."
   },
 
   // 15b. HIRING & SELECTION PROCESS
@@ -150,7 +150,7 @@ export const KNOWLEDGE_BASE: QAItem[] = [
     category: 'hiring',
     keywords: ['hiring process', 'selection process', 'recruitment process', 'interview process', 'how are candidates selected', 'hiring steps', 'whats hiring process', 'what is hiring process'],
     question: "What is AD TECH's hiring and selection process for developer roles and internships?",
-    answer: "AD TECH follows a structured, transparent 3-step hiring process for developer roles and internships:\n1) **Resume & Portfolio Screening** (reviewing technical background, GitHub repositories, and past projects)\n2) **5-Day Evaluation Sprint** (candidates are placed in structured team roles across AI, Frontend, or Backend to deliver a real project sprint)\n3) **Performance Evaluation & Offer** (successful candidates are awarded certificates, stipends, or full developer roles based on sprint performance). Send your resume to hradtechenterpriseschepvtltd@gmail.com to apply!"
+    answer: "AD TECH follows a structured, transparent 3-step hiring process for developer roles and internships:\n1) **Resume & Portfolio Screening** (reviewing technical background, GitHub repositories, and past projects)\n2) **5-Day Evaluation Sprint** (candidates are placed in structured team roles across AI, Frontend, or Backend to deliver a real project sprint)\n3) **Performance Evaluation & Offer** (successful candidates are awarded certificates, stipends, or full developer roles based on sprint performance). Send your resume to ad.tech.enterprises.pvt.ltd@gmail.com to apply!"
   },
 
   // 16. CONTACT INFO (Directly from PDF Footer on All Pages)
@@ -158,7 +158,7 @@ export const KNOWLEDGE_BASE: QAItem[] = [
     category: 'contact',
     keywords: ['contact', 'email', 'phone', 'reach us', 'address', 'mail', 'phone number', 'contact details'],
     question: "How can I contact AD TECH Enterprises Pvt. Ltd.?",
-    answer: "You can reach out to our team via email at **hradtechenterpriseschepvtltd@gmail.com** or call us directly at **+91 83193 58568**. You can also submit project scope requirements or book a callback session right on our website!"
+    answer: "You can reach out to our team via email at **ad.tech.enterprises.pvt.ltd@gmail.com** or call us directly at **+91 83193 58568**. You can also submit project scope requirements or book a callback session right on our website!"
   },
 
   // 17. INDUSTRY CONSULTATION — Website vs App vs AI advice for business owners
@@ -166,7 +166,7 @@ export const KNOWLEDGE_BASE: QAItem[] = [
     category: 'consultation',
     keywords: ['business owner', 'my company', 'my business', 'help me', 'help my business', 'how can you help', 'how ad tech can help', 'need help', 'i own', 'i run', 'i have a', 'what should i', 'should i get', 'do i need', 'website or app', 'app or website', 'which is better'],
     question: "I'm a business owner — how can AD TECH help my company? Should I get a website or an app?",
-    answer: "AD TECH helps organizations across all industries (including retail, real estate, healthcare, education, and services) design, build, and scale custom digital platforms. A **website** is essential for online visibility, Google search discovery (SEO), product/service showcases, and customer lead generation. A **mobile app** (Android & iOS) is ideal for customer engagement, push notifications, and order tracking. We also build custom **AI Chatbots & Agents** to streamline daily operations 24/7. Connect with our team at hradtechenterpriseschepvtltd@gmail.com or call +91 83193 58568 to get a custom digital roadmap for your business!"
+    answer: "AD TECH helps organizations across all industries (including retail, real estate, healthcare, education, and services) design, build, and scale custom digital platforms. A **website** is essential for online visibility, Google search discovery (SEO), product/service showcases, and customer lead generation. A **mobile app** (Android & iOS) is ideal for customer engagement, push notifications, and order tracking. We also build custom **AI Chatbots & Agents** to streamline daily operations 24/7. Connect with our team at ad.tech.enterprises.pvt.ltd@gmail.com or call +91 83193 58568 to get a custom digital roadmap for your business!"
   },
 
   // 17b. FURNITURE & RETAIL SPECIFIC CONSULTATION
@@ -174,7 +174,7 @@ export const KNOWLEDGE_BASE: QAItem[] = [
     category: 'consultation',
     keywords: ['furniture', 'furniture company', 'furniture store', 'furniture owner', 'furniture business'],
     question: "A furniture company owner is asking: would an app or a website be better for my business?",
-    answer: "For a furniture store or home decor business, a **high-performance website** is essential as your primary digital showroom for Google search discovery (SEO), high-resolution product catalogs, customer inquiries, and e-commerce transactions. A **mobile app** complements this by enabling customer loyalty programs, push notifications for new collections, and order tracking. At AD TECH, we recommend starting with a responsive e-commerce web platform and optionally building a native mobile app. Connect with us at hradtechenterpriseschepvtltd@gmail.com or call +91 83193 58568 to get started!"
+    answer: "For a furniture store or home decor business, a **high-performance website** is essential as your primary digital showroom for Google search discovery (SEO), high-resolution product catalogs, customer inquiries, and e-commerce transactions. A **mobile app** complements this by enabling customer loyalty programs, push notifications for new collections, and order tracking. At AD TECH, we recommend starting with a responsive e-commerce web platform and optionally building a native mobile app. Connect with us at ad.tech.enterprises.pvt.ltd@gmail.com or call +91 83193 58568 to get started!"
   },
 
   // 18. HELP BUILDING A WEBSITE OR WEB APP
@@ -182,7 +182,7 @@ export const KNOWLEDGE_BASE: QAItem[] = [
     category: 'services',
     keywords: ['building a website', 'build a website', 'help me building', 'help me build', 'can you help me building', 'can you help me build', 'build website', 'create a website', 'website development', 'web application', 'custom website'],
     question: "Can AD TECH help me build a website or web application?",
-    answer: "Yes, absolutely! AD TECH Enterprises specializes in designing and developing custom high-performance web applications, business websites, enterprise portals, e-commerce stores, and SaaS platforms using Next.js, React, and Tailwind CSS. We craft responsive, fast-loading, and SEO-optimized sites with admin dashboards tailored to your exact business workflow. Contact our team at hradtechenterpriseschepvtltd@gmail.com or call +91 83193 58568 to get started!"
+    answer: "Yes, absolutely! AD TECH Enterprises specializes in designing and developing custom high-performance web applications, business websites, enterprise portals, e-commerce stores, and SaaS platforms using Next.js, React, and Tailwind CSS. We craft responsive, fast-loading, and SEO-optimized sites with admin dashboards tailored to your exact business workflow. Contact our team at ad.tech.enterprises.pvt.ltd@gmail.com or call +91 83193 58568 to get started!"
   },
 
   // 19. PRICING & PROJECT SCOPE
@@ -206,7 +206,7 @@ export const KNOWLEDGE_BASE: QAItem[] = [
     category: 'internship',
     keywords: ['how to apply', 'how can i apply', 'how to apply for internship', 'how to apply for job', 'internship application', 'apply for developer', 'requirements to apply', 'github portfolio', 'resume submission'],
     question: "How can I apply for a developer internship at AD TECH and what materials do I need to submit?",
-    answer: "To apply for a developer internship at AD TECH, send an email to **hradtechenterpriseschepvtltd@gmail.com** with:\n1) Your updated **Resume / CV**\n2) Your **GitHub Profile** or project portfolio link\n3) Your primary tech stack interest (Frontend, Backend, AI, Android/iOS, or QA).\nOur team will review your application and invite qualified candidates to participate in our 5-day evaluation sprint!"
+    answer: "To apply for a developer internship at AD TECH, send an email to **ad.tech.enterprises.pvt.ltd@gmail.com** with:\n1) Your updated **Resume / CV**\n2) Your **GitHub Profile** or project portfolio link\n3) Your primary tech stack interest (Frontend, Backend, AI, Android/iOS, or QA).\nOur team will review your application and invite qualified candidates to participate in our 5-day evaluation sprint!"
   },
 
   // 22. STIPENDS, CERTIFICATES & PERKS FOR INTERNS
@@ -248,11 +248,11 @@ export const QUICK_ACTIONS_RESPONSES = {
     suggestions: ["Scroll to Services", "Book a Callback"]
   },
   internship: {
-    message: "Our internship program embodies our tagline 'Building Future Tech Talent', offering practical developer roles working on 5-day evaluation sprint deliverables. To apply, send your resume and portfolio to hradtechenterpriseschepvtltd@gmail.com.\n\nWould you like to open our Careers & Internships page?",
+    message: "Our internship program embodies our tagline 'Building Future Tech Talent', offering practical developer roles working on 5-day evaluation sprint deliverables. To apply, send your resume and portfolio to ad.tech.enterprises.pvt.ltd@gmail.com.\n\nWould you like to open our Careers & Internships page?",
     suggestions: ["Scroll to Careers", "Contact Us"]
   },
   contact: {
-    message: "You can connect directly with AD TECH Enterprises Pvt. Ltd.:\n- **Email**: hradtechenterpriseschepvtltd@gmail.com\n- **Phone**: +91 83193 58568\n\nYou can also click 'Book a Callback' below to submit your details directly.",
+    message: "You can connect directly with AD TECH Enterprises Pvt. Ltd.:\n- **Email**: ad.tech.enterprises.pvt.ltd@gmail.com\n- **Phone**: +91 83193 58568\n\nYou can also click 'Book a Callback' below to submit your details directly.",
     suggestions: ["Book a Callback", "Submit Requirements"]
   }
 };

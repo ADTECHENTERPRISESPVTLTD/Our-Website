@@ -34,7 +34,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: "How can clients get in touch or start a project?",
-    answer: "Clients can reach out directly via email at hradtechenterpriseschepvtltd@gmail.com or call +91 83193 58568 to discuss digital transformation and software needs."
+    answer: "Clients can reach out directly via email at ad.tech.enterprises.pvt.ltd@gmail.com or call +91 83193 58568 to discuss digital transformation and software needs."
   },
   {
     question: "What are the core values driving AD TECH's team?",

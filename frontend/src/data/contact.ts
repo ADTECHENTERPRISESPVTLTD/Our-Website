@@ -9,8 +9,8 @@ export const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    value: "hradtechenterpriseschepvtltd@gmail.com",
-    link: "mailto:hradtechenterpriseschepvtltd@gmail.com",
+    value: "ad.tech.enterprises.pvt.ltd@gmail.com",
+    link: "mailto:ad.tech.enterprises.pvt.ltd@gmail.com",
   },
   {
     icon: Phone,

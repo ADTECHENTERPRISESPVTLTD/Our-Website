@@ -208,7 +208,7 @@ function formatKnowledgeToBusinessStyle(rawText: string, message: string): strin
   let callToAction = "Would you like to discuss a custom solution with AD TECH?";
 
   if (queryLower.includes('intern') || queryLower.includes('career') || queryLower.includes('apply') || queryLower.includes('hiring') || queryLower.includes('resume')) {
-    callToAction = "You can send your resume and portfolio directly to AD TECH's team at hradtechenterpriseschepvtltd@gmail.com!";
+    callToAction = "You can send your resume and portfolio directly to AD TECH's team at ad.tech.enterprises.pvt.ltd@gmail.com!";
   } else if (queryLower.includes('contact') || queryLower.includes('email') || queryLower.includes('phone') || queryLower.includes('reach') || queryLower.includes('mail')) {
     callToAction = "Would you like to schedule a callback session with AD TECH's technical team?";
   } else if (queryLower.includes('web') || queryLower.includes('app') || queryLower.includes('ai') || queryLower.includes('service') || queryLower.includes('tech stack')) {

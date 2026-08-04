@@ -13,7 +13,7 @@ export const COMPANY = {
   name: "AD Tech Enterprises Pvt. Ltd.",
   shortName: "AD TECH",
   tagline: "Building Future Tech Talent.",
-  email: "hradtechenterpriseschepvtltd@gmail.com",
+  email: "ad.tech.enterprises.pvt.ltd@gmail.com",
   phone: "+91 83193 58568",
   address: "Nagpur, Maharashtra, India",
   workingHours: "Monday - Saturday",

@@ -361,17 +361,20 @@ export default function ChatWidget() {
       .replace(/https?:\/\/\S+/g, '')
       .trim();
 
-    // Specific phonetic formatting for email addresses (e.g. hradtechenterpriseschepvtltd@gmail.com -> H R A D Tech Enterprises Private Limited at gmail dot com)
-    clean = clean.replace(/(\w+)@([a-zA-Z0-9.\-]+)/gi, (match: string, username: string, domain: string) => {
+    // Specific phonetic formatting for email addresses (e.g. ad.tech.enterprises.pvt.ltd@gmail.com -> A D Tech Enterprises Private Limited at gmail dot com)
+    clean = clean.replace(/([a-zA-Z0-9.\-_]+)@([a-zA-Z0-9.\-_]+)/gi, (match: string, username: string, domain: string) => {
       let cleanUser = username
+        .replace(/\./g, ' ')
         .replace(/hradtech/gi, 'H R A D Tech ')
         .replace(/adtech/gi, 'A D Tech ')
-        .replace(/enterprises/gi, 'Enterprises ')
+        .replace(/\bad\b/gi, 'A D')
+        .replace(/\btech\b/gi, 'Tech')
+        .replace(/enterprises/gi, 'Enterprises')
         .replace(/che/gi, ' ')
-        .replace(/pvtltd/gi, ' Private Limited ')
-        .replace(/pvt/gi, ' Private ')
-        .replace(/ltd/gi, ' Limited ')
-        .replace(/hr/gi, 'H R ');
+        .replace(/pvtltd/gi, 'Private Limited')
+        .replace(/\bpvt\b/gi, 'Private')
+        .replace(/\bltd\b/gi, 'Limited')
+        .replace(/\bhr\b/gi, 'H R');
 
       let cleanDomain = domain.replace(/\./g, ' dot ');
       return `${cleanUser} at ${cleanDomain}`;

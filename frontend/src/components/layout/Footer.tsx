@@ -148,11 +148,11 @@ export default function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="mailto:hradtechenterpriseschepvtltd@gmail.com"
+                  href="mailto:ad.tech.enterprises.pvt.ltd@gmail.com"
                   className="group flex items-start gap-3 text-sm text-slate-400 transition-all duration-300 hover:text-white"
                 >
                   <Mail size={16} className="mt-0.5 text-cyan-400 shrink-0" />
-                  <span className="break-all">hradtechenterpriseschepvtltd@gmail.com</span>
+                  <span className="break-all">ad.tech.enterprises.pvt.ltd@gmail.com</span>
                 </a>
               </li>
               <li>
