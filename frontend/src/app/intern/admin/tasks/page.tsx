@@ -13,7 +13,8 @@ import {
   Calendar,
   AlertCircle,
   X,
-  AlertTriangle
+  AlertTriangle,
+  FileText
 } from "lucide-react";
 import api from "@/lib/api";
 
@@ -60,6 +61,10 @@ export default function AdminTasksPage() {
 
   const [reassignInternId, setReassignInternId] = useState("");
 
+  // PDF attachment state
+  const [taskAttachment, setTaskAttachment] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -80,13 +85,39 @@ export default function AdminTasksPage() {
   // Handlers
   const handleCreateTask = async (e: React.FormEvent) => {
     e.preventDefault();
+    setUploading(true);
     try {
-      await api.post("/tasks", taskForm);
+      const res = await api.post("/tasks", taskForm);
+      const newTaskId = res.data.data?._id;
+
+      if (newTaskId && taskAttachment) {
+        const formData = new FormData();
+        formData.append("file", taskAttachment);
+        await api.put(`/tasks/${newTaskId}/attachment`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+      }
+
       alert("Task Created Successfully!");
       setActiveModal(null);
+      setTaskAttachment(null);
+      setTaskForm({
+        taskTitle: "",
+        description: "",
+        priority: "Medium",
+        deadline: "",
+        category: "General",
+        assignedIntern: interns[0]?._id || "",
+      });
       fetchData();
     } catch (err: any) {
-      alert(err.response?.data?.error || "Failed to create task");
+      alert(
+        err.response?.data?.error ||
+          err.response?.data?.message ||
+          "Failed to create task. Only PDF files are allowed."
+      );
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -179,6 +210,7 @@ export default function AdminTasksPage() {
               category: "General",
               assignedIntern: interns[0]?._id || "",
             });
+            setTaskAttachment(null);
             setActiveModal("create");
           }}
           className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition shadow-md cursor-pointer"
@@ -498,6 +530,41 @@ export default function AdminTasksPage() {
                       )}
                     </div>
 
+                    {/* PDF Attachment Upload (Create only) */}
+                    {activeModal === "create" && (
+                      <div>
+                        <label className="block text-xs font-bold uppercase text-slate-400 mb-2">
+                          Attach Task PDF <span className="text-slate-600 normal-case font-medium">(Optional)</span>
+                        </label>
+                        <div className="flex items-center gap-3">
+                          <label className="flex-1 cursor-pointer">
+                            <div className="w-full bg-[#0b1120] border border-dashed border-[#2a3648] hover:border-cyan-500/50 rounded-xl px-4 py-3 text-sm text-slate-400 flex items-center gap-3 transition">
+                              <FileText size={16} className="text-cyan-400 shrink-0" />
+                              <span className="truncate">
+                                {taskAttachment ? taskAttachment.name : "Choose a PDF file..."}
+                              </span>
+                            </div>
+                            <input
+                              type="file"
+                              accept="application/pdf"
+                              className="hidden"
+                              onChange={(e) => setTaskAttachment(e.target.files?.[0] || null)}
+                            />
+                          </label>
+                          {taskAttachment && (
+                            <button
+                              type="button"
+                              onClick={() => setTaskAttachment(null)}
+                              className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition shrink-0 cursor-pointer"
+                              title="Remove PDF"
+                            >
+                              <X size={16} />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
                     <div className="flex justify-end gap-3 pt-4 border-t border-[#1e293b]">
                       <button
                         type="button"
@@ -508,9 +575,10 @@ export default function AdminTasksPage() {
                       </button>
                       <button
                         type="submit"
-                        className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white text-sm font-semibold shadow-md transition"
+                        disabled={uploading}
+                        className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white text-sm font-semibold shadow-md transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                       >
-                        {activeModal === "create" ? "Create Task" : "Save Changes"}
+                        {uploading ? "Creating..." : activeModal === "create" ? "Create Task" : "Save Changes"}
                       </button>
                     </div>
                   </form>

@@ -3,20 +3,16 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
+import type { Variants } from "framer-motion";
 import {
   ArrowRight,
   ChevronDown,
-  Sparkles,
   Shield,
-  Cpu,
   Cloud,
   Code2,
   Bot,
   Users,
-  Building2,
-  Zap,
-  Smartphone,
-  Globe,
+  Cpu,
 } from "lucide-react";
 import AnimatedHeading from "@/components/ui/AnimatedHeading";
 import HeroBackground from "./HeroBackground";
@@ -29,63 +25,6 @@ const highlights = [
   { label: "Cyber Security", icon: Shield },
   { label: "Software Delivery", icon: Code2 },
 ];
-
-const stats = [
-  { value: 100, suffix: "+", label: "Projects Delivered", icon: Zap },
-  { value: 50, suffix: "+", label: "Happy Clients", icon: Users },
-  { value: 99, suffix: "%", label: "Client Satisfaction", icon: Sparkles },
-  { value: 5, suffix: "+", label: "Years Excellence", icon: Building2 },
-];
-
-const techItems = [
-  { icon: Bot, label: "AI & ML" },
-  { icon: Cloud, label: "Cloud Native" },
-  { icon: Shield, label: "Cyber Security" },
-  { icon: Smartphone, label: "App Development" },
-  { icon: Globe, label: "Web Solutions" },
-  { icon: Zap, label: "Automation" },
-];
-
-// ─── Animated Counter ─────────────────────────────────────────────────────────
-
-function AnimatedCounter({
-  value,
-  suffix = "",
-  duration = 2,
-}: {
-  value: number;
-  suffix?: string;
-  duration?: number;
-}) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  useEffect(() => {
-    if (!isInView) return;
-
-    let startTime: number | null = null;
-    const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-      setCount(Math.floor(eased * value));
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    };
-
-    requestAnimationFrame(step);
-  }, [isInView, value, duration]);
-
-  return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>
-  );
-}
 
 // ─── Magnetic Button Wrapper ──────────────────────────────────────────────────
 
@@ -137,36 +76,40 @@ function MagneticButton({
   );
 }
 
-// ─── Floating Tech Card ───────────────────────────────────────────────────────
-
-function FloatingTechCard({
-  children,
-  className = "",
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay, ease: "easeOut" }}
-      className={`tech-float-card ${className}`}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
 // ─── Main Hero Component ─────────────────────────────────────────────────────
 
 export default function Hero() {
   const [subtitleIndex, setSubtitleIndex] = useState(0);
+  const [spot, setSpot] = useState({ x: 50, y: 40 });
   const sectionRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const isContentInView = useInView(contentRef, { once: true, margin: "-50px" });
+
+  // Premium staged entrance variants
+  const heroContainer: Variants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.14, delayChildren: 0.05 } },
+  };
+  const heroItem: Variants = {
+    hidden: { opacity: 0, y: 26, scale: 0.985, filter: "blur(6px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
+  // Interactive spotlight that follows the cursor inside the hero
+  const handleSpotMove = useCallback((e: React.MouseEvent) => {
+    const rect = sectionRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    setSpot({
+      x: ((e.clientX - rect.left) / rect.width) * 100,
+      y: ((e.clientY - rect.top) / rect.height) * 100,
+    });
+  }, []);
 
   const taglines = [
     "Empowering Businesses Through Intelligent Technology",
@@ -174,11 +117,11 @@ export default function Hero() {
     "AI-Driven Solutions For Tomorrow's Challenges",
   ];
 
-  // Rotating tagline effect
+  // Rotating tagline effect - 15 seconds per tagline so visitors can read them
   useEffect(() => {
     const interval = setInterval(() => {
       setSubtitleIndex((prev) => (prev + 1) % taglines.length);
-    }, 4000);
+    }, 15000);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -191,12 +134,27 @@ export default function Hero() {
     }
   };
 
-  return (
+return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center bg-transparent overflow-hidden"
+      onMouseMove={handleSpotMove}
+      className="relative min-h-screen flex flex-col bg-transparent overflow-hidden"
       aria-label="Hero section"
     >
+      {/* ─── Animated Canvas Background ─── */}
+      <HeroBackground />
+
+      {/* ─── Interactive Cursor Spotlight ─── */}
+      <motion.div
+        aria-hidden="true"
+        className="hero-spotlight pointer-events-none"
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+        transition={{ duration: 1.2, delay: 0.4 }}
+        style={{
+          background: `radial-gradient(circle 420px at ${spot.x}% ${spot.y}%, rgba(6, 182, 212, 0.1), transparent 70%)`,
+        }}
+      />
 
       {/* ─── Gradient Overlays ─── */}
       <div
@@ -208,67 +166,69 @@ export default function Hero() {
         aria-hidden="true"
       />
 
+
       {/* ─── Grid Overlay ─── */}
       <div
         className="absolute inset-0 z-[1] bg-grid compact opacity-40 pointer-events-none"
         aria-hidden="true"
       />
 
-      {/* ─── Main Content ─── */}
+      {/* ─── Decorative Floating Orbs ─── */}
       <div
-        ref={contentRef}
-        className="hero-content-wrapper w-full z-10 mx-auto max-w-7xl px-6 py-20 lg:py-28"
-      >
-        <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16">
-          {/* ─── Left Column: Text + CTAs ─── */}
-          <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            animate={isContentInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex-1 max-w-2xl"
-          >
-            {/* Pill Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-300">
-                <Sparkles size={14} className="text-cyan-400" />
-                AI • Cloud • Cyber Security • Software Development
-              </span>
-            </motion.div>
+        className="absolute top-1/4 left-[8%] w-64 h-64 rounded-full border border-cyan-400/10 floating-element pointer-events-none"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute bottom-1/4 right-[6%] w-80 h-80 rounded-full border border-purple-500/10 floating-element-delayed pointer-events-none"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute top-1/3 right-[12%] w-32 h-32 rounded-full border border-cyan-400/10 floating-element-delayed pointer-events-none"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute bottom-1/3 left-[10%] w-24 h-24 rounded-full border border-blue-500/10 floating-element pointer-events-none"
+        aria-hidden="true"
+      />
 
-            {/* Main Heading */}
-            <div className="mt-8">
+      {/* ─── Main Content Area (flex-1 to push scroll indicator to bottom) ─── */}
+      <div className="flex-1 flex items-start lg:items-center justify-center">
+        <div
+          ref={contentRef}
+          className="hero-content-wrapper w-full z-10 mx-auto max-w-7xl px-6 pt-12 pb-8 sm:pt-24 sm:pb-8 lg:py-28"
+        >
+          <motion.div
+            variants={heroContainer}
+            initial="hidden"
+            animate={isContentInView ? "visible" : "hidden"}
+            className="mx-auto max-w-5xl text-center"
+          >
+            {/* Eyebrow */}
+            <motion.p
+              variants={heroItem}
+              className="hero-eyebrow"
+            >
+              <span className="hero-eyebrow-dot" />
+              AD TECH ENTERPRISES PVT. LTD.
+            </motion.p>
+
+            {/* Rotating Main Heading (SplitText char animation) */}
+            <motion.div
+              variants={heroItem}
+              className="mt-8 flex items-center justify-center"
+            >
               <AnimatedHeading
-                text="AD TECH ENTERPRISES PVT. LTD."
-                className="hero-title text-left text-[#F8FAFC]"
+                key={subtitleIndex}
+                text={taglines[subtitleIndex]}
+                className="hero-tagline text-center text-[#F8FAFC]"
                 tag="h1"
               />
-              <div className="mt-2 h-1 w-24 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" />
-            </div>
-
-            {/* Rotating Tagline */}
-            <div className="mt-6 h-12 overflow-hidden">
-              <motion.p
-                key={subtitleIndex}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="text-2xl font-semibold text-[#E2E8F0] sm:text-3xl typing-cursor"
-              >
-                {taglines[subtitleIndex]}
-              </motion.p>
-            </div>
+            </motion.div>
 
             {/* Description */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-6 max-w-2xl text-lg leading-8 text-[#94A3B8]"
+              variants={heroItem}
+              className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-[#94A3B8] sm:text-xl"
             >
               We help organizations unlock growth with tailored AI, software, cloud
               and automation solutions built for performance, security and scale.
@@ -276,12 +236,11 @@ export default function Hero() {
 
             {/* CTA Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="mt-10 flex flex-wrap gap-4"
+              variants={heroItem}
+              className="mt-12 flex flex-wrap items-center justify-center gap-4"
             >
               <MagneticButton href="/services" className="hero-cta hero-cta-primary group">
+                <span className="hero-cta-shine" aria-hidden="true" />
                 Explore Services
                 <ArrowRight
                   size={18}
@@ -293,30 +252,30 @@ export default function Hero() {
                 Contact Us
               </MagneticButton>
 
-              <MagneticButton href="/careers" className="hero-cta hero-cta-ghost group">
-                <Users size={18} />
-                Careers
-              </MagneticButton>
+              <div className="flex flex-wrap items-center justify-center gap-3 w-full sm:w-auto">
+                <MagneticButton href="/careers" className="hero-cta hero-cta-ghost group">
+                  <Users size={16} />
+                  Careers
+                </MagneticButton>
 
-              <MagneticButton href="/login" className="hero-cta hero-cta-gradient group">
-                <Cpu size={18} />
+<MagneticButton href="/intern/login" className="hero-cta hero-cta-gradient group">
+                <Cpu size={16} />
                 Intern Dashboard
               </MagneticButton>
+              </div>
             </motion.div>
 
             {/* Highlights Pills */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-8 flex flex-wrap gap-3"
+              variants={heroItem}
+              className="mt-12 flex flex-wrap items-center justify-center gap-3"
             >
               {highlights.map((item) => {
                 const Icon = item.icon;
                 return (
                   <span
                     key={item.label}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-[#2A3648] bg-[#111827]/80 px-4 py-2 text-sm text-[#CBD5E1] transition-all duration-300 hover:border-cyan-400/40 hover:bg-[#111827]"
+                    className="hero-highlight-pill"
                   >
                     <Icon size={14} className="text-cyan-400" />
                     {item.label}
@@ -325,77 +284,24 @@ export default function Hero() {
               })}
             </motion.div>
           </motion.div>
-
-          {/* ─── Right Column: Stats + Tech Cards ─── */}
-          <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            animate={isContentInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            className="flex-1 mt-12 lg:mt-0"
-          >
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {stats.map((stat, index) => {
-                const Icon = stat.icon;
-                return (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                    className="stat-card group"
-                  >
-                    <Icon
-                      size={20}
-                      className="text-cyan-400/60 group-hover:text-cyan-400 transition-colors duration-300"
-                    />
-                    <h3 className="mt-2 text-3xl font-bold text-[#F8FAFC]">
-                      <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                    </h3>
-                    <p className="mt-1 text-sm text-[#94A3B8]">{stat.label}</p>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            {/* Tech Floating Cards */}
-            <div className="mt-6 grid grid-cols-3 gap-3">
-              {techItems.map((item, index) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.7 + index * 0.05 }}
-                  className="flex flex-col items-center gap-1.5 rounded-xl border border-[#2A3648]/60 bg-[#111827]/60 px-3 py-3 text-center transition-all duration-300 hover:border-cyan-400/30 hover:bg-[#111827]/90 hover:scale-105 cursor-default"
-                >
-                  {(() => {
-                    const IconComponent = item.icon;
-                    return <IconComponent size={20} className="text-cyan-400" />;
-                  })()}
-                  <span className="text-xs font-medium text-[#94A3B8]">{item.label}</span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
         </div>
       </div>
 
-      {/* ─── Scroll Indicator ─── */}
-      <div className="scroll-indicator" onClick={scrollToNext} role="button" tabIndex={0} aria-label="Scroll to next section" onKeyDown={(e) => { if (e.key === 'Enter') scrollToNext(); }}>
+      {/* ─── Scroll Indicator (in flow, centered at bottom) ─── */}
+      <div
+        className="scroll-indicator"
+        onClick={scrollToNext}
+        role="button"
+        tabIndex={0}
+        aria-label="Scroll to next section"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") scrollToNext();
+        }}
+      >
         <span>Scroll</span>
         <div className="scroll-mouse" />
         <ChevronDown size={14} />
       </div>
-
-      {/* ─── Decorative Elements ─── */}
-      <div
-        className="absolute top-1/4 right-[5%] w-72 h-72 border border-cyan-400/5 rounded-full floating-element pointer-events-none"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute bottom-1/4 left-[3%] w-48 h-48 border border-purple-500/5 rounded-full floating-element-delayed pointer-events-none"
-        aria-hidden="true"
-      />
     </section>
   );
 }

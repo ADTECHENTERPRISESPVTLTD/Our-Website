@@ -6,7 +6,7 @@ import AnimatedHeading from "@/components/ui/AnimatedHeading";
 
 export default function ContactHero() {
   return (
-    <section className="site-hero relative overflow-hidden py-28">
+    <section className="site-hero relative overflow-hidden pt-16 pb-20 sm:pt-24 sm:pb-24">
       {/* Background Glows */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="bg-glow-cyan -left-20 top-10 h-[400px] w-[400px] opacity-60" />

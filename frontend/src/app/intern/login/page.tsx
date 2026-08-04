@@ -30,9 +30,16 @@ export default function LoginPage() {
     // Save JWT
     localStorage.setItem("token", response.data.token);
 
+    const role = response.data?.data?.role;
+
     alert("Login Successful!");
 
-    router.push("/intern/dashboard");
+    // Route based on role: Admins go to Admin Panel, interns go to Intern Dashboard
+    if (role === "Admin") {
+      router.push("/intern/admin");
+    } else {
+      router.push("/intern/dashboard");
+    }
   } catch (error: any) {
     alert(error.response?.data?.message || "Invalid email or password");
   } finally {

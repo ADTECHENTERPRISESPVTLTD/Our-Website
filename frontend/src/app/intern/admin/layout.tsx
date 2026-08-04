@@ -38,6 +38,7 @@ export default function AdminLayout({
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [user, setUser] = useState<any>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const router = useRouter();
@@ -46,6 +47,11 @@ export default function AdminLayout({
   useEffect(() => {
     checkAdminAuth();
   }, []);
+
+  // Close the mobile sidebar whenever the route changes
+  useEffect(() => {
+    setIsMobileSidebarOpen(false);
+  }, [pathname]);
 
   const checkAdminAuth = async () => {
     try {
@@ -178,12 +184,14 @@ export default function AdminLayout({
         {/* Sidebar Header */}
         <div className="h-20 flex items-center justify-between px-6 border-b border-[#1e293b]/70">
           <Link href="/intern/admin" className="flex items-center gap-3">
-            <span className="h-8 w-8 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-cyan-500/20">
-              AD
-            </span>
+            <img
+              src="/Ad tech logo.png"
+              alt="AD Tech Logo"
+              className="h-10 w-10 object-contain drop-shadow-[0_0_10px_rgba(6,182,212,0.3)]"
+            />
             {isSidebarOpen && (
-              <span className="font-bold text-[#F8FAFC] tracking-wider text-sm">
-                AD TECH ADMIN
+              <span className="font-bold text-[#F8FAFC] tracking-wider text-lg">
+                AD<span className="text-cyan-400">TECH</span>
               </span>
             )}
           </Link>
@@ -230,19 +238,106 @@ export default function AdminLayout({
         </div>
       </aside>
 
+      {/* Mobile Sidebar Drawer */}
+      <AnimatePresence>
+        {isMobileSidebarOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileSidebarOpen(false)}
+              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+              aria-hidden="true"
+            />
+            <motion.aside
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="fixed top-0 left-0 bottom-0 z-50 w-72 max-w-[85vw] bg-[#0d1527] border-r border-[#1e293b]/70 flex flex-col md:hidden"
+            >
+              <div className="h-20 flex items-center justify-between px-5 border-b border-[#1e293b]/70">
+                <Link href="/intern/admin" onClick={() => setIsMobileSidebarOpen(false)} className="flex items-center gap-3">
+                  <img
+                    src="/Ad tech logo.png"
+                    alt="AD Tech Logo"
+                    className="h-10 w-10 object-contain"
+                  />
+                  <span className="font-bold text-[#F8FAFC] tracking-wider text-lg">
+                    AD<span className="text-cyan-400">TECH</span>
+                  </span>
+                </Link>
+                <button
+                  onClick={() => setIsMobileSidebarOpen(false)}
+                  className="p-2 text-[#94A3B8] hover:text-white rounded-lg hover:bg-[#1e293b] transition cursor-pointer"
+                  aria-label="Close menu"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+                {menuItems.map((item) => {
+                  const isActive = pathname === item.path;
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.path}
+                      onClick={() => setIsMobileSidebarOpen(false)}
+                      className={`flex items-center gap-4 px-4 py-3.5 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer ${
+                        isActive
+                          ? "bg-gradient-to-r from-cyan-500/10 to-blue-600/10 border border-cyan-500/30 text-cyan-300"
+                          : "text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-[#111827]/40 border border-transparent"
+                      }`}
+                    >
+                      <item.icon size={20} className={isActive ? "text-cyan-400" : "text-[#64748B]"} />
+                      <span>{item.name}</span>
+                    </Link>
+                  );
+                })}
+              </nav>
+
+              <div className="p-4 border-t border-[#1e293b]/70">
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#111827]/50 border border-[#1e293b]/50 justify-between">
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-[#F8FAFC] truncate">{user?.fullName}</p>
+                    <p className="text-[10px] text-cyan-400 font-semibold uppercase tracking-wider">Admin Portal</p>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="p-2 text-[#64748B] hover:text-red-400 rounded-lg hover:bg-red-500/10 transition cursor-pointer"
+                    title="Logout"
+                  >
+                    <LogOut size={18} />
+                  </button>
+                </div>
+              </div>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+
       {/* Main Content Area */}
       <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${isSidebarOpen ? "md:pl-64" : "md:pl-20"}`}>
         
         {/* Header */}
-        <header className="h-20 bg-[#0d1527]/70 border-b border-[#1e293b]/70 backdrop-blur-md sticky top-0 z-30 px-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <header className="h-20 bg-[#0d1527]/70 border-b border-[#1e293b]/70 backdrop-blur-md sticky top-0 z-30 px-4 md:px-6 flex items-center justify-between">
+          <div className="flex items-center gap-4 min-w-0">
             <button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="p-2 hover:bg-[#1e293b]/50 rounded-lg text-[#94A3B8] hover:text-[#F8FAFC] cursor-pointer"
+              onClick={() => {
+                // On mobile the hidden sidebar opens as a drawer, on desktop it collapses
+                if (window.innerWidth < 768) {
+                  setIsMobileSidebarOpen(!isMobileSidebarOpen);
+                } else {
+                  setIsSidebarOpen(!isSidebarOpen);
+                }
+              }}
+              className="p-2 hover:bg-[#1e293b]/50 rounded-lg text-[#94A3B8] hover:text-[#F8FAFC] cursor-pointer shrink-0"
             >
               <Menu size={20} />
             </button>
-            <h2 className="text-lg font-bold text-[#F8FAFC]">
+            <h2 className="text-sm sm:text-lg font-bold text-[#F8FAFC] truncate max-w-[30vw] sm:max-w-none">
               {menuItems.find((item) => pathname === item.path)?.name || "Admin Management"}
             </h2>
           </div>
@@ -266,7 +361,7 @@ export default function AdminLayout({
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    className="absolute right-0 mt-3 w-80 bg-[#0e1628]/95 border border-[#1e293b] rounded-2xl p-4 shadow-2xl backdrop-blur-lg"
+                    className="fixed top-20 right-3 left-3 z-[60] md:absolute md:top-full md:right-0 md:left-auto md:mt-3 md:w-80 bg-[#0e1628]/95 border border-[#1e293b] rounded-2xl p-4 shadow-2xl backdrop-blur-lg"
                   >
                     <div className="flex items-center justify-between pb-3 border-b border-[#1e293b] mb-3">
                       <span className="font-bold text-sm text-[#F8FAFC]">System Alerts</span>
@@ -275,7 +370,7 @@ export default function AdminLayout({
                       </span>
                     </div>
 
-                    <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
+                    <div className="space-y-3 max-h-[50vh] overflow-y-auto pr-1 md:max-h-60">
                       {notifications.map((item) => (
                         <div key={item.id} className="p-2.5 rounded-xl bg-[#111827]/80 border border-[#1e293b]/70 flex items-start gap-3">
                           {item.type === "task_overdue" ? (
@@ -298,21 +393,29 @@ export default function AdminLayout({
               </AnimatePresence>
             </div>
 
-            {/* Profile Dropdown */}
-            <div className="flex items-center gap-3 pl-4 border-l border-[#1e293b]">
-              <div className="h-9 w-9 rounded-full bg-[#111827] border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+            {/* Profile + Logout */}
+            <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-4 border-l border-[#1e293b]">
+              <div className="hidden sm:flex h-9 w-9 rounded-full bg-[#111827] border border-cyan-500/30 items-center justify-center text-cyan-400">
                 <User size={16} />
               </div>
               <div className="hidden lg:block">
                 <p className="text-xs font-bold text-[#F8FAFC]">{user?.fullName}</p>
                 <p className="text-[10px] text-[#64748B] font-semibold">{user?.department}</p>
               </div>
+              <button
+                onClick={handleLogout}
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-semibold hover:bg-red-500/20 hover:border-red-500/50 hover:text-red-300 transition-all duration-300 cursor-pointer"
+                title="Logout"
+              >
+                <LogOut size={15} />
+                <span className="hidden md:inline">Logout</span>
+              </button>
             </div>
           </div>
         </header>
 
         {/* Content Wrapper */}
-        <div className="flex-1 p-6 md:p-8 overflow-y-auto">
+        <div className="flex-1 p-4 md:p-8 overflow-y-auto">
           {children}
         </div>
       </div>

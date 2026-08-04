@@ -146,3 +146,81 @@ export const scaleUpProps = {
   variants: scaleUp,
 };
 
+// ═══════════════════════════════════════════════════════════════════════
+// Premium transitions (v2) — cinematic blur + drift entrance
+// ═══════════════════════════════════════════════════════════════════════
+
+export const premiumTransition: Transition = {
+  duration: 0.85,
+  ease: [0.22, 1, 0.36, 1], // easeOutQuint feel
+};
+
+export const premiumFadeUp: Variants = {
+  hidden: { opacity: 0, y: 44, scale: 0.98, filter: "blur(6px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: premiumTransition,
+  },
+};
+
+export const premiumFadeLeft: Variants = {
+  hidden: { opacity: 0, x: -56, filter: "blur(6px)" },
+  visible: {
+    opacity: 1,
+    x: 0,
+    filter: "blur(0px)",
+    transition: premiumTransition,
+  },
+};
+
+export const premiumFadeRight: Variants = {
+  hidden: { opacity: 0, x: 56, filter: "blur(6px)" },
+  visible: {
+    opacity: 1,
+    x: 0,
+    filter: "blur(0px)",
+    transition: premiumTransition,
+  },
+};
+
+export const premiumScaleUp: Variants = {
+  hidden: { opacity: 0, scale: 0.86, filter: "blur(8px)" },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: premiumTransition,
+  },
+};
+
+export const premiumFadeUpProps = {
+  initial: "hidden",
+  whileInView: "visible",
+  viewport: viewportOptions,
+  variants: premiumFadeUp,
+};
+
+export const premiumFadeLeftProps = {
+  initial: "hidden",
+  whileInView: "visible",
+  viewport: viewportOptions,
+  variants: premiumFadeLeft,
+};
+
+export const premiumFadeRightProps = {
+  initial: "hidden",
+  whileInView: "visible",
+  viewport: viewportOptions,
+  variants: premiumFadeRight,
+};
+
+export const premiumScaleUpProps = {
+  initial: "hidden",
+  whileInView: "visible",
+  viewport: viewportOptions,
+  variants: premiumScaleUp,
+};
+

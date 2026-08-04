@@ -13,8 +13,8 @@ export default function HeroBackground() {
     if (!ctx) return;
 
     let animationFrameId: number;
-    let mouseX = 0;
-    let mouseY = 0;
+    let mouseX = -1000;
+    let mouseY = -1000;
     let time = 0;
 
     const particles: {
@@ -25,6 +25,8 @@ export default function HeroBackground() {
       speedY: number;
       opacity: number;
       hue: number;
+      twinkleSpeed: number;
+      twinklePhase: number;
     }[] = [];
 
     const resize = () => {
@@ -35,7 +37,7 @@ export default function HeroBackground() {
 
     const initParticles = () => {
       particles.length = 0;
-      const count = Math.min(80, Math.floor((canvas!.width * canvas!.height) / 15000));
+      const count = Math.min(100, Math.floor((canvas!.width * canvas!.height) / 13000));
       for (let i = 0; i < count; i++) {
         particles.push({
           x: Math.random() * canvas!.width,
@@ -43,8 +45,10 @@ export default function HeroBackground() {
           size: Math.random() * 2.5 + 0.5,
           speedX: (Math.random() - 0.5) * 0.4,
           speedY: (Math.random() - 0.5) * 0.4,
-          opacity: Math.random() * 0.5 + 0.1,
-          hue: Math.random() > 0.5 ? 190 : 230, // cyan or blue
+          opacity: Math.random() * 0.5 + 0.15,
+          hue: Math.random() > 0.35 ? (Math.random() > 0.5 ? 190 : 215) : 270, // Cyan, Sky Blue, or Purple
+          twinkleSpeed: Math.random() * 0.004 + 0.002,
+          twinklePhase: Math.random() * Math.PI * 2,
         });
       }
     };
@@ -110,7 +114,10 @@ export default function HeroBackground() {
     const drawParticles = () => {
       if (!canvas || !ctx) return;
 
-      particles.forEach((p) => {
+      const len = particles.length;
+
+      for (let i = 0; i < len; i++) {
+        const p = particles[i];
         p.x += p.speedX;
         p.y += p.speedY;
 
@@ -120,28 +127,56 @@ export default function HeroBackground() {
         if (p.y < 0) p.y = canvas.height;
         if (p.y > canvas.height) p.y = 0;
 
+        // Twinkling glitter opacity
+        const twinkle = Math.sin(time * p.twinkleSpeed + p.twinklePhase) * 0.3;
+        const currentOpacity = Math.max(0.12, Math.min(0.9, p.opacity + twinkle));
+
+        // Slight size pulse
+        const drawSize = p.size * (1 + Math.sin(time * 0.002 + p.twinklePhase) * 0.2);
+
         // Draw particle
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, 80%, 65%, ${p.opacity})`;
+        ctx.arc(p.x, p.y, drawSize, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 82%, 68%, ${currentOpacity})`;
         ctx.fill();
 
-        // Draw connections (nearby particles)
-        particles.forEach((p2) => {
+        // Draw connections (nearby particles) — single pass pair check
+        for (let j = i + 1; j < len; j++) {
+          const p2 = particles[j];
           const dx = p.x - p2.x;
           const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(6, 182, 212, ${0.08 * (1 - dist / 120)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
+          // Quick reject via bounding box before sqrt
+          if (Math.abs(dx) < 120 && Math.abs(dy) < 120) {
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = `rgba(6, 182, 212, ${0.08 * (1 - dist / 120)})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
           }
-        });
-      });
+        }
+
+        // Interactive lines from particles near the cursor
+        if (mouseX > 0 && mouseY > 0) {
+          const mdx = p.x - mouseX;
+          const mdy = p.y - mouseY;
+          if (Math.abs(mdx) < 160 && Math.abs(mdy) < 160) {
+            const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+            if (mdist < 160) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(mouseX, mouseY);
+              ctx.strokeStyle = `rgba(56, 189, 248, ${0.16 * (1 - mdist / 160)})`;
+              ctx.lineWidth = 0.6;
+              ctx.stroke();
+            }
+          }
+        }
+      }
     };
 
     const animate = (timestamp: number) => {
