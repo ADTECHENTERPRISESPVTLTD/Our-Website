@@ -554,6 +554,17 @@ p {
   }
 }
 
+@keyframes orbBreathe {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.5));
+  }
+  50% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 35px rgba(56, 189, 248, 0.8));
+  }
+}
+
 /* ---- Hero Gradient Text ---- */
 .hero-gradient-text {
   background: linear-gradient(135deg, #f8fbff 0%, #7dd3fc 20%, #38bdf8 50%, #818cf8 80%, #06b6d4 100%);
