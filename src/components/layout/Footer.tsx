@@ -107,7 +107,7 @@ export default function Footer() {
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-3">
               <img
-                src="/adtech-logo.png"
+                src="/adtech-logo.svg"
                 alt="AD Tech Logo"
                 className="h-12 w-12 object-contain"
               />

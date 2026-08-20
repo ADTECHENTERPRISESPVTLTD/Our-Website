@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <linearGradient id="aGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+    <linearGradient id="dGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+    <linearGradient id="shadow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Shadow / depth for A -->
+  <path d="M45 215 L115 55 L145 55 L145 215 L115 215 L95 165 L55 165 Z" fill="url(#shadow)" transform="translate(12, 12)"/>
+
+  <!-- Letter A -->
+  <path d="M45 215 L115 55 L145 55 L145 215 L125 215 L125 170 L95 170 L95 215 Z M100 145 L120 145 L110 105 Z" fill="url(#aGrad)"/>
+
+  <!-- Shadow / depth for D -->
+  <path d="M165 55 L265 55 C310 55 335 85 335 135 C335 185 310 215 265 215 L165 215 L165 195 L265 195 C295 195 315 175 315 135 C315 95 295 75 265 75 L165 75 Z" fill="url(#shadow)" transform="translate(12, 12)"/>
+
+  <!-- Letter D -->
+  <path d="M165 55 L265 55 C310 55 335 85 335 135 C335 185 310 215 265 215 L165 215 L165 195 L265 195 C295 195 315 175 315 135 C315 95 295 75 265 75 L165 75 Z M165 55 L165 75 L265 75 C295 75 315 95 315 135 C315 175 295 195 265 195 L165 195 Z" fill="url(#dGrad)" opacity="0.95"/>
+</svg>
