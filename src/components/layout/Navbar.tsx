@@ -38,8 +38,8 @@ export default function Navbar() {
     <nav
       className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#0B1120]/95 backdrop-blur-xl shadow-lg shadow-black/20 border-b border-[#1A2233]"
-          : "bg-[#0B1120]/80 backdrop-blur-md border-b border-[#374151]"
+          ? "bg-[#0B1120] backdrop-blur-xl shadow-lg shadow-black/40 border-b border-[#1A2233]"
+          : "bg-[#0B1120] backdrop-blur-md border-b border-[#1A2233]"
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
@@ -92,7 +92,7 @@ export default function Navbar() {
         {/* Mobile Hamburger */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden relative z-50 flex h-10 w-10 items-center justify-center rounded-xl border border-[#2A3648] bg-[#1A2233]/50 text-white transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-400/10"
+          className="lg:hidden relative z-50 flex h-10 w-10 items-center justify-center rounded-xl border border-[#1A2233] bg-[#0B1120] text-white transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-400/10"
           aria-label="Toggle menu"
         >
           {isOpen ? <X size={20} /> : <Menu size={20} />}
@@ -115,11 +115,11 @@ export default function Navbar() {
 
             {/* Drawer */}
             <motion.div
-              initial={{ x: "-100%" }}
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
+              exit={{ x: "100%" }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="lg:hidden fixed inset-y-0 left-0 z-50 w-80 max-w-[80vw] bg-[#0B1120]/98 backdrop-blur-xl border-r border-[#1A2233] shadow-2xl"
+              className="lg:hidden fixed inset-y-0 right-0 z-50 w-80 max-w-[80vw] bg-[#0B1120] backdrop-blur-xl border-l border-[#1A2233] shadow-2xl"
             >
               <div className="px-6 py-6 space-y-3">
                 <div className="flex items-center justify-between mb-6">
@@ -145,7 +145,7 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className="block rounded-xl border border-[#2A3648] bg-[#1A2233]/50 px-5 py-3 text-[#CBD5E1] font-medium transition-all duration-300 hover:border-cyan-400 hover:text-cyan-400 hover:bg-cyan-400/5"
+                      className="block rounded-xl border border-[#1A2233] bg-[#0B1120] px-5 py-3 text-[#CBD5E1] font-medium transition-all duration-300 hover:border-cyan-400 hover:text-cyan-400 hover:bg-cyan-400/5"
                     >
                       {link.label}
                     </Link>
