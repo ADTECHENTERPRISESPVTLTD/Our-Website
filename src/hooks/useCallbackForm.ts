@@ -133,10 +133,9 @@ export function useCallbackForm(): UseCallbackFormReturn {
 
         await callbackService.create(data);
         setSubmitted(true);
-      } catch (error: any) {
-        setApiError(
-          error.message || "Something went wrong. Please try again."
-        );
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : "Something went wrong. Please try again.";
+        setApiError(message);
       } finally {
         setIsSubmitting(false);
       }

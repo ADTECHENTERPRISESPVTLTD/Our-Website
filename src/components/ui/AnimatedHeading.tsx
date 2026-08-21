@@ -5,14 +5,13 @@ import SplitText from "./SplitText";
 export default function AnimatedHeading({
   text,
   className = "",
-  compactGrid = false,
   tag = "h1",
   ...rest
 }: {
   text: string;
   className?: string;
   compactGrid?: boolean;
-  tag?: any;
+  tag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div";
 }) {
   return (
     <SplitText

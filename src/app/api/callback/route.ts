@@ -22,9 +22,10 @@ export async function POST(request: Request) {
     }
 
     return Response.json(data, { status: 201 });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal server error";
     return Response.json(
-      { success: false, message: error.message || "Internal server error" },
+      { success: false, message },
       { status: 500 }
     );
   }
@@ -33,4 +34,3 @@ export async function POST(request: Request) {
 export async function GET() {
   return Response.json({ success: true, message: "Callback API is running." });
 }
-

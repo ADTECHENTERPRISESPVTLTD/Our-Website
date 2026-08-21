@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import {
@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import AnimatedHeading from "@/components/ui/AnimatedHeading";
 import HeroBackground from "./HeroBackground";
+import MoltenMetal from "@/components/MoltenMetal";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -92,15 +93,13 @@ function AnimatedCounter({
 function MagneticButton({
   children,
   className = "",
-  as: Component = "a",
   href,
-  ...props
+  onClick,
 }: {
   children: React.ReactNode;
   className?: string;
-  as?: any;
   href?: string;
-  [key: string]: any;
+  onClick?: () => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -125,38 +124,15 @@ function MagneticButton({
       className="magnetic-btn inline-block"
     >
       {href ? (
-        <Link href={href} className={className} {...props}>
+        <Link href={href} className={className} onClick={onClick}>
           {children}
         </Link>
       ) : (
-        <span className={className} {...props}>
+        <button type="button" className={className} onClick={onClick}>
           {children}
-        </span>
+        </button>
       )}
     </div>
-  );
-}
-
-// ─── Floating Tech Card ───────────────────────────────────────────────────────
-
-function FloatingTechCard({
-  children,
-  className = "",
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay, ease: "easeOut" }}
-      className={`tech-float-card ${className}`}
-    >
-      {children}
-    </motion.div>
   );
 }
 
@@ -194,10 +170,30 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center bg-[#0B1120]/70 overflow-hidden"
+      className="relative min-h-screen flex items-center bg-[#0B1120]/80 overflow-hidden"
       aria-label="Hero section"
     >
-      {/* ─── Animated Background ─── */}
+      {/* ─── MoltenMetal & Canvas Background ─── */}
+      <MoltenMetal
+        color1="#140d2a"
+        color2="#04a9dd"
+        color3="#fdfafa"
+        speed={0.15}
+        scale={4.9}
+        detail={4}
+        glow={1.5}
+        coreSize={0.11}
+        swirl={1}
+        fold={-0.3}
+        blackPoint={0.06}
+        brightness={1.4}
+        colorMode="ember"
+        grain
+        grainIntensity={0.06}
+        mouseInteraction
+        mouseStrength={0.15}
+        opacity={0.45}
+      />
       <HeroBackground />
 
       {/* ─── Gradient Overlays ─── */}
@@ -401,4 +397,3 @@ export default function Hero() {
     </section>
   );
 }
-

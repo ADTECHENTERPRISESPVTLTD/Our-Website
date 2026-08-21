@@ -2,17 +2,38 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import MoltenMetal from "@/components/MoltenMetal";
 
 export default function FinalCTA() {
   return (
-    <section className="section-shell bg-[#111827]/70 px-6 py-24">
-      <div className="mx-auto max-w-5xl">
+    <section className="relative section-shell overflow-hidden bg-[#0B1120]/80 px-6 py-24">
+      <MoltenMetal
+        color1="#140d2a"
+        color2="#04a9dd"
+        color3="#fdfafa"
+        speed={0.15}
+        scale={4.9}
+        detail={4}
+        glow={1.5}
+        coreSize={0.11}
+        swirl={1}
+        fold={-0.3}
+        blackPoint={0.06}
+        brightness={1.4}
+        colorMode="ember"
+        grain
+        grainIntensity={0.06}
+        mouseInteraction
+        mouseStrength={0.15}
+        opacity={0.4}
+      />
+      <div className="relative z-10 mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="section-card rounded-[32px] p-10 text-center md:p-16"
+          className="section-card rounded-[32px] p-10 text-center md:p-16 backdrop-blur-md bg-[#0f172a]/80 border border-[#2a3648]"
         >
           <p className="section-eyebrow">Start Your Digital Transformation</p>
           <h2 className="mt-4 text-4xl font-bold text-[#F8FAFC] sm:text-5xl">

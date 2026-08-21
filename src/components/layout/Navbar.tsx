@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -18,6 +20,8 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const [prevPathname, setPrevPathname] = useState(pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,10 +31,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setIsOpen(false);
-  }, []);
+  }
 
   return (
     <nav
@@ -47,9 +51,11 @@ export default function Navbar() {
             whileHover={{ scale: 1.05 }}
             className="relative"
           >
-            <img
+            <Image
               src="/adtech-logo.png"
               alt="AD Tech Logo"
+              width={56}
+              height={56}
               className="h-14 w-14 object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </motion.div>
@@ -141,4 +147,3 @@ export default function Navbar() {
     </nav>
   );
 }
-

@@ -50,10 +50,11 @@ export async function submitCallbackAction(formData: FormData) {
 
     revalidatePath("/callback");
     return { success: true, message: "Callback request submitted successfully" };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Something went wrong. Please try again.";
     return {
       success: false,
-      message: error.message || "Something went wrong. Please try again.",
+      message,
     };
   }
 }
@@ -92,10 +93,11 @@ export async function submitContactAction(formData: FormData) {
 
     revalidatePath("/contact");
     return { success: true, message: "Message sent successfully" };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Something went wrong. Please try again.";
     return {
       success: false,
-      message: error.message || "Something went wrong. Please try again.",
+      message,
     };
   }
 }
@@ -138,11 +140,11 @@ export async function submitRequirementAction(formData: FormData) {
 
     revalidatePath("/requirement");
     return { success: true, message: "Requirement submitted successfully" };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Something went wrong. Please try again.";
     return {
       success: false,
-      message: error.message || "Something went wrong. Please try again.",
+      message,
     };
   }
 }
-

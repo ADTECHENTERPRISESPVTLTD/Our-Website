@@ -75,7 +75,6 @@ export function useCareer(): UseCareerReturn {
       newErrors.email = "Please enter a valid email address";
     }
 
-    const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\./0-9]*$/;
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required";
     } else if (formData.phone.trim().replace(/\D/g, "").length < 10) {
@@ -150,10 +149,9 @@ export function useCareer(): UseCareerReturn {
 
         await careerService.create(data, resumeFile);
         setSubmitted(true);
-      } catch (error: any) {
-        setApiError(
-          error.message || "Something went wrong. Please try again."
-        );
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : "Something went wrong. Please try again.";
+        setApiError(message);
       } finally {
         setIsSubmitting(false);
       }

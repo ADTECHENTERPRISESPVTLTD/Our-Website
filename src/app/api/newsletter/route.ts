@@ -2,7 +2,6 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // Forward the request to the Express backend
     const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
     const response = await fetch(`${backendUrl}/api/newsletter`, {
       method: "POST",
@@ -22,9 +21,10 @@ export async function POST(request: Request) {
     }
 
     return Response.json(data, { status: 201 });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal server error";
     return Response.json(
-      { success: false, message: error.message || "Internal server error" },
+      { success: false, message },
       { status: 500 }
     );
   }

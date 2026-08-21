@@ -86,7 +86,7 @@ export function delay(ms: number): Promise<void> {
 /**
  * Safely parse JSON without throwing.
  */
-export function safeJsonParse<T = any>(str: string, fallback: T): T {
+export function safeJsonParse<T = unknown>(str: string, fallback: T): T {
   try {
     return JSON.parse(str) as T;
   } catch {
@@ -97,7 +97,7 @@ export function safeJsonParse<T = any>(str: string, fallback: T): T {
 /**
  * Check if a value is empty (null, undefined, empty string, empty array, empty object).
  */
-export function isEmpty(value: any): boolean {
+export function isEmpty(value: unknown): boolean {
   if (value === null || value === undefined) return true;
   if (typeof value === "string") return value.trim().length === 0;
   if (Array.isArray(value)) return value.length === 0;

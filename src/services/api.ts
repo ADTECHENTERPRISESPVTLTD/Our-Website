@@ -2,7 +2,7 @@
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   message: string;
   data?: T;
@@ -49,7 +49,7 @@ export async function get<T>(
 
 export async function post<T>(
   endpoint: string,
-  body: any,
+  body: unknown,
   options?: RequestInit
 ): Promise<ApiResponse<T>> {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -80,7 +80,7 @@ export async function postFormData<T>(
 
 export async function put<T>(
   endpoint: string,
-  body: any,
+  body: unknown,
   options?: RequestInit
 ): Promise<ApiResponse<T>> {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -109,4 +109,3 @@ export async function del<T>(
 
   return handleResponse<T>(response);
 }
-

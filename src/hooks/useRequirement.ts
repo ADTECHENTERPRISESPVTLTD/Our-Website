@@ -84,7 +84,6 @@ export function useRequirement(): UseRequirementReturn {
       newErrors.email = "Please enter a valid email";
     }
 
-    const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\./0-9]*$/;
     if (!formData.phoneNumber.trim()) {
       newErrors.phoneNumber = "Phone number is required";
     } else if (
@@ -146,10 +145,9 @@ export function useRequirement(): UseRequirementReturn {
 
         await requirementService.create(data);
         setSubmitted(true);
-      } catch (error: any) {
-        setApiError(
-          error.message || "Something went wrong. Please try again."
-        );
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : "Something went wrong. Please try again.";
+        setApiError(message);
       } finally {
         setIsSubmitting(false);
       }
