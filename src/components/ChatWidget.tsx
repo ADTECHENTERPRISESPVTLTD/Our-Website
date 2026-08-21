@@ -508,40 +508,65 @@ export default function ChatWidget() {
       
       {/* 1. Chat Trigger Button (Cross-Device Touch Target Optimized: Min 56x56px) */}
       {!isOpen && (
-        <button
-          onClick={toggleChat}
-          aria-label="Open AD TECH AI Assistant Chat"
-          className="group relative flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer overflow-visible animate-float touch-manipulation"
-          title="Talk to AD TECH Assistant"
-        >
-          {/* Futuristic Hologram Back-Glow */}
-          <div className="absolute h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-600 opacity-40 blur-md group-hover:opacity-85 transition-opacity duration-300"></div>
-          
-          {/* Glowing ring */}
-          <div className="absolute inset-1 sm:inset-1.5 rounded-full border border-sky-400/30 group-hover:border-sky-400/80 transition-colors duration-300 animate-pulse-slow"></div>
-
-          {/* Robot Image Bubble with Green Online Indicator Dot */}
-          <div className="relative h-13 w-13 sm:h-15 sm:w-15 rounded-full overflow-visible shadow-2xl border border-slate-700/50">
-            <img src="/bot-avatar.png" className="h-full w-full rounded-full object-cover avatar-wave transition-transform duration-300" alt="AD TECH Bot" />
-            
-            {/* Green Active/Online Status Dot */}
-            <span className="absolute top-0 right-0 h-3.5 w-3.5 sm:h-4 sm:w-4 rounded-full bg-emerald-500 border-2 border-[#0B1120] shadow-[0_0_10px_rgba(16,185,129,0.9)] z-20 animate-pulse"></span>
-          </div>
-          
-          {/* Unread notification badge */}
-          {unreadCount > 0 && (
-            <span className="absolute top-0 left-0 z-20 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white animate-pulse">
-              {unreadCount}
-            </span>
-          )}
-          
-          {/* Quick intro text on desktop hover */}
-          <div className="absolute right-20 bottom-3 hidden lg:group-hover:flex flex-col items-end">
-            <div className="bg-slate-900 border border-slate-700 text-slate-200 text-xs py-2 px-3.5 rounded-2xl rounded-br-none shadow-xl whitespace-nowrap animate-bounce flex items-center gap-1.5">
-              <span>Hi there! 👋 Need help?</span>
+        <>
+          {/* External Notification Bubble */}
+          <div className="absolute bottom-20 right-0 sm:bottom-24 sm:right-0 z-50 max-w-[220px] sm:max-w-[260px] animate-slide-in">
+            <div className="relative bg-gradient-to-br from-slate-900 via-[#111827] to-[#1A2233] border border-[#2A3648] rounded-2xl rounded-br-sm shadow-2xl p-3 sm:p-4">
+              {/* Bot Image */}
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="relative h-10 w-10 sm:h-12 sm:w-12 rounded-full overflow-visible border-2 border-sky-400/50 bg-[#0B1120] shadow-[0_0_15px_rgba(56,189,248,0.3)] shrink-0">
+                  <img 
+                    src="/bot-avatar.png" 
+                    className="h-full w-full rounded-full object-cover" 
+                    alt="AD TECH Bot" 
+                  />
+                  <span className="absolute top-0 right-0 h-3 w-3 rounded-full bg-emerald-500 border-2 border-[#0B1120] shadow-[0_0_8px_rgba(16,185,129,0.95)] z-10 animate-pulse"></span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs sm:text-sm font-semibold text-white leading-tight">Hi, I am Aasha</p>
+                  <p className="text-[10px] sm:text-xs text-slate-400 mt-0.5 leading-tight">How can I help you? 😊</p>
+                </div>
+              </div>
+              {/* Arrow pointer */}
+              <div className="absolute -bottom-2 right-5 sm:right-6 w-4 h-4 bg-gradient-to-br from-slate-900 via-[#111827] to-[#1A2233] border-r border-b border-[#2A3648] transform rotate-45"></div>
             </div>
           </div>
-        </button>
+
+          <button
+            onClick={toggleChat}
+            aria-label="Open AD TECH AI Assistant Chat"
+            className="group relative flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer overflow-visible animate-float touch-manipulation"
+            title="Talk to AD TECH Assistant"
+          >
+            {/* Futuristic Hologram Back-Glow */}
+            <div className="absolute h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-600 opacity-40 blur-md group-hover:opacity-85 transition-opacity duration-300"></div>
+            
+            {/* Glowing ring */}
+            <div className="absolute inset-1 sm:inset-1.5 rounded-full border border-sky-400/30 group-hover:border-sky-400/80 transition-colors duration-300 animate-pulse-slow"></div>
+
+            {/* Robot Image Bubble with Green Online Indicator Dot */}
+            <div className="relative h-13 w-13 sm:h-15 sm:w-15 rounded-full overflow-visible shadow-2xl border border-slate-700/50">
+              <img src="/bot-avatar.png" className="h-full w-full rounded-full object-cover avatar-wave transition-transform duration-300" alt="AD TECH Bot" />
+              
+              {/* Green Active/Online Status Dot */}
+              <span className="absolute top-0 right-0 h-3.5 w-3.5 sm:h-4 sm:w-4 rounded-full bg-emerald-500 border-2 border-[#0B1120] shadow-[0_0_10px_rgba(16,185,129,0.9)] z-20 animate-pulse"></span>
+            </div>
+            
+            {/* Unread notification badge */}
+            {unreadCount > 0 && (
+              <span className="absolute top-0 left-0 z-20 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white animate-pulse">
+                {unreadCount}
+              </span>
+            )}
+            
+            {/* Quick intro text on desktop hover */}
+            <div className="absolute right-20 bottom-3 hidden lg:group-hover:flex flex-col items-end">
+              <div className="bg-slate-900 border border-slate-700 text-slate-200 text-xs py-2 px-3.5 rounded-2xl rounded-br-none shadow-xl whitespace-nowrap animate-bounce flex items-center gap-1.5">
+                <span>Hi there! 👋 Need help?</span>
+              </div>
+            </div>
+          </button>
+        </>
       )}
 
       {/* 2. Chat Window (Cross-Device Responsive: Mobile Fullscreen, iPad Drawer, PC Modal) */}
