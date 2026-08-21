@@ -510,7 +510,7 @@ export default function ChatWidget() {
       {!isOpen && (
         <>
           {/* External Notification Bubble */}
-          <div className="absolute bottom-20 right-0 sm:bottom-24 sm:right-0 z-50 max-w-[220px] sm:max-w-[260px] animate-slide-in">
+          <div className="absolute bottom-24 right-0 sm:bottom-28 sm:right-0 z-50 w-64 sm:w-72 animate-slide-in">
             <div className="relative bg-gradient-to-br from-slate-900 via-[#111827] to-[#1A2233] border border-[#2A3648] rounded-2xl rounded-br-sm shadow-2xl p-3 sm:p-4">
               {/* Bot Image */}
               <div className="flex items-center gap-2.5 sm:gap-3">
