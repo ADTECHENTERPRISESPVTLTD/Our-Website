@@ -291,6 +291,8 @@ p {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #7dd3fc;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .hero-eyebrow-dot {
@@ -317,7 +319,7 @@ p {
   }
 
   .hero-eyebrow {
-    font-size: 1rem;
+    font-size: 1.25rem;
     letter-spacing: 0.08em;
     gap: 0.4rem;
     white-space: normal;
