@@ -102,45 +102,71 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden overflow-hidden border-t border-[#1A2233] bg-[#0B1120]/98 backdrop-blur-xl"
-          >
-            <div className="px-6 py-6 space-y-3">
-              {navLinks.map((link, index) => (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+              onClick={() => setIsOpen(false)}
+            />
+
+            {/* Drawer */}
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="lg:hidden fixed inset-y-0 left-0 z-50 w-80 max-w-[80vw] bg-[#0B1120]/98 backdrop-blur-xl border-r border-[#1A2233] shadow-2xl"
+            >
+              <div className="px-6 py-6 space-y-3">
+                <div className="flex items-center justify-between mb-6">
+                  <Link href="/" className="flex items-center gap-3" onClick={() => setIsOpen(false)}>
+                    <Image
+                      src="/adtech-logo.png"
+                      alt="AD Tech Logo"
+                      width={140}
+                      height={75}
+                      className="h-10 w-auto object-contain"
+                      priority
+                    />
+                    <span className="text-xl font-bold text-white">AD TECH</span>
+                  </Link>
+                </div>
+                {navLinks.map((link, index) => (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className="block rounded-xl border border-[#2A3648] bg-[#1A2233]/50 px-5 py-3 text-[#CBD5E1] font-medium transition-all duration-300 hover:border-cyan-400 hover:text-cyan-400 hover:bg-cyan-400/5"
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                ))}
                 <motion.div
-                  key={link.href}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
+                  transition={{ delay: 0.3 }}
                 >
                   <Link
-                    href={link.href}
+                    href="/requirement"
                     onClick={() => setIsOpen(false)}
-                    className="block rounded-xl border border-[#2A3648] bg-[#1A2233]/50 px-5 py-3 text-[#CBD5E1] font-medium transition-all duration-300 hover:border-cyan-400 hover:text-cyan-400 hover:bg-cyan-400/5"
+                    className="block rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 py-3 text-center text-white font-semibold shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:shadow-xl"
                   >
-                    {link.label}
+                    Submit Requirement
                   </Link>
                 </motion.div>
-              ))}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                <Link
-                  href="/requirement"
-                  onClick={() => setIsOpen(false)}
-                  className="block rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 py-3 text-center text-white font-semibold shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:shadow-xl"
-                >
-                  Submit Requirement
-                </Link>
-              </motion.div>
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </nav>

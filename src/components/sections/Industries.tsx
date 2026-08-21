@@ -10,6 +10,9 @@ import {
   Rocket,
   Building2,
   CreditCard,
+  Coffee,
+  Hotel,
+  UtensilsCrossed,
 } from "lucide-react";
 
 const industries = [
@@ -21,6 +24,9 @@ const industries = [
   { name: "Startups", icon: Rocket },
   { name: "MSMEs", icon: Building2 },
   { name: "Financial Services", icon: CreditCard },
+  { name: "Cafés", icon: Coffee },
+  { name: "Hotels", icon: Hotel },
+  { name: "Restaurants", icon: UtensilsCrossed },
 ];
 
 export default function Industries() {
@@ -57,7 +63,7 @@ export default function Industries() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {industries.map((industry) => {
             const Icon = industry.icon;
             return (

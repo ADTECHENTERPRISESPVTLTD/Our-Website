@@ -31,8 +31,8 @@ const highlights = [
 ];
 
 const stats = [
-  { value: 100, suffix: "+", label: "Projects Delivered", icon: Zap },
-  { value: 50, suffix: "+", label: "Happy Clients", icon: Users },
+  { value: 50, suffix: "+", label: "Projects Delivered", icon: Zap },
+  { value: 38, suffix: "+", label: "Happy Clients", icon: Users },
   { value: 99, suffix: "%", label: "Client Satisfaction", icon: Sparkles },
   { value: 5, suffix: "+", label: "Years Excellence", icon: Building2 },
 ];
@@ -137,29 +137,6 @@ function MagneticButton({
   );
 }
 
-// ─── Floating Tech Card ───────────────────────────────────────────────────────
-
-function FloatingTechCard({
-  children,
-  className = "",
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay, ease: "easeOut" }}
-      className={`tech-float-card ${className}`}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
 // ─── Main Hero Component ─────────────────────────────────────────────────────
 
 export default function Hero() {
@@ -167,6 +144,8 @@ export default function Hero() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const isContentInView = useInView(contentRef, { once: true, margin: "-50px" });
+  const statsRef = useRef<HTMLDivElement>(null);
+  const isStatsInView = useInView(statsRef, { once: true, margin: "-100px" });
 
   const taglines = [
     "Empowering Businesses Through Intelligent Technology",
@@ -219,165 +198,158 @@ export default function Hero() {
       {/* ─── Main Content ─── */}
       <div
         ref={contentRef}
-        className="hero-content-wrapper w-full z-10 mx-auto max-w-7xl px-6 py-20 lg:py-28"
+        className="hero-content-wrapper w-full z-10 mx-auto max-w-7xl px-6 pt-28 pb-24 lg:pt-36 lg:pb-32"
       >
-        <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16">
-          {/* ─── Left Column: Text + CTAs ─── */}
-          <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            animate={isContentInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex-1 max-w-2xl"
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isContentInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          {/* Main Heading */}
+          <div>
+            <AnimatedHeading
+              text="AD TECH ENTERPRISES PVT. LTD."
+              className="hero-title text-center text-[#F8FAFC]"
+              tag="h1"
+            />
+            <div className="mx-auto mt-3 h-1 w-24 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" />
+          </div>
+
+          {/* Tagline */}
+          <motion.p
+            key={subtitleIndex}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="mt-6 text-xl font-semibold text-[#E2E8F0] sm:text-3xl typing-cursor"
           >
-            {/* Pill Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-300">
-                <Sparkles size={14} className="text-cyan-400" />
-                AI • Cloud • Cyber Security • Software Development
-              </span>
-            </motion.div>
+            {taglines[subtitleIndex]}
+          </motion.p>
 
-            {/* Main Heading */}
-            <div className="mt-8">
-              <AnimatedHeading
-                text="AD TECH ENTERPRISES PVT. LTD."
-                className="hero-title text-left text-[#F8FAFC]"
-                tag="h1"
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={isContentInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-6 mx-auto max-w-3xl text-lg leading-8 text-[#94A3B8]"
+          >
+            We help organizations unlock growth with tailored AI, software, cloud
+            and automation solutions built for performance, security and scale.
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isContentInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="mt-10 flex flex-wrap justify-center gap-4"
+          >
+            <MagneticButton href="/services" className="hero-cta hero-cta-primary group">
+              Explore Services
+              <ArrowRight
+                size={18}
+                className="transition-transform duration-300 group-hover:translate-x-1"
               />
-              <div className="mt-2 h-1 w-24 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" />
-            </div>
+            </MagneticButton>
 
-            {/* Rotating Tagline */}
-            <div className="mt-6 h-12 overflow-hidden">
-              <motion.p
-                key={subtitleIndex}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="text-2xl font-semibold text-[#E2E8F0] sm:text-3xl typing-cursor"
-              >
-                {taglines[subtitleIndex]}
-              </motion.p>
-            </div>
+            <MagneticButton href="/contact" className="hero-cta hero-cta-secondary group">
+              Contact Us
+            </MagneticButton>
 
-            {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-6 max-w-2xl text-lg leading-8 text-[#94A3B8]"
-            >
-              We help organizations unlock growth with tailored AI, software, cloud
-              and automation solutions built for performance, security and scale.
-            </motion.p>
+            <MagneticButton href="/careers" className="hero-cta hero-cta-ghost group">
+              <Users size={18} />
+              Careers
+            </MagneticButton>
 
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="mt-10 flex flex-wrap gap-4"
-            >
-              <MagneticButton href="/services" className="hero-cta hero-cta-primary group">
-                Explore Services
-                <ArrowRight
-                  size={18}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </MagneticButton>
-
-              <MagneticButton href="/contact" className="hero-cta hero-cta-secondary group">
-                Contact Us
-              </MagneticButton>
-
-              <MagneticButton href="/careers" className="hero-cta hero-cta-ghost group">
-                <Users size={18} />
-                Careers
-              </MagneticButton>
-
-              <MagneticButton href="/login" className="hero-cta hero-cta-gradient group">
-                <Cpu size={18} />
-                Intern Dashboard
-              </MagneticButton>
-            </motion.div>
-
-            {/* Highlights Pills */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-8 flex flex-wrap gap-3"
-            >
-              {highlights.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <span
-                    key={item.label}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-[#2A3648] bg-[#111827]/80 px-4 py-2 text-sm text-[#CBD5E1] transition-all duration-300 hover:border-cyan-400/40 hover:bg-[#111827]"
-                  >
-                    <Icon size={14} className="text-cyan-400" />
-                    {item.label}
-                  </span>
-                );
-              })}
-            </motion.div>
+            <MagneticButton href="/login" className="hero-cta hero-cta-gradient group">
+              <Cpu size={18} />
+              Intern Dashboard
+            </MagneticButton>
           </motion.div>
 
-          {/* ─── Right Column: Stats + Tech Cards ─── */}
+          {/* Highlights Pills */}
           <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            animate={isContentInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            className="flex-1 mt-12 lg:mt-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isContentInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            className="mt-10 flex flex-wrap justify-center gap-3"
           >
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {stats.map((stat, index) => {
-                const Icon = stat.icon;
-                return (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                    className="stat-card group"
-                  >
-                    <Icon
-                      size={20}
-                      className="text-cyan-400/60 group-hover:text-cyan-400 transition-colors duration-300"
-                    />
-                    <h3 className="mt-2 text-3xl font-bold text-[#F8FAFC]">
-                      <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                    </h3>
-                    <p className="mt-1 text-sm text-[#94A3B8]">{stat.label}</p>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            {/* Tech Floating Cards */}
-            <div className="mt-6 grid grid-cols-3 gap-3">
-              {techItems.map((item, index) => (
-                <motion.div
+            {highlights.map((item) => {
+              const Icon = item.icon;
+              return (
+                <span
                   key={item.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.7 + index * 0.05 }}
-                  className="flex flex-col items-center gap-1.5 rounded-xl border border-[#2A3648]/60 bg-[#111827]/60 px-3 py-3 text-center transition-all duration-300 hover:border-cyan-400/30 hover:bg-[#111827]/90 hover:scale-105 cursor-default"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[#2A3648] bg-[#111827]/80 px-4 py-2 text-sm text-[#CBD5E1] transition-all duration-300 hover:border-cyan-400/40 hover:bg-[#111827]"
                 >
-                  {(() => {
-                    const IconComponent = item.icon;
-                    return <IconComponent size={20} className="text-cyan-400" />;
-                  })()}
-                  <span className="text-xs font-medium text-[#94A3B8]">{item.label}</span>
+                  <Icon size={14} className="text-cyan-400" />
+                  {item.label}
+                </span>
+              );
+            })}
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* ─── Stats + Tech Cards Below Hero ─── */}
+      <div
+        ref={statsRef}
+        className="relative z-10 w-full"
+      >
+        <div className="mx-auto max-w-7xl px-6 pb-20">
+          {/* Stats Grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isStatsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4"
+          >
+            {stats.map((stat, index) => {
+              const Icon = stat.icon;
+              return (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isStatsInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="stat-card group text-center"
+                >
+                  <Icon
+                    size={24}
+                    className="mx-auto text-cyan-400/60 group-hover:text-cyan-400 transition-colors duration-300"
+                  />
+                  <h3 className="mt-3 text-3xl font-bold text-[#F8FAFC]">
+                    <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                  </h3>
+                  <p className="mt-1 text-sm text-[#94A3B8]">{stat.label}</p>
                 </motion.div>
-              ))}
-            </div>
+              );
+            })}
+          </motion.div>
+
+          {/* Tech Floating Cards */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isStatsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+            className="mt-8 grid grid-cols-3 gap-3 sm:grid-cols-3 md:grid-cols-6"
+          >
+            {techItems.map((item, index) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isStatsInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: 0.5 + index * 0.05 }}
+                className="flex flex-col items-center gap-1.5 rounded-xl border border-[#2A3648]/60 bg-[#111827]/60 px-3 py-3 text-center transition-all duration-300 hover:border-cyan-400/30 hover:bg-[#111827]/90 hover:scale-105 cursor-default"
+              >
+                {(() => {
+                  const IconComponent = item.icon;
+                  return <IconComponent size={20} className="text-cyan-400" />;
+                })()}
+                <span className="text-xs font-medium text-[#94A3B8]">{item.label}</span>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </div>
@@ -401,4 +373,3 @@ export default function Hero() {
     </section>
   );
 }
-

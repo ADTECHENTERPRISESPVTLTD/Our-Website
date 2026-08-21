@@ -2,7 +2,7 @@ import React from "react";
 
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: "accent" | "success" | "warning" | "error";
+  variant?: "accent" | "success" | "warning" | "error" | "teal";
 }
 
 export const Badge: React.FC<BadgeProps> = ({ children, variant = "accent" }) => {
@@ -11,6 +11,7 @@ export const Badge: React.FC<BadgeProps> = ({ children, variant = "accent" }) =>
     success: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
     warning: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
     error: "bg-rose-500/10 text-rose-400 border border-rose-500/20",
+    teal: "bg-cyan-500/10 text-cyan-300 border border-cyan-500/20",
   };
 
   return (

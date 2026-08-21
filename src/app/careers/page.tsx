@@ -215,7 +215,7 @@ export default function CareerRoute() {
                 viewport={{ once: true }}
                 className="bg-[#1A2233] border border-[#2A3648] rounded-2xl p-6 hover:border-cyan-400/40 hover:shadow-[0_0_25px_rgba(34,211,238,0.08)] transition-all duration-300"
               >
-                <Badge variant="success">Benefit</Badge>
+                <Badge variant="teal">Benefit</Badge>
                 <h4 className="text-lg font-semibold text-[#F8FAFC] mt-3 mb-2">{benefit.title}</h4>
                 <p className="text-[#CBD5E1] text-sm leading-relaxed">{benefit.desc}</p>
               </motion.div>
