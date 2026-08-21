@@ -4,7 +4,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   MessageSquare, X, Send, Phone, Briefcase, FileText, 
   Calendar, Info, HelpCircle, CheckCircle, Moon, Sun, 
-  Minus, Sparkles, SendHorizontal, Mic, Maximize2, Minimize2
+  Minus, Sparkles, SendHorizontal, Mic, Maximize2, Minimize2,
+  Volume2
 } from 'lucide-react';
 import { EMAIL, PHONE, KNOWLEDGE_BASE } from '@/data/knowledgeBase';
 
@@ -41,6 +42,10 @@ export default function ChatWidget() {
   const [isListening, setIsListening] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(true);
   const recognitionRef = useRef<any>(null);
+
+  // Voice Playback States
+  const [playingAudioId, setPlayingAudioId] = useState<string | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Connection/API Status State
   const [apiMode, setApiMode] = useState<'online' | 'offline' | 'checking'>('checking');
@@ -137,6 +142,63 @@ export default function ChatWidget() {
       } catch (err) {
         console.error("Speech recognition error:", err);
       }
+    }
+  };
+
+  const handlePlayAudio = async (msgId: string, text: string) => {
+    if (playingAudioId === msgId && audioRef.current && !audioRef.current.paused) {
+      audioRef.current.pause();
+      audioRef.current = null;
+      setPlayingAudioId(null);
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/voice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text }),
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        
+        if (audioRef.current) {
+          audioRef.current.pause();
+          URL.revokeObjectURL(audioRef.current.src);
+        }
+        
+        const audio = new Audio(url);
+        audioRef.current = audio;
+        setPlayingAudioId(msgId);
+        
+        audio.onended = () => {
+          setPlayingAudioId(null);
+          URL.revokeObjectURL(url);
+        };
+        
+        audio.onerror = () => {
+          setPlayingAudioId(null);
+          URL.revokeObjectURL(url);
+        };
+        
+        await audio.play();
+      } else {
+        const data = await response.json();
+        if (data.fallback && typeof window !== 'undefined' && 'speechSynthesis' in window) {
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.rate = 1;
+          utterance.pitch = 1;
+          utterance.volume = 1;
+          setPlayingAudioId(msgId);
+          utterance.onend = () => setPlayingAudioId(null);
+          window.speechSynthesis.speak(utterance);
+        }
+      }
+    } catch (error) {
+      console.error('Voice playback error:', error);
+      setPlayingAudioId(null);
     }
   };
 
@@ -770,10 +832,26 @@ export default function ChatWidget() {
                   )}
                 </div>
 
-                {/* Timestamp */}
-                <span className="text-[9px] text-slate-500 mt-1 px-1">
-                  {msg.timestamp}
-                </span>
+                {/* Timestamp + Voice Playback */}
+                <div className="flex items-center gap-1 mt-1 px-1">
+                  <span className="text-[9px] text-slate-500">
+                    {msg.timestamp}
+                  </span>
+                  {msg.role === 'assistant' && (
+                    <button
+                      onClick={() => handlePlayAudio(msg.id, msg.content)}
+                      aria-label={playingAudioId === msg.id ? "Stop audio" : "Play audio"}
+                      className="flex items-center justify-center h-4 w-4 rounded-full text-slate-400 hover:text-sky-400 transition-colors cursor-pointer"
+                      title={playingAudioId === msg.id ? "Stop" : "Listen"}
+                    >
+                      {playingAudioId === msg.id ? (
+                        <Minus className="h-3 w-3" />
+                      ) : (
+                        <Volume2 className="h-3 w-3" />
+                      )}
+                    </button>
+                  )}
+                </div>
 
                 {/* Quick suggestions right below the bubble */}
                 {msg.suggestions && msg.suggestions.length > 0 && (
