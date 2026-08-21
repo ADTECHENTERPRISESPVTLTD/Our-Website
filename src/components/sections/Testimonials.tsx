@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import MoltenMetal from "@/components/MoltenMetal";
 
 const testimonials = [
   {
@@ -19,8 +20,28 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="section-shell bg-[#0B1120]/70 px-6 py-24">
-      <div className="mx-auto max-w-7xl">
+    <section className="relative section-shell overflow-hidden bg-[#111827]/80 px-6 py-24">
+      <MoltenMetal
+        color1="#140d2a"
+        color2="#04a9dd"
+        color3="#fdfafa"
+        speed={0.15}
+        scale={4.9}
+        detail={4}
+        glow={1.5}
+        coreSize={0.11}
+        swirl={1}
+        fold={-0.3}
+        blackPoint={0.06}
+        brightness={1.4}
+        colorMode="ember"
+        grain
+        grainIntensity={0.06}
+        mouseInteraction
+        mouseStrength={0.15}
+        opacity={0.35}
+      />
+      <div className="relative z-10 mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -43,7 +64,7 @@ export default function Testimonials() {
               transition={{ duration: 0.5, delay: index * 0.12 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.03 }}
-              className="section-card rounded-[24px] p-8"
+              className="section-card rounded-[24px] p-8 backdrop-blur-md bg-[#1e293b]/70 border border-[#334155]"
             >
               <div className="text-4xl text-cyan-300">“</div>
               <p className="mt-3 text-lg leading-8 text-[#CBD5E1]">{item.message}</p>

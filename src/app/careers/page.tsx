@@ -4,7 +4,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import AnimatedHeading from "@/components/ui/AnimatedHeading";
-import { SectionHeading } from "@/components/sectionheading";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { Badge } from "@/components/badge";
 import { Divider } from "@/components/divider";
@@ -177,7 +176,6 @@ export default function CareerRoute() {
       </section>
 
       <section className="w-full max-w-5xl mx-auto py-16 px-6">
-
         {/* Internship Benefits */}
         <div className="my-16">
           <div className="text-center mb-12">
@@ -517,4 +515,3 @@ export default function CareerRoute() {
     </main>
   );
 }
-

@@ -1,5 +1,5 @@
 // Career API Service
-import { post, get, postFormData } from "./api";
+import { get, postFormData } from "./api";
 
 export interface CareerFormData {
   name: string;
@@ -43,4 +43,3 @@ export const careerService = {
     return get<Career[]>("/careers");
   },
 };
-

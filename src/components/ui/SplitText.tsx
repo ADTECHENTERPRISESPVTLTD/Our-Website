@@ -1,4 +1,4 @@
-import { useRef, useEffect, type MutableRefObject } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText as GSAPSplitText } from 'gsap/SplitText';
@@ -6,7 +6,23 @@ import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger, GSAPSplitText, useGSAP);
 
-const SplitText = ({
+export interface SplitTextProps {
+  text: string;
+  className?: string;
+  delay?: number;
+  duration?: number;
+  ease?: string;
+  splitType?: string;
+  from?: { opacity: number; y: number };
+  to?: { opacity: number; y: number };
+  threshold?: number;
+  rootMargin?: string;
+  textAlign?: 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit';
+  tag?: React.ElementType;
+  onLetterAnimationComplete?: () => void;
+}
+
+const SplitText: React.FC<SplitTextProps> = ({
   text,
   className = '',
   delay = 50,
@@ -19,21 +35,7 @@ const SplitText = ({
   rootMargin = '-100px',
   textAlign = 'center',
   tag = 'p',
-  onLetterAnimationComplete = undefined,
-}: {
-  text: string;
-  className?: string;
-  delay?: number;
-  duration?: number;
-  ease?: string;
-  splitType?: string;
-  from?: { opacity: number; y: number };
-  to?: { opacity: number; y: number };
-  threshold?: number;
-  rootMargin?: string;
-  textAlign?: string;
-  tag?: any;
-  onLetterAnimationComplete?: () => void;
+  onLetterAnimationComplete,
 }) => {
   const ref = useRef<HTMLElement | null>(null);
   const animationCompletedRef = useRef(false);
@@ -47,14 +49,13 @@ const SplitText = ({
   useGSAP(
     () => {
       if (!ref.current || !text) return;
-      // Prevent re-animation if already completed
       if (animationCompletedRef.current) return;
-      const el = ref.current as HTMLElement & { _rbsplitInstance?: { revert: () => void } } | null;
+      const el = ref.current as HTMLElement & { _rbsplitInstance?: { revert: () => void } };
 
-      if (el?.['_rbsplitInstance']) {
+      if (el?._rbsplitInstance) {
         try {
-          el._rbsplitInstance?.revert();
-        } catch (_) {
+          el._rbsplitInstance.revert();
+        } catch {
           /* noop */
         }
         el._rbsplitInstance = undefined;
@@ -130,7 +131,7 @@ const SplitText = ({
         }
         try {
           splitInstance.revert();
-        } catch (_) {
+        } catch {
           /* noop */
         }
         if (el) {
@@ -154,29 +155,24 @@ const SplitText = ({
     }
   );
 
-  const renderTag = () => {
-    const style = {
-      textAlign,
-      overflow: 'hidden',
-      display: 'inline-block',
-      whiteSpace: 'inherit',
-      wordWrap: 'break-word',
-      willChange: 'transform, opacity',
-      backfaceVisibility: 'hidden' as any,
-      WebkitBackfaceVisibility: 'hidden' as any,
-      perspective: 1000 as any,
-      WebkitPerspective: 1000 as any
-    };
-    const classes = `split-parent ${className}`;
-    const Tag = tag || 'p';
-
-    return (
-      <Tag ref={ref} style={style} className={classes}>
-        {text}
-      </Tag>
-    );
+  const style: React.CSSProperties = {
+    textAlign,
+    overflow: 'hidden',
+    display: 'inline-block',
+    whiteSpace: 'inherit',
+    wordWrap: 'break-word',
+    willChange: 'transform, opacity',
+    backfaceVisibility: 'hidden',
+    WebkitBackfaceVisibility: 'hidden',
   };
-  return renderTag();
+  const classes = `split-parent ${className}`;
+  const Tag = (tag || 'p') as React.ElementType;
+
+  return (
+    <Tag ref={ref} style={style} className={classes}>
+      {text}
+    </Tag>
+  );
 };
 
 export default SplitText;

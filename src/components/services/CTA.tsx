@@ -12,7 +12,7 @@ export default function CTA() {
         <Card className="rounded-3xl border border-cyan-500/20 bg-gradient-to-br from-[#111827] to-[#0F172A] p-12 text-center">
 
           <span className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-400">
-            LET'S BUILD TOGETHER
+            LET&apos;S BUILD TOGETHER
           </span>
 
           <h2 className="mt-6 text-4xl font-bold text-white md:text-5xl">
@@ -23,8 +23,8 @@ export default function CTA() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-400">
-            Whether it's a website, mobile application, AI solution or cloud
-            platform, we're ready to transform your ideas into reality.
+            Whether it&apos;s a website, mobile application, AI solution or cloud
+            platform, we&apos;re ready to transform your ideas into reality.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">

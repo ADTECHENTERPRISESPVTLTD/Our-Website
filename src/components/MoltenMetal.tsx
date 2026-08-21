@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Renderer, Program, Mesh, Triangle } from "ogl";
+import "./MoltenMetal.css";
 
 const hexToRgb = (hex: string): [number, number, number] => {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -106,18 +107,17 @@ void main() {
 }
 `;
 
-const ctxMap = new WeakMap<
-  HTMLDivElement,
-  {
-    renderer: any;
-    program: Program;
-    mesh: Mesh;
-    canvas: HTMLCanvasElement;
-    raf: number;
-  }
->();
+interface OglContext {
+  renderer: Renderer;
+  program: Program;
+  mesh: Mesh;
+  canvas: HTMLCanvasElement;
+  raf: number;
+}
 
-type MoltenMetalProps = {
+const ctxMap = new WeakMap<HTMLDivElement, OglContext>();
+
+export type MoltenMetalProps = {
   color1?: string;
   color2?: string;
   color3?: string;
@@ -136,28 +136,32 @@ type MoltenMetalProps = {
   mouseInteraction?: boolean;
   mouseStrength?: number;
   opacity?: number;
+  className?: string;
+  style?: React.CSSProperties;
 };
 
-const MoltenMetal = ({
-  color1 = "#5227FF",
-  color2 = "#FF9FFC",
-  color3 = "#FFFFFF",
-  speed = 0.35,
-  scale = 4,
-  detail = 3,
-  glow = 1.6,
-  coreSize = 0.1,
+const MoltenMetal: React.FC<MoltenMetalProps> = ({
+  color1 = "#140d2a",
+  color2 = "#04a9dd",
+  color3 = "#fdfafa",
+  speed = 0.15,
+  scale = 4.9,
+  detail = 4,
+  glow = 1.5,
+  coreSize = 0.11,
   swirl = 1,
-  fold = -0.2,
-  blackPoint = 0.05,
-  brightness = 1.3,
-  colorMode = "molten",
+  fold = -0.3,
+  blackPoint = 0.06,
+  brightness = 1.4,
+  colorMode = "ember",
   grain = true,
-  grainIntensity = 0.05,
+  grainIntensity = 0.06,
   mouseInteraction = true,
-  mouseStrength = 0.3,
-  opacity = 1.0,
-}: MoltenMetalProps) => {
+  mouseStrength = 0.15,
+  opacity = 0.95,
+  className = "",
+  style,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -187,25 +191,25 @@ const MoltenMetal = ({
       uniforms: {
         iTime: { value: 0 },
         iResolution: { value: new Float32Array([1, 1]) },
-        uSpeed: { value: 0.35 },
-        uScale: { value: 4 },
-        uDetail: { value: 3 },
-        uGlow: { value: 1.6 },
-        uCoreSize: { value: 0.1 },
-        uSwirl: { value: 1 },
-        uFold: { value: -0.2 },
-        uBlackPoint: { value: 0.05 },
-        uBrightness: { value: 1.3 },
-        uColorMode: { value: 0 },
-        uGrain: { value: 1 },
-        uGrainIntensity: { value: 0.05 },
-        uOpacity: { value: 1.0 },
+        uSpeed: { value: speed },
+        uScale: { value: scale },
+        uDetail: { value: detail },
+        uGlow: { value: glow },
+        uCoreSize: { value: coreSize },
+        uSwirl: { value: swirl },
+        uFold: { value: fold },
+        uBlackPoint: { value: blackPoint },
+        uBrightness: { value: brightness },
+        uColorMode: { value: colorModeToFloat(colorMode) },
+        uGrain: { value: grain ? 1 : 0 },
+        uGrainIntensity: { value: grainIntensity },
+        uOpacity: { value: opacity },
         uMouse: { value: new Float32Array([0.5, 0.5]) },
-        uMouseStrength: { value: 0.3 },
-        uEnableMouse: { value: true },
-        uColor1: { value: new Float32Array([1, 1, 1]) },
-        uColor2: { value: new Float32Array([1, 1, 1]) },
-        uColor3: { value: new Float32Array([1, 1, 1]) },
+        uMouseStrength: { value: mouseStrength },
+        uEnableMouse: { value: mouseInteraction },
+        uColor1: { value: new Float32Array(hexToRgb(color1)) },
+        uColor2: { value: new Float32Array(hexToRgb(color2)) },
+        uColor3: { value: new Float32Array(hexToRgb(color3)) },
       },
     });
 
@@ -232,8 +236,10 @@ const MoltenMetal = ({
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      targetMouse[0] = (e.clientX - rect.left) / rect.width;
-      targetMouse[1] = 1.0 - (e.clientY - rect.top) / rect.height;
+      if (rect.width > 0 && rect.height > 0) {
+        targetMouse[0] = (e.clientX - rect.left) / rect.width;
+        targetMouse[1] = 1.0 - (e.clientY - rect.top) / rect.height;
+      }
     };
     const handleMouseLeave = () => {
       targetMouse[0] = 0.5;
@@ -258,8 +264,9 @@ const MoltenMetal = ({
     };
 
     const tryStart = () => {
-      if (isVisible && isPageVisible && raf === 0)
+      if (isVisible && isPageVisible && raf === 0) {
         raf = requestAnimationFrame(loop);
+      }
     };
     const tryStop = () => {
       if (raf !== 0) {
@@ -271,7 +278,11 @@ const MoltenMetal = ({
     const io = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry.isIntersecting;
-        isVisible ? tryStart() : tryStop();
+        if (isVisible) {
+          tryStart();
+        } else {
+          tryStop();
+        }
       },
       { threshold: 0 }
     );
@@ -279,7 +290,11 @@ const MoltenMetal = ({
 
     const onVisibility = () => {
       isPageVisible = !document.hidden;
-      isPageVisible ? tryStart() : tryStop();
+      if (isPageVisible) {
+        tryStart();
+      } else {
+        tryStop();
+      }
     };
     document.addEventListener("visibilitychange", onVisibility);
 
@@ -292,13 +307,13 @@ const MoltenMetal = ({
       document.removeEventListener("visibilitychange", onVisibility);
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseleave", handleMouseLeave);
-      const ctx = ctxMap.get(container);
-      if (ctx) ctxMap.delete(container);
+      ctxMap.delete(container);
       try {
         container.removeChild(canvas);
       } catch {}
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -323,6 +338,7 @@ const MoltenMetal = ({
     u.uOpacity.value = opacity;
     u.uMouseStrength.value = mouseStrength;
     u.uEnableMouse.value = mouseInteraction;
+
     const c1 = hexToRgb(color1);
     const c2 = hexToRgb(color2);
     const c3 = hexToRgb(color3);
@@ -360,7 +376,12 @@ const MoltenMetal = ({
   ]);
 
   return (
-    <div ref={containerRef} className="molten-metal-container" aria-hidden="true" />
+    <div
+      ref={containerRef}
+      className={`molten-metal-container ${className}`.trim()}
+      style={style}
+      aria-hidden="true"
+    />
   );
 };
 

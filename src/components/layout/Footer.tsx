@@ -87,8 +87,9 @@ export default function Footer() {
 
       setSubscribeSuccess(true);
       setEmail("");
-    } catch (error: any) {
-      setSubscribeError(error.message || "Something went wrong. Please try again.");
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Something went wrong. Please try again.";
+      setSubscribeError(message);
     } finally {
       setIsSubscribing(false);
     }
@@ -106,6 +107,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/adtech-logo.png"
                 alt="AD Tech Logo"

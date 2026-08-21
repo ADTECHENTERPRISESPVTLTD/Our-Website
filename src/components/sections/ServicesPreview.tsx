@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { fadeUpProps, viewportOptions } from "@/hooks/useAnimatedInView";
+import { fadeUpProps } from "@/hooks/useAnimatedInView";
+import MoltenMetal from "@/components/MoltenMetal";
 import {
   Settings,
   Bot,
@@ -46,8 +47,28 @@ const services = [
 
 export default function ServicesPreview() {
   return (
-    <section className="section-shell bg-[#111827]/70 px-6 py-24">
-      <div className="mx-auto max-w-7xl">
+    <section className="relative section-shell overflow-hidden bg-[#111827]/80 px-6 py-24">
+      <MoltenMetal
+        color1="#0a192f"
+        color2="#04a9dd"
+        color3="#fdfafa"
+        speed={0.12}
+        scale={4.5}
+        detail={4}
+        glow={1.5}
+        coreSize={0.11}
+        swirl={1}
+        fold={-0.3}
+        blackPoint={0.06}
+        brightness={1.4}
+        colorMode="ember"
+        grain
+        grainIntensity={0.06}
+        mouseInteraction
+        mouseStrength={0.15}
+        opacity={0.35}
+      />
+      <div className="relative z-10 mx-auto max-w-7xl">
         <motion.div
           {...fadeUpProps}
           className="text-center"
@@ -70,7 +91,7 @@ export default function ServicesPreview() {
               transition={{ duration: 0.5, delay: index * 0.08 }}
               viewport={{ once: true, margin: "-50px" }}
               whileHover={{ scale: 1.03 }}
-              className="section-card hover-card rounded-[24px] p-7"
+              className="section-card hover-card rounded-[24px] p-7 backdrop-blur-md bg-[#1e293b]/70 border border-[#334155]"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-400/15 text-cyan-300">
                 <service.Icon size={24} />
@@ -84,4 +105,3 @@ export default function ServicesPreview() {
     </section>
   );
 }
-
