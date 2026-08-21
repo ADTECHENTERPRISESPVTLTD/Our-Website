@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import MoltenMetal from "@/components/MoltenMetal";
+import AuroraBackground from "@/components/ui/AuroraBackground";
 
 type TaskStatus = "Pending" | "In Progress" | "Completed";
 
@@ -46,6 +47,7 @@ export default function DashboardPage() {
 
   return (
     <main className="page-shell relative w-full min-h-screen overflow-hidden text-[#F8FAFC] bg-[#0B1120]/80">
+      <AuroraBackground className="absolute inset-0 z-0 pointer-events-none opacity-70" />
       <MoltenMetal
         color1="#140d2a"
         color2="#04a9dd"

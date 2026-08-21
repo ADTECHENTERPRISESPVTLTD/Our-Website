@@ -109,9 +109,9 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden overflow-hidden border-t border-[#1A2233] bg-[#0B1120]/98 backdrop-blur-xl"
+            className="lg:hidden overflow-hidden border-t border-[#1E293B] bg-[#0B1120] shadow-2xl"
           >
-            <div className="px-6 py-6 space-y-3">
+            <div className="px-6 py-6 space-y-3 bg-[#0B1120]">
               {navLinks.map((link, index) => (
                 <motion.div
                   key={link.href}
@@ -122,7 +122,7 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className="block rounded-xl border border-[#2A3648] bg-[#1A2233]/50 px-5 py-3 text-[#CBD5E1] font-medium transition-all duration-300 hover:border-cyan-400 hover:text-cyan-400 hover:bg-cyan-400/5"
+                    className="block rounded-xl border border-[#1E293B] bg-[#0F172A] px-5 py-3 text-[#F8FAFC] font-medium transition-all duration-300 hover:border-cyan-400 hover:text-cyan-400 hover:bg-cyan-400/10"
                   >
                     {link.label}
                   </Link>

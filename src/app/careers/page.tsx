@@ -10,6 +10,7 @@ import { Divider } from "@/components/divider";
 import { useCareer } from "@/hooks/useCareer";
 import { Loader2, CheckCircle, AlertTriangle, Check, X } from "lucide-react";
 import MoltenMetal from "@/components/MoltenMetal";
+import AuroraBackground from "@/components/ui/AuroraBackground";
 
 interface JobOpening {
   title: string;
@@ -89,6 +90,7 @@ export default function CareerRoute() {
     <main className="page-shell min-h-screen">
       {/* Hero Section */}
       <section className="site-hero relative overflow-hidden py-28 bg-[#0B1120]/80">
+        <AuroraBackground className="absolute inset-0 z-0 pointer-events-none opacity-70" />
         <MoltenMetal
           color1="#140d2a"
           color2="#04a9dd"
@@ -107,7 +109,7 @@ export default function CareerRoute() {
           grainIntensity={0.06}
           mouseInteraction
           mouseStrength={0.15}
-          opacity={0.4}
+          opacity={0.3}
         />
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="bg-glow-cyan -left-20 top-10 h-[400px] w-[400px] opacity-60" />

@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import MoltenMetal from "@/components/MoltenMetal";
+import AuroraBackground from "@/components/ui/AuroraBackground";
 
 export default function FinalCTA() {
   return (
     <section className="relative section-shell overflow-hidden bg-[#0B1120]/80 px-6 py-24">
+      <AuroraBackground className="absolute inset-0 z-0 pointer-events-none opacity-60" />
       <MoltenMetal
         color1="#140d2a"
         color2="#04a9dd"

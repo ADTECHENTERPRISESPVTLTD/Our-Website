@@ -21,6 +21,7 @@ import {
 import AnimatedHeading from "@/components/ui/AnimatedHeading";
 import HeroBackground from "./HeroBackground";
 import MoltenMetal from "@/components/MoltenMetal";
+import AuroraBackground from "@/components/ui/AuroraBackground";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -173,7 +174,8 @@ export default function Hero() {
       className="relative min-h-screen flex items-center bg-[#0B1120]/80 overflow-hidden"
       aria-label="Hero section"
     >
-      {/* ─── MoltenMetal & Canvas Background ─── */}
+      {/* ─── AuroraBackground & Canvas Background ─── */}
+      <AuroraBackground className="absolute inset-0 z-0 pointer-events-none opacity-80" />
       <MoltenMetal
         color1="#140d2a"
         color2="#04a9dd"
@@ -192,7 +194,7 @@ export default function Hero() {
         grainIntensity={0.06}
         mouseInteraction
         mouseStrength={0.15}
-        opacity={0.45}
+        opacity={0.35}
       />
       <HeroBackground />
 

@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 import AnimatedHeading from "@/components/ui/AnimatedHeading";
 import CallbackForm from "@/components/callback/CallbackForm";
 import MoltenMetal from "@/components/MoltenMetal";
+import AuroraBackground from "@/components/ui/AuroraBackground";
 
 export default function CallbackPage() {
   return (
     <main className="page-shell min-h-screen overflow-hidden relative">
+      <AuroraBackground className="absolute inset-0 z-0 pointer-events-none opacity-80" />
       <MoltenMetal
         color1="#140d2a"
         color2="#04a9dd"

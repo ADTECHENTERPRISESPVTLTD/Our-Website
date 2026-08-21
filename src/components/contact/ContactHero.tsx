@@ -4,10 +4,12 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import AnimatedHeading from "@/components/ui/AnimatedHeading";
 import MoltenMetal from "@/components/MoltenMetal";
+import AuroraBackground from "@/components/ui/AuroraBackground";
 
 export default function ContactHero() {
   return (
     <section className="site-hero relative overflow-hidden py-28 bg-[#0B1120]/80">
+      <AuroraBackground className="absolute inset-0 z-0 pointer-events-none opacity-70" />
       <MoltenMetal
         color1="#140d2a"
         color2="#04a9dd"
@@ -26,7 +28,7 @@ export default function ContactHero() {
         grainIntensity={0.06}
         mouseInteraction
         mouseStrength={0.15}
-        opacity={0.4}
+        opacity={0.3}
       />
       {/* Background Glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

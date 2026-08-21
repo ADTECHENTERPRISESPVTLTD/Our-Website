@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import MoltenMetal from "@/components/MoltenMetal";
+import AuroraBackground from "@/components/ui/AuroraBackground";
 
 export default function AttendancePage() {
   return (
     <main className="page-shell relative min-h-screen overflow-hidden text-[#F8FAFC] bg-[#0B1120]/80">
+      <AuroraBackground className="absolute inset-0 z-0 pointer-events-none opacity-70" />
       <MoltenMetal
         color1="#140d2a"
         color2="#04a9dd"

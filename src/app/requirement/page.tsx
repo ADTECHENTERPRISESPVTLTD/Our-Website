@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 import AnimatedHeading from "@/components/ui/AnimatedHeading";
 import RequirementForm from "@/components/requirement/RequirementForm";
 import MoltenMetal from "@/components/MoltenMetal";
+import AuroraBackground from "@/components/ui/AuroraBackground";
 
 export default function RequirementPage() {
   return (
     <main className="page-shell relative min-h-screen overflow-hidden text-white">
+      <AuroraBackground className="absolute inset-0 z-0 pointer-events-none opacity-75" />
       <MoltenMetal
         color1="#140d2a"
         color2="#04a9dd"
