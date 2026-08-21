@@ -3,8 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import MoltenMetal from "@/components/MoltenMetal";
-import AuroraBackground from "@/components/ui/AuroraBackground";
+import AuroraBackground from "@/components/ui/aurora-background";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -18,27 +17,7 @@ export default function LoginPage() {
 
   return (
     <main className="page-shell min-h-screen relative overflow-hidden">
-      <AuroraBackground className="absolute inset-0 z-0 pointer-events-none opacity-80" />
-      <MoltenMetal
-        color1="#140d2a"
-        color2="#04a9dd"
-        color3="#fdfafa"
-        speed={0.15}
-        scale={4.9}
-        detail={4}
-        glow={1.5}
-        coreSize={0.11}
-        swirl={1}
-        fold={-0.3}
-        blackPoint={0.06}
-        brightness={1.4}
-        colorMode="ember"
-        grain
-        grainIntensity={0.06}
-        mouseInteraction
-        mouseStrength={0.15}
-        opacity={0.4}
-      />
+      <AuroraBackground starCount={75} pulseDuration={8} className="absolute inset-0 z-0 pointer-events-none" />
       <div className="min-h-screen bg-[#0B1120]/70 text-[#F8FAFC] flex items-center justify-center p-4 relative z-10">
         <div className="w-full max-w-md bg-[#1A2233]/90 backdrop-blur-xl border border-[#2A3648] rounded-xl p-8 shadow-2xl">
           {/* Logo Container */}

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { fadeUpProps } from "@/hooks/useAnimatedInView";
-import MoltenMetal from "@/components/MoltenMetal";
+import AuroraBackground from "@/components/ui/aurora-background";
 import {
   Settings,
   Bot,
@@ -48,26 +48,7 @@ const services = [
 export default function ServicesPreview() {
   return (
     <section className="relative section-shell overflow-hidden bg-[#111827]/80 px-6 py-24">
-      <MoltenMetal
-        color1="#0a192f"
-        color2="#04a9dd"
-        color3="#fdfafa"
-        speed={0.12}
-        scale={4.5}
-        detail={4}
-        glow={1.5}
-        coreSize={0.11}
-        swirl={1}
-        fold={-0.3}
-        blackPoint={0.06}
-        brightness={1.4}
-        colorMode="ember"
-        grain
-        grainIntensity={0.06}
-        mouseInteraction
-        mouseStrength={0.15}
-        opacity={0.35}
-      />
+      <AuroraBackground starCount={60} pulseDuration={8} className="absolute inset-0 z-0 pointer-events-none" />
       <div className="relative z-10 mx-auto max-w-7xl">
         <motion.div
           {...fadeUpProps}

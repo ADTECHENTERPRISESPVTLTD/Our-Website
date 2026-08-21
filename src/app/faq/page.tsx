@@ -4,35 +4,14 @@ import React from "react";
 import { motion } from "framer-motion";
 import AnimatedHeading from "@/components/ui/AnimatedHeading";
 import FAQSection from "@/components/FAQsection";
-import MoltenMetal from "@/components/MoltenMetal";
-import AuroraBackground from "@/components/ui/AuroraBackground";
+import AuroraBackground from "@/components/ui/aurora-background";
 
 export default function FAQPage() {
   return (
     <main className="page-shell min-h-screen">
       {/* Hero Section */}
       <section className="site-hero relative overflow-hidden py-24 bg-[#0B1120]/80">
-        <AuroraBackground className="absolute inset-0 z-0 pointer-events-none opacity-70" />
-        <MoltenMetal
-          color1="#140d2a"
-          color2="#04a9dd"
-          color3="#fdfafa"
-          speed={0.15}
-          scale={4.9}
-          detail={4}
-          glow={1.5}
-          coreSize={0.11}
-          swirl={1}
-          fold={-0.3}
-          blackPoint={0.06}
-          brightness={1.4}
-          colorMode="ember"
-          grain
-          grainIntensity={0.06}
-          mouseInteraction
-          mouseStrength={0.15}
-          opacity={0.3}
-        />
+        <AuroraBackground starCount={75} pulseDuration={8} className="absolute inset-0 z-0 pointer-events-none" />
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="bg-glow-cyan -left-20 top-10 h-[400px] w-[400px] opacity-60" />
           <div className="bg-glow-blue -bottom-20 right-0 h-[400px] w-[400px] opacity-70" />

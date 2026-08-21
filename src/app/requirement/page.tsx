@@ -3,33 +3,12 @@
 import { motion } from "framer-motion";
 import AnimatedHeading from "@/components/ui/AnimatedHeading";
 import RequirementForm from "@/components/requirement/RequirementForm";
-import MoltenMetal from "@/components/MoltenMetal";
-import AuroraBackground from "@/components/ui/AuroraBackground";
+import AuroraBackground from "@/components/ui/aurora-background";
 
 export default function RequirementPage() {
   return (
     <main className="page-shell relative min-h-screen overflow-hidden text-white">
-      <AuroraBackground className="absolute inset-0 z-0 pointer-events-none opacity-75" />
-      <MoltenMetal
-        color1="#140d2a"
-        color2="#04a9dd"
-        color3="#fdfafa"
-        speed={0.15}
-        scale={4.9}
-        detail={4}
-        glow={1.5}
-        coreSize={0.11}
-        swirl={1}
-        fold={-0.3}
-        blackPoint={0.06}
-        brightness={1.4}
-        colorMode="ember"
-        grain
-        grainIntensity={0.06}
-        mouseInteraction
-        mouseStrength={0.15}
-        opacity={0.35}
-      />
+      <AuroraBackground starCount={80} pulseDuration={8} className="absolute inset-0 z-0 pointer-events-none" />
       {/* Background Glows */}
       <div className="pointer-events-none absolute -right-32 top-16 h-[420px] w-[420px] rounded-full bg-cyan-500/20 blur-3xl" />
       <div className="pointer-events-none absolute -left-28 bottom-16 h-[360px] w-[360px] rounded-full bg-blue-500/10 blur-3xl" />
