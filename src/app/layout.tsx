@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import AuroraBackground from "@/components/ui/aurora-background";
+import ChatWidget from "@/components/ChatWidget";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,9 @@ export default function RootLayout({
         </main>
 
         <Footer />
+
+        {/* Asha AI Voice Assistant Chatbot */}
+        <ChatWidget />
       </body>
     </html>
   );
