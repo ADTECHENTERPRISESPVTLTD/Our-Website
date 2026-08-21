@@ -253,7 +253,7 @@ export default function Hero() {
             </motion.p>
 
             {/* Rotating Main Heading (SplitText char animation) */}
-            <motion.div variants={heroItem} className="mt-8 flex items-center justify-center">
+            <motion.div variants={heroItem} className="mt-4 flex items-center justify-center">
             <AnimatedHeading
               text={taglines[subtitleIndex]}
               className="hero-tagline text-center text-[#F8FAFC]"
@@ -264,7 +264,7 @@ export default function Hero() {
             {/* Description */}
             <motion.p
               variants={heroItem}
-              className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-[#94A3B8] sm:text-xl"
+              className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-[#94A3B8] sm:text-xl"
             >
               We help organizations unlock growth with tailored AI, software, cloud
               and automation solutions built for performance, security and scale.
@@ -273,7 +273,7 @@ export default function Hero() {
             {/* CTA Buttons */}
             <motion.div
               variants={heroItem}
-              className="mt-12 flex flex-wrap items-center justify-center gap-4"
+              className="mt-8 flex flex-wrap items-center justify-center gap-4"
             >
             <MagneticButton href="/services" className="hero-cta hero-cta-primary group">
               Explore Services
@@ -301,7 +301,7 @@ export default function Hero() {
             {/* Highlights Pills */}
             <motion.div
               variants={heroItem}
-              className="mt-12 flex flex-wrap items-center justify-center gap-3"
+              className="mt-8 flex flex-wrap items-center justify-center gap-3"
             >
             {highlights.map((item) => {
               const Icon = item.icon;
