@@ -516,7 +516,7 @@ export default function ChatWidget() {
               <div className="flex items-center gap-2.5 sm:gap-3">
                 <div className="relative h-10 w-10 sm:h-12 sm:w-12 rounded-full overflow-visible border-2 border-sky-400/50 bg-[#0B1120] shadow-[0_0_15px_rgba(56,189,248,0.3)] shrink-0">
                   <img 
-                    src="/bot-avatar.png" 
+                    src="/chatbot-logo.svg" 
                     className="h-full w-full rounded-full object-cover" 
                     alt="AD TECH Bot" 
                   />
@@ -546,7 +546,7 @@ export default function ChatWidget() {
 
             {/* Robot Image Bubble with Green Online Indicator Dot */}
             <div className="relative h-13 w-13 sm:h-15 sm:w-15 rounded-full overflow-visible shadow-2xl border border-slate-700/50">
-              <img src="/bot-avatar.png" className="h-full w-full rounded-full object-cover avatar-wave transition-transform duration-300" alt="AD TECH Bot" />
+              <img src="/chatbot-logo.svg" className="h-full w-full rounded-full object-cover avatar-wave transition-transform duration-300" alt="AD TECH Bot" />
               
               {/* Green Active/Online Status Dot */}
               <span className="absolute top-0 right-0 h-3.5 w-3.5 sm:h-4 sm:w-4 rounded-full bg-emerald-500 border-2 border-[#0B1120] shadow-[0_0_10px_rgba(16,185,129,0.9)] z-20 animate-pulse"></span>
@@ -586,7 +586,7 @@ export default function ChatWidget() {
           {/* Circular Mascot Avatar on iPad & PC */}
           <div className="absolute right-2 bottom-24 z-30 h-16 w-16 lg:h-20 lg:w-20 rounded-full overflow-visible border-2 border-sky-400/50 bg-[#0B1120] shadow-[0_0_20px_rgba(56,189,248,0.25)] animate-float hidden md:block">
             <img 
-              src="/bot-avatar.png" 
+              src="/chatbot-logo.svg" 
               className="h-full w-full rounded-full object-cover avatar-wave" 
               alt="AD TECH Mascot" 
             />
@@ -597,7 +597,7 @@ export default function ChatWidget() {
           <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-slate-900 via-[#111827] to-[#1A2233] border-b border-[#2A3648] text-white shrink-0">
             <div className="flex items-center gap-2.5">
               <div className="relative">
-                <img src="/adtech-logo.png" className="h-7 w-7 object-contain shrink-0 select-none" alt="AD TECH Logo" />
+                <img src="/chatbot-logo.svg" className="h-7 w-7 object-contain shrink-0 select-none" alt="AD TECH Logo" />
               </div>
               <div>
                 <h3 className="text-sm font-bold tracking-wide">AD TECH Assistant</h3>
