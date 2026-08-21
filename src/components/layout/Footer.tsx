@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Phone, MapPin, ArrowUpRight, Loader2, CheckCircle } from "lucide-react";
 
 const quickLinks = [
@@ -107,11 +108,12 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="/adtech-logo.png"
                 alt="AD Tech Logo"
-                className="h-12 w-12 object-contain"
+                width={140}
+                height={75}
+                className="h-10 w-auto object-contain"
               />
               <span className="text-xl font-bold text-white">AD TECH</span>
             </Link>
