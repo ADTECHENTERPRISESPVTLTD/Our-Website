@@ -710,6 +710,21 @@ p {
   }
 }
 
+@keyframes auroraPulse {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.15) rotate(4deg);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.3;
+  }
+}
+
 .animate-aurora {
   animation: aurora 60s linear infinite;
 }

@@ -101,48 +101,61 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Backdrop & Right Corner Popup Card */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden overflow-hidden border-t border-[#1E293B] bg-[#0B1120] shadow-2xl"
-          >
-            <div className="px-6 py-6 space-y-3 bg-[#0B1120]">
-              {navLinks.map((link, index) => (
+          <>
+            {/* Background Blur Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-md lg:hidden"
+            />
+
+            {/* Right-Corner Floating Menu Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: -10 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="absolute top-full right-6 mt-3 w-72 max-w-[calc(100vw-3rem)] rounded-2xl border border-[#2A3648] bg-[#0B1120]/95 p-4 shadow-2xl backdrop-blur-2xl z-50 lg:hidden"
+            >
+              <div className="space-y-2">
+                {navLinks.map((link, index) => (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.04 }}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className="block rounded-xl border border-[#2A3648]/60 bg-[#1A2233]/70 px-4 py-2.5 text-[#F8FAFC] font-medium text-sm transition-all duration-300 hover:border-cyan-400 hover:text-cyan-400 hover:bg-cyan-400/10"
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                ))}
                 <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: 10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
+                  transition={{ delay: 0.28 }}
+                  className="pt-1"
                 >
                   <Link
-                    href={link.href}
+                    href="/requirement"
                     onClick={() => setIsOpen(false)}
-                    className="block rounded-xl border border-[#1E293B] bg-[#0F172A] px-5 py-3 text-[#F8FAFC] font-medium transition-all duration-300 hover:border-cyan-400 hover:text-cyan-400 hover:bg-cyan-400/10"
+                    className="block rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2.5 text-center text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
                   >
-                    {link.label}
+                    Submit Requirement
                   </Link>
                 </motion.div>
-              ))}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                <Link
-                  href="/requirement"
-                  onClick={() => setIsOpen(false)}
-                  className="block rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 py-3 text-center text-white font-semibold shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:shadow-xl"
-                >
-                  Submit Requirement
-                </Link>
-              </motion.div>
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </nav>
