@@ -307,31 +307,41 @@ p {
 .bg-grid {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 70px 70px;
+  background-image: 
+    radial-gradient(circle, rgba(6, 182, 212, 0.15) 1px, transparent 1px),
+    linear-gradient(rgba(56, 189, 248, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.07) 1px, transparent 1px);
+  background-size: 50px 50px, 50px 50px, 50px 50px;
+  background-position: -1px -1px, 0 0, 0 0;
   z-index: 0;
   pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
 }
 
 .bg-grid.compact {
-  background-size: 40px 40px;
+  background-size: 30px 30px, 30px 30px, 30px 30px;
 }
 
 .bg-glow-cyan,
-.bg-glow-blue {
+.bg-glow-blue,
+.bg-glow-purple {
   position: absolute;
   z-index: 0;
   border-radius: 50%;
-  filter: blur(150px);
+  filter: blur(140px);
   pointer-events: none;
 }
 
 .bg-glow-cyan {
-  background: rgba(6,182,212,0.12);
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.28), transparent 70%);
 }
 
 .bg-glow-blue {
-  background: rgba(59,130,246,0.10);
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.25), transparent 70%);
+}
+
+.bg-glow-purple {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.22), transparent 70%);
 }
 
 /* Animated heading helpers for SplitText targets */
