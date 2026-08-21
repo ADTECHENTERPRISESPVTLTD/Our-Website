@@ -2,14 +2,35 @@
 
 import Link from "next/link";
 import AnimatedHeading from "@/components/ui/AnimatedHeading";
+import MoltenMetal from "@/components/MoltenMetal";
 
 export default function ServicesHero() {
   return (
-    <section className="site-hero pt-36 pb-24">
-      <div className="bg-glow-cyan -top-40 -left-40 h-[450px] w-[450px]" />
-      <div className="bg-glow-blue -bottom-40 -right-40 h-[450px] w-[450px]" />
+    <section className="site-hero relative overflow-hidden pt-36 pb-24 bg-[#0B1120]/80">
+      <MoltenMetal
+        color1="#140d2a"
+        color2="#04a9dd"
+        color3="#fdfafa"
+        speed={0.15}
+        scale={4.9}
+        detail={4}
+        glow={1.5}
+        coreSize={0.11}
+        swirl={1}
+        fold={-0.3}
+        blackPoint={0.06}
+        brightness={1.4}
+        colorMode="ember"
+        grain
+        grainIntensity={0.06}
+        mouseInteraction
+        mouseStrength={0.15}
+        opacity={0.4}
+      />
+      <div className="bg-glow-cyan -top-40 -left-40 h-[450px] w-[450px] pointer-events-none" />
+      <div className="bg-glow-blue -bottom-40 -right-40 h-[450px] w-[450px] pointer-events-none" />
 
-      <div className="bg-grid compact" />
+      <div className="bg-grid compact pointer-events-none" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 text-center lg:px-8">
         <span className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium tracking-wide text-cyan-400">

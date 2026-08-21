@@ -54,9 +54,10 @@ export default function Navbar() {
             <Image
               src="/adtech-logo.png"
               alt="AD Tech Logo"
-              width={56}
-              height={56}
-              className="h-14 w-14 object-contain transition-transform duration-300 group-hover:scale-105"
+              width={160}
+              height={85}
+              className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              priority
             />
           </motion.div>
           <motion.h1
