@@ -1,11 +1,32 @@
 "use client";
 
 import Link from "next/link";
+import MoltenMetal from "@/components/MoltenMetal";
 
 export default function AttendancePage() {
   return (
-    <main className="page-shell min-h-screen text-[#F8FAFC]">
-      <div className="min-h-screen p-8 max-w-6xl mx-auto space-y-8">
+    <main className="page-shell relative min-h-screen overflow-hidden text-[#F8FAFC] bg-[#0B1120]/80">
+      <MoltenMetal
+        color1="#140d2a"
+        color2="#04a9dd"
+        color3="#fdfafa"
+        speed={0.15}
+        scale={4.9}
+        detail={4}
+        glow={1.5}
+        coreSize={0.11}
+        swirl={1}
+        fold={-0.3}
+        blackPoint={0.06}
+        brightness={1.4}
+        colorMode="ember"
+        grain
+        grainIntensity={0.06}
+        mouseInteraction
+        mouseStrength={0.15}
+        opacity={0.35}
+      />
+      <div className="relative z-10 min-h-screen p-8 max-w-6xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex justify-between items-center border-b border-[#2A3648] pb-5">
           <div>

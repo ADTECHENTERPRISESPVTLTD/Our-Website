@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import MoltenMetal from "@/components/MoltenMetal";
 
 type TaskStatus = "Pending" | "In Progress" | "Completed";
 
@@ -44,8 +45,28 @@ export default function DashboardPage() {
   const completedCount = tasks.filter((t) => t.status === "Completed").length;
 
   return (
-    <main className="page-shell w-full min-h-screen text-[#F8FAFC]">
-      <div className="p-8 max-w-7xl mx-auto space-y-8">
+    <main className="page-shell relative w-full min-h-screen overflow-hidden text-[#F8FAFC] bg-[#0B1120]/80">
+      <MoltenMetal
+        color1="#140d2a"
+        color2="#04a9dd"
+        color3="#fdfafa"
+        speed={0.15}
+        scale={4.9}
+        detail={4}
+        glow={1.5}
+        coreSize={0.11}
+        swirl={1}
+        fold={-0.3}
+        blackPoint={0.06}
+        brightness={1.4}
+        colorMode="ember"
+        grain
+        grainIntensity={0.06}
+        mouseInteraction
+        mouseStrength={0.15}
+        opacity={0.35}
+      />
+      <div className="relative z-10 p-8 max-w-7xl mx-auto space-y-8">
         {/* Welcome Card */}
         <div className="bg-[#1A2233] border border-[#2A3648] rounded-2xl p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shadow-xl">
           <div>
