@@ -170,7 +170,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center bg-[#0B1120]/80 overflow-hidden"
+      className="relative min-h-screen flex items-center bg-[#0B1120]/70 overflow-hidden"
       aria-label="Hero section"
     >
       {/* ─── MoltenMetal & Canvas Background ─── */}

@@ -173,15 +173,19 @@ const MoltenMetal: React.FC<MoltenMetalProps> = ({
       alpha: true,
       premultipliedAlpha: true,
       antialias: false,
-      dpr: Math.min(window.devicePixelRatio || 1, 2),
+      dpr: 1,
     });
 
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
+    gl.disable(gl.DEPTH_TEST);
+    gl.disable(gl.CULL_FACE);
+    gl.disable(gl.STENCIL_TEST);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
     const canvas = gl.canvas as HTMLCanvasElement;
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.display = "block";
     container.appendChild(canvas);
 
     const geometry = new Triangle(gl);
@@ -229,6 +233,8 @@ const MoltenMetal: React.FC<MoltenMetalProps> = ({
 
     const ro = new ResizeObserver(setSize);
     ro.observe(container);
+    window.addEventListener("resize", setSize);
+    window.visualViewport?.addEventListener("resize", setSize);
     setSize();
 
     const targetMouse = [0.5, 0.5];
@@ -307,6 +313,8 @@ const MoltenMetal: React.FC<MoltenMetalProps> = ({
       document.removeEventListener("visibilitychange", onVisibility);
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("resize", setSize);
+      window.visualViewport?.removeEventListener("resize", setSize);
       ctxMap.delete(container);
       try {
         container.removeChild(canvas);
