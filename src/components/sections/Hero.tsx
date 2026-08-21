@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
+import type { Variants } from "framer-motion";
 import {
   ArrowRight,
   ChevronDown,
@@ -141,17 +142,42 @@ function MagneticButton({
 
 export default function Hero() {
   const [subtitleIndex, setSubtitleIndex] = useState(0);
+  const [spot, setSpot] = useState({ x: 50, y: 40 });
   const sectionRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const isContentInView = useInView(contentRef, { once: true, margin: "-50px" });
   const statsRef = useRef<HTMLDivElement>(null);
   const isStatsInView = useInView(statsRef, { once: true, margin: "-100px" });
 
+  const handleSpotMove = useCallback((e: React.MouseEvent) => {
+    const rect = sectionRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    setSpot({
+      x: ((e.clientX - rect.left) / rect.width) * 100,
+      y: ((e.clientY - rect.top) / rect.height) * 100,
+    });
+  }, []);
+
   const taglines = [
     "Empowering Businesses Through Intelligent Technology",
     "Building Future Tech Talent With Innovation",
     "AI-Driven Solutions For Tomorrow's Challenges",
   ];
+
+  const heroContainer: Variants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.14, delayChildren: 0.05 } },
+  };
+  const heroItem: Variants = {
+    hidden: { opacity: 0, y: 26, scale: 0.985, filter: "blur(6px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
 
   // Rotating tagline effect
   useEffect(() => {
@@ -173,11 +199,24 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center bg-[#0B1120] overflow-hidden"
+      onMouseMove={handleSpotMove}
+      className="relative min-h-screen flex flex-col bg-transparent overflow-hidden"
       aria-label="Hero section"
     >
       {/* ─── Animated Background ─── */}
       <HeroBackground />
+
+      {/* ─── Interactive Cursor Spotlight ─── */}
+      <motion.div
+        aria-hidden="true"
+        className="hero-spotlight pointer-events-none"
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+        transition={{ duration: 1.2, delay: 0.4 }}
+        style={{
+          background: `radial-gradient(circle 420px at ${spot.x}% ${spot.y}%, rgba(6, 182, 212, 0.1), transparent 70%)`,
+        }}
+      />
 
       {/* ─── Gradient Overlays ─── */}
       <div
@@ -195,57 +234,47 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* ─── Main Content ─── */}
-      <div
-        ref={contentRef}
-        className="hero-content-wrapper w-full z-10 mx-auto max-w-7xl px-6 pt-28 pb-24 lg:pt-36 lg:pb-32"
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-4xl mx-auto text-center"
+      {/* ─── Main Content Area (flex-1 to push scroll indicator to bottom) ─── */}
+      <div className="flex-1 flex items-start lg:items-center justify-center">
+        <div
+          ref={contentRef}
+          className="hero-content-wrapper w-full z-10 mx-auto max-w-7xl px-6 pt-12 pb-8 sm:pt-24 sm:pb-8 lg:py-28"
         >
-          {/* Main Heading */}
-          <div>
+          <motion.div
+            variants={heroContainer}
+            initial="hidden"
+            animate={isContentInView ? "visible" : "hidden"}
+            className="mx-auto max-w-5xl text-center"
+          >
+            {/* Eyebrow */}
+            <motion.p variants={heroItem} className="hero-eyebrow">
+              <span className="hero-eyebrow-dot" />
+              AD TECH ENTERPRISES PVT. LTD.
+            </motion.p>
+
+            {/* Rotating Main Heading (SplitText char animation) */}
+            <motion.div variants={heroItem} className="mt-8 flex items-center justify-center">
             <AnimatedHeading
-              text="AD TECH ENTERPRISES PVT. LTD."
-              className="hero-title text-center text-[#F8FAFC]"
+              text={taglines[subtitleIndex]}
+              className="hero-tagline text-center text-[#F8FAFC]"
               tag="h1"
             />
-            <div className="mx-auto mt-3 h-1 w-24 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" />
-          </div>
+            </motion.div>
 
-          {/* Tagline */}
-          <motion.p
-            key={subtitleIndex}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="mt-6 text-xl font-semibold text-[#E2E8F0] sm:text-3xl typing-cursor"
-          >
-            {taglines[subtitleIndex]}
-          </motion.p>
+            {/* Description */}
+            <motion.p
+              variants={heroItem}
+              className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-[#94A3B8] sm:text-xl"
+            >
+              We help organizations unlock growth with tailored AI, software, cloud
+              and automation solutions built for performance, security and scale.
+            </motion.p>
 
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-6 mx-auto max-w-3xl text-lg leading-8 text-[#94A3B8]"
-          >
-            We help organizations unlock growth with tailored AI, software, cloud
-            and automation solutions built for performance, security and scale.
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-10 flex flex-wrap justify-center gap-4"
-          >
+            {/* CTA Buttons */}
+            <motion.div
+              variants={heroItem}
+              className="mt-12 flex flex-wrap items-center justify-center gap-4"
+            >
             <MagneticButton href="/services" className="hero-cta hero-cta-primary group">
               Explore Services
               <ArrowRight
@@ -267,15 +296,13 @@ export default function Hero() {
               <Cpu size={18} />
               Intern Dashboard
             </MagneticButton>
-          </motion.div>
+            </motion.div>
 
-          {/* Highlights Pills */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isContentInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="mt-10 flex flex-wrap justify-center gap-3"
-          >
+            {/* Highlights Pills */}
+            <motion.div
+              variants={heroItem}
+              className="mt-12 flex flex-wrap items-center justify-center gap-3"
+            >
             {highlights.map((item) => {
               const Icon = item.icon;
               return (
@@ -287,9 +314,10 @@ export default function Hero() {
                   {item.label}
                 </span>
               );
-            })}
+             })}
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
 
       {/* ─── Stats + Tech Cards Below Hero ─── */}
