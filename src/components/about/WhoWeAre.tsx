@@ -6,7 +6,7 @@ import Card from "@/components/ui/Card";
 
 export default function WhoWeAre() {
   return (
-    <section className="relative bg-[#0B1120] py-24 overflow-hidden">
+    <section className="relative bg-[#0B1120]/70 py-24 overflow-hidden">
 
       {/* Background Glow */}
 

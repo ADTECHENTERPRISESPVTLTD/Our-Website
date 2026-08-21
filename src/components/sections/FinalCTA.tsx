@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function FinalCTA() {
   return (
-    <section className="section-shell bg-[#111827] px-6 py-24">
+    <section className="section-shell bg-[#111827]/70 px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -26,7 +26,7 @@ export default function FinalCTA() {
             <Link href="/contact" className="rounded-2xl bg-[#F8FAFC] px-8 py-3.5 font-semibold text-[#0B1120] transition duration-300 hover:scale-105">
               Get Started
             </Link>
-            <Link href="/services" className="rounded-2xl border border-[#334155] px-8 py-3.5 font-semibold text-[#F8FAFC] transition duration-300 hover:border-cyan-400 hover:bg-[#0B1120]">
+            <Link href="/services" className="rounded-2xl border border-[#334155] px-8 py-3.5 font-semibold text-[#F8FAFC] transition duration-300 hover:border-cyan-400 hover:bg-[#0B1120]/70">
               Explore Services
             </Link>
           </div>

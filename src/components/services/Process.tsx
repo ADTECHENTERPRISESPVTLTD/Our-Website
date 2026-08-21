@@ -3,7 +3,7 @@ import Card from "@/components/ui/Card";
 
 export default function Process() {
   return (
-    <section className="relative overflow-hidden bg-[#0B1120] py-24">
+    <section className="relative overflow-hidden bg-[#0B1120]/70 py-24">
       {/* Background Glow */}
       <div className="bg-glow-cyan absolute left-0 top-20 h-72 w-72" />
       <div className="bg-glow-blue absolute right-0 bottom-20 h-72 w-72" />
@@ -53,7 +53,7 @@ export default function Process() {
                 </div>
 
                 {/* Step Circle */}
-                <div className="relative z-10 flex h-20 w-20 items-center justify-center rounded-full border-4 border-cyan-500 bg-[#0B1120] text-2xl font-bold text-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.2)]">
+                <div className="relative z-10 flex h-20 w-20 items-center justify-center rounded-full border-4 border-cyan-500 bg-[#0B1120]/70 text-2xl font-bold text-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.2)]">
                   {step.step}
                 </div>
 

@@ -51,7 +51,7 @@ const servicesList = [
 
 export default function Services() {
   return (
-    <section className="bg-[#111827] py-24 px-6 overflow-hidden">
+    <section className="bg-[#111827]/70 py-24 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Heading Animation */}
         <motion.div
@@ -90,7 +90,7 @@ export default function Services() {
                 whileHover={{ y: -10, scale: 1.03 }}
                 className="bg-[#1A2233] border border-[#2A3648] rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all"
               >
-                <div className="h-14 w-14 flex items-center justify-center rounded-xl bg-[#0B1120] text-cyan-400 mb-6">
+                <div className="h-14 w-14 flex items-center justify-center rounded-xl bg-[#0B1120]/70 text-cyan-400 mb-6">
                   <IconComponent size={28} />
                 </div>
 

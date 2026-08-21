@@ -18,7 +18,7 @@ export default function LoginPage() {
 
   return (
     <main className="page-shell min-h-screen">
-    <div className="min-h-screen bg-[#0B1120] text-[#F8FAFC] flex items-center justify-center p-4 relative z-10">
+    <div className="min-h-screen bg-[#0B1120]/70 text-[#F8FAFC] flex items-center justify-center p-4 relative z-10">
       <div className="w-full max-w-md bg-[#1A2233] border border-[#2A3648] rounded-xl p-8 shadow-2xl">
         
         {/* Larger Logo Container with Tight Bottom Margin */}
@@ -50,7 +50,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="yuragi@adtech.com"
-              className="w-full bg-[#111827] border border-[#2A3648] text-[#F8FAFC] rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#64748B]"
+              className="w-full bg-[#111827]/70 border border-[#2A3648] text-[#F8FAFC] rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#64748B]"
             />
           </div>
 
@@ -64,7 +64,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full bg-[#111827] border border-[#2A3648] text-[#F8FAFC] rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#64748B]"
+              className="w-full bg-[#111827]/70 border border-[#2A3648] text-[#F8FAFC] rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#64748B]"
             />
           </div>
 

@@ -24,7 +24,7 @@ const industries = [
 
 export default function Industries() {
   return (
-    <section className="section-shell bg-[#0B1120] px-6 py-24">
+    <section className="section-shell bg-[#0B1120]/70 px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <div className="text-center">
           <p className="section-eyebrow">Industries We Serve</p>

@@ -23,7 +23,7 @@ const reasons = [
 
 export default function WhyChoose() {
   return (
-    <section className="section-shell bg-[#0B1120] px-6 py-24">
+    <section className="section-shell bg-[#0B1120]/70 px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

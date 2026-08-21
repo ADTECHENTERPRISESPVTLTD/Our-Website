@@ -194,7 +194,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center bg-[#0B1120] overflow-hidden"
+      className="relative min-h-screen flex items-center bg-[#0B1120]/70 overflow-hidden"
       aria-label="Hero section"
     >
       {/* ─── Animated Background ─── */}
@@ -318,7 +318,7 @@ export default function Hero() {
                 return (
                   <span
                     key={item.label}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-[#2A3648] bg-[#111827]/80 px-4 py-2 text-sm text-[#CBD5E1] transition-all duration-300 hover:border-cyan-400/40 hover:bg-[#111827]"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[#2A3648] bg-[#111827]/80 px-4 py-2 text-sm text-[#CBD5E1] transition-all duration-300 hover:border-cyan-400/40 hover:bg-[#111827]/70"
                   >
                     <Icon size={14} className="text-cyan-400" />
                     {item.label}

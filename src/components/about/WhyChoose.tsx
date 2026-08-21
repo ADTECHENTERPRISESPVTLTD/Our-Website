@@ -51,7 +51,7 @@ const reasons = [
 
 export default function WhyChoose() {
   return (
-    <section className="relative py-28 overflow-hidden bg-[#0B1120]">
+    <section className="relative py-28 overflow-hidden bg-[#0B1120]/70">
 
       {/* Background Glow */}
 

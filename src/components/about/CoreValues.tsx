@@ -33,7 +33,7 @@ const values = [
 
 export default function CoreValues() {
   return (
-    <section className="relative py-28 bg-[#0B1120] overflow-hidden">
+    <section className="relative py-28 bg-[#0B1120]/70 overflow-hidden">
 
       <div className="bg-glow-blue absolute left-0 top-10 h-80 w-80" />
       <div className="bg-glow-cyan absolute right-0 bottom-0 h-96 w-96" />

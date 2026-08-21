@@ -95,7 +95,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-[#0B1120] border-t border-[#1A2233] overflow-hidden">
+    <footer className="relative bg-[#0B1120]/70 border-t border-[#1A2233] overflow-hidden">
       {/* Background Glow */}
       <div className="absolute left-0 bottom-0 h-64 w-64 bg-cyan-500/5 blur-[120px] pointer-events-none" />
       <div className="absolute right-0 top-0 h-64 w-64 bg-blue-500/5 blur-[120px] pointer-events-none" />
@@ -107,7 +107,7 @@ export default function Footer() {
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-3">
               <img
-                src="/adtech-logo.svg"
+                src="/adtech-logo.png"
                 alt="AD Tech Logo"
                 className="h-12 w-12 object-contain"
               />

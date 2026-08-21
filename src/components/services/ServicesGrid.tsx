@@ -3,7 +3,7 @@ import { services } from "@/data/services";
 
 export default function ServicesGrid() {
   return (
-    <section className="relative bg-[#0B1120] py-24">
+    <section className="relative bg-[#0B1120]/70 py-24">
       {/* Background Glow */}
       <div className="bg-glow-cyan absolute top-0 left-0 h-80 w-80" />
       <div className="bg-glow-blue absolute bottom-0 right-0 h-80 w-80" />

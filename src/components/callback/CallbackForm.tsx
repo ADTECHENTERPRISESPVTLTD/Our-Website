@@ -20,7 +20,7 @@ export default function CallbackForm() {
 
   if (submitted) {
     return (
-      <section className="section-shell bg-[#0B1120] py-20">
+      <section className="section-shell bg-[#0B1120]/70 py-20">
         <div className="mx-auto max-w-3xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -63,7 +63,7 @@ export default function CallbackForm() {
   }
 
   return (
-    <section className="section-shell bg-[#0B1120] py-20">
+    <section className="section-shell bg-[#0B1120]/70 py-20">
       <div className="mx-auto max-w-3xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -107,7 +107,7 @@ export default function CallbackForm() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Full Name"
-                      className={`w-full rounded-xl border bg-[#0B1120] px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] ${
+                      className={`w-full rounded-xl border bg-[#0B1120]/70 px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] ${
                         errors.name
                           ? "border-red-400 focus:border-red-400"
                           : "border-slate-700 focus:border-cyan-400"
@@ -134,7 +134,7 @@ export default function CallbackForm() {
                       value={formData.company}
                       onChange={handleChange}
                       placeholder="Company Name"
-                      className={`w-full rounded-xl border bg-[#0B1120] px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] ${
+                      className={`w-full rounded-xl border bg-[#0B1120]/70 px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] ${
                         errors.company
                           ? "border-red-400 focus:border-red-400"
                           : "border-slate-700 focus:border-cyan-400"
@@ -163,7 +163,7 @@ export default function CallbackForm() {
                     value={formData.phoneNumber}
                     onChange={handleChange}
                     placeholder="Phone Number"
-                    className={`w-full rounded-xl border bg-[#0B1120] px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] ${
+                    className={`w-full rounded-xl border bg-[#0B1120]/70 px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] ${
                       errors.phoneNumber
                         ? "border-red-400 focus:border-red-400"
                         : "border-slate-700 focus:border-cyan-400"
@@ -192,7 +192,7 @@ export default function CallbackForm() {
                       value={formData.preferredDate}
                       onChange={handleChange}
                       min={today}
-                      className={`w-full rounded-xl border bg-[#0B1120] px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] [color-scheme:dark] ${
+                      className={`w-full rounded-xl border bg-[#0B1120]/70 px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] [color-scheme:dark] ${
                         errors.preferredDate
                           ? "border-red-400 focus:border-red-400"
                           : "border-slate-700 focus:border-cyan-400"
@@ -218,7 +218,7 @@ export default function CallbackForm() {
                       name="preferredTime"
                       value={formData.preferredTime}
                       onChange={handleChange}
-                      className={`w-full rounded-xl border bg-[#0B1120] px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] [color-scheme:dark] ${
+                      className={`w-full rounded-xl border bg-[#0B1120]/70 px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] [color-scheme:dark] ${
                         errors.preferredTime
                           ? "border-red-400 focus:border-red-400"
                           : "border-slate-700 focus:border-cyan-400"
@@ -247,7 +247,7 @@ export default function CallbackForm() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Brief message about what you'd like to discuss..."
-                    className={`w-full rounded-xl border bg-[#0B1120] px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] resize-none ${
+                    className={`w-full rounded-xl border bg-[#0B1120]/70 px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] resize-none ${
                       errors.message
                         ? "border-red-400 focus:border-red-400"
                         : "border-slate-700 focus:border-cyan-400"

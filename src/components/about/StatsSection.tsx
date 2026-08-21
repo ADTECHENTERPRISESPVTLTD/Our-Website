@@ -23,7 +23,7 @@ const stats = [
 
 export default function StatsSection() {
   return (
-    <section className="relative py-28 bg-[#0B1120] overflow-hidden">
+    <section className="relative py-28 bg-[#0B1120]/70 overflow-hidden">
 
       {/* Background Glow */}
 

@@ -83,22 +83,22 @@ export default function DashboardPage() {
               <span className="text-sm text-[#94A3B8] font-semibold uppercase tracking-wider">
                 Assigned Tasks
               </span>
-              <span className="text-xs text-[#F8FAFC] bg-[#111827] border border-[#2A3648] px-3 py-1 rounded-md font-bold">
+              <span className="text-xs text-[#F8FAFC] bg-[#111827]/70 border border-[#2A3648] px-3 py-1 rounded-md font-bold">
                 Total: {totalTasks}
               </span>
             </div>
 
             {/* Dynamic Task Breakdown Badges */}
             <div className="grid grid-cols-3 gap-3 pt-1">
-              <div className="bg-[#111827] border border-[#2A3648] p-3 rounded-xl flex flex-col items-center justify-center text-center">
+              <div className="bg-[#111827]/70 border border-[#2A3648] p-3 rounded-xl flex flex-col items-center justify-center text-center">
                 <span className="text-[11px] text-[#94A3B8] font-medium uppercase whitespace-nowrap">Pending</span>
                 <span className="font-bold text-xl text-[#EF4444] mt-1">{pendingCount}</span>
               </div>
-              <div className="bg-[#111827] border border-[#2A3648] p-3 rounded-xl flex flex-col items-center justify-center text-center">
+              <div className="bg-[#111827]/70 border border-[#2A3648] p-3 rounded-xl flex flex-col items-center justify-center text-center">
                 <span className="text-[11px] text-[#94A3B8] font-medium uppercase whitespace-nowrap">In Progress</span>
                 <span className="font-bold text-xl text-[#F59E0B] mt-1">{inProgressCount}</span>
               </div>
-              <div className="bg-[#111827] border border-[#2A3648] p-3 rounded-xl flex flex-col items-center justify-center text-center">
+              <div className="bg-[#111827]/70 border border-[#2A3648] p-3 rounded-xl flex flex-col items-center justify-center text-center">
                 <span className="text-[11px] text-[#94A3B8] font-medium uppercase whitespace-nowrap">Completed</span>
                 <span className="font-bold text-xl text-[#10B981] mt-1">{completedCount}</span>
               </div>
@@ -122,13 +122,13 @@ export default function DashboardPage() {
           <div className="flex flex-wrap gap-5">
             <Link
               href="/attendance"
-              className="bg-[#111827] border border-[#2A3648] text-[#CBD5E1] hover:text-[#F8FAFC] hover:border-[#64748B] px-6 py-3.5 rounded-xl text-base font-semibold transition-all duration-200 hover:bg-[#1f293d]"
+              className="bg-[#111827]/70 border border-[#2A3648] text-[#CBD5E1] hover:text-[#F8FAFC] hover:border-[#64748B] px-6 py-3.5 rounded-xl text-base font-semibold transition-all duration-200 hover:bg-[#1f293d]"
             >
               Go to Attendance Module →
             </Link>
             <Link
               href="/tasks"
-              className="bg-[#111827] border border-[#2A3648] text-[#CBD5E1] hover:text-[#F8FAFC] hover:border-[#64748B] px-6 py-3.5 rounded-xl text-base font-semibold transition-all duration-200 hover:bg-[#1f293d]"
+              className="bg-[#111827]/70 border border-[#2A3648] text-[#CBD5E1] hover:text-[#F8FAFC] hover:border-[#64748B] px-6 py-3.5 rounded-xl text-base font-semibold transition-all duration-200 hover:bg-[#1f293d]"
             >
               View Assigned Tasks →
             </Link>

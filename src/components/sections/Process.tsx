@@ -23,7 +23,7 @@ const steps = [
 
 export default function Process() {
   return (
-    <section className="section-shell bg-[#111827] px-6 py-24">
+    <section className="section-shell bg-[#111827]/70 px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
