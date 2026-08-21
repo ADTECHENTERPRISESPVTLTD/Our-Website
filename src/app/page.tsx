@@ -9,16 +9,18 @@ import FinalCTA from "@/components/sections/FinalCTA";
 
 
 export default function Home(){
-  return(
-    <div className="relative bg-[#0B1120]">
-      <Hero/>
-      <CompanyOverview/>
-      <ServicesPreview/>
-      <WhyChoose/>
-      <Process/>
-      <Industries/>
-      <Testimonials/>
-      <FinalCTA/>
-    </div>
-  )
+
+return(
+<>
+<Hero/>
+<CompanyOverview/>
+<ServicesPreview/>
+<WhyChoose/>
+<Process/>
+<Industries/>
+<Testimonials/>
+<FinalCTA/>
+</>
+)
+
 }

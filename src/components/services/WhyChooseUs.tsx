@@ -49,7 +49,7 @@ const features = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="relative overflow-hidden bg-[#0B1120]/70 py-24">
+    <section className="relative overflow-hidden bg-[#0B1120] py-24">
       {/* Background Glow */}
       <div className="bg-glow-cyan absolute left-0 top-0 h-80 w-80" />
       <div className="bg-glow-blue absolute right-0 bottom-0 h-80 w-80" />

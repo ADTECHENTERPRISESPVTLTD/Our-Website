@@ -20,8 +20,6 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
-  const [prevPathname, setPrevPathname] = useState(pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,10 +29,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  if (prevPathname !== pathname) {
-    setPrevPathname(pathname);
+  // Close mobile menu on route change
+  useEffect(() => {
     setIsOpen(false);
-  }
+  }, []);
 
   return (
     <nav
@@ -56,7 +54,7 @@ export default function Navbar() {
               alt="AD Tech Logo"
               width={160}
               height={85}
-              className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              className="h-14 w-14 object-contain transition-transform duration-300 group-hover:scale-105"
               priority
             />
           </motion.div>
@@ -148,3 +146,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

@@ -5,7 +5,7 @@ import { Eye, Target, Check } from "lucide-react";
 
 export default function VisionMission() {
   return (
-    <section className="relative bg-[#0B1120]/70 py-24 overflow-hidden">
+    <section className="relative bg-[#0B1120] py-24 overflow-hidden">
       <div className="absolute inset-0">
         <div className="bg-glow-blue absolute left-20 top-10 h-72 w-72" />
         <div className="bg-glow-cyan absolute right-10 bottom-10 h-96 w-96" />

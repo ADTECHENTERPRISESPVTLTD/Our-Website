@@ -413,7 +413,7 @@ export default function CareerRoute() {
                       onChange={handleChange}
                       type="text" 
                       placeholder="John Doe" 
-                      className={`w-full bg-[#111827]/70 border ${
+                      className={`w-full bg-[#111827] border ${
                         errors.name ? "border-red-400" : "border-[#2A3648]"
                       } rounded-lg px-4 py-2.5 text-[#F8FAFC] text-sm focus:outline-none focus:border-[#06B6D4] transition-all`}
                     />
@@ -427,7 +427,7 @@ export default function CareerRoute() {
                       onChange={handleChange}
                       type="email" 
                       placeholder="john@example.com" 
-                      className={`w-full bg-[#111827]/70 border ${
+                      className={`w-full bg-[#111827] border ${
                         errors.email ? "border-red-400" : "border-[#2A3648]"
                       } rounded-lg px-4 py-2.5 text-[#F8FAFC] text-sm focus:outline-none focus:border-[#06B6D4] transition-all`}
                     />
@@ -441,7 +441,7 @@ export default function CareerRoute() {
                       onChange={handleChange}
                       type="tel" 
                       placeholder="+91 98765 43210" 
-                      className={`w-full bg-[#111827]/70 border ${
+                      className={`w-full bg-[#111827] border ${
                         errors.phone ? "border-red-400" : "border-[#2A3648]"
                       } rounded-lg px-4 py-2.5 text-[#F8FAFC] text-sm focus:outline-none focus:border-[#06B6D4] transition-all`}
                     />
@@ -455,7 +455,7 @@ export default function CareerRoute() {
                       onChange={handleChange}
                       type="text" 
                       placeholder="Your College Name" 
-                      className={`w-full bg-[#111827]/70 border ${
+                      className={`w-full bg-[#111827] border ${
                         errors.college ? "border-red-400" : "border-[#2A3648]"
                       } rounded-lg px-4 py-2.5 text-[#F8FAFC] text-sm focus:outline-none focus:border-[#06B6D4] transition-all`}
                     />
@@ -469,7 +469,7 @@ export default function CareerRoute() {
                       onChange={handleChange}
                       type="text" 
                       placeholder="React, TypeScript, Python, etc." 
-                      className={`w-full bg-[#111827]/70 border ${
+                      className={`w-full bg-[#111827] border ${
                         errors.skills ? "border-red-400" : "border-[#2A3648]"
                       } rounded-lg px-4 py-2.5 text-[#F8FAFC] text-sm focus:outline-none focus:border-[#06B6D4] transition-all`}
                     />
@@ -484,7 +484,7 @@ export default function CareerRoute() {
                         onChange={handleChange}
                         type="url" 
                         placeholder="https://yourportfolio.com" 
-                        className="w-full bg-[#111827]/70 border border-[#2A3648] rounded-lg px-4 py-2.5 text-[#F8FAFC] text-sm focus:outline-none focus:border-[#06B6D4] transition-all"
+                        className="w-full bg-[#111827] border border-[#2A3648] rounded-lg px-4 py-2.5 text-[#F8FAFC] text-sm focus:outline-none focus:border-[#06B6D4] transition-all"
                       />
                     </div>
                     <div>
@@ -495,7 +495,7 @@ export default function CareerRoute() {
                         onChange={handleChange}
                         type="url" 
                         placeholder="https://linkedin.com/in/..." 
-                        className="w-full bg-[#111827]/70 border border-[#2A3648] rounded-lg px-4 py-2.5 text-[#F8FAFC] text-sm focus:outline-none focus:border-[#06B6D4] transition-all"
+                        className="w-full bg-[#111827] border border-[#2A3648] rounded-lg px-4 py-2.5 text-[#F8FAFC] text-sm focus:outline-none focus:border-[#06B6D4] transition-all"
                       />
                     </div>
                   </div>
@@ -506,7 +506,7 @@ export default function CareerRoute() {
                       onChange={handleResumeChange}
                       type="file" 
                       accept=".pdf,.doc,.docx"
-                      className={`w-full bg-[#111827]/70 border ${
+                      className={`w-full bg-[#111827] border ${
                         errors.resume ? "border-red-400" : "border-[#2A3648]"
                       } rounded-lg px-4 py-2.5 text-[#F8FAFC] text-sm focus:outline-none focus:border-[#06B6D4] transition-all file:mr-3 file:rounded-md file:border-0 file:bg-cyan-500/20 file:px-3 file:py-1 file:text-sm file:text-cyan-300`}
                     />

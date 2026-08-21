@@ -47,7 +47,7 @@ export default function FinalCTA() {
             <Link href="/contact" className="rounded-2xl bg-[#F8FAFC] px-8 py-3.5 font-semibold text-[#0B1120] transition duration-300 hover:scale-105">
               Get Started
             </Link>
-            <Link href="/services" className="rounded-2xl border border-[#334155] px-8 py-3.5 font-semibold text-[#F8FAFC] transition duration-300 hover:border-cyan-400 hover:bg-[#0B1120]/70">
+            <Link href="/services" className="rounded-2xl border border-[#334155] px-8 py-3.5 font-semibold text-[#F8FAFC] transition duration-300 hover:border-cyan-400 hover:bg-[#0B1120]">
               Explore Services
             </Link>
           </div>

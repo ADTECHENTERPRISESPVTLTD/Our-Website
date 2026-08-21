@@ -29,7 +29,7 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <section className="section-shell bg-[#0B1120]/70 py-20">
+      <section className="section-shell bg-[#0B1120] py-20">
         <div className="mx-auto max-w-3xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -66,7 +66,7 @@ export default function ContactForm() {
   }
 
   return (
-    <section className="section-shell bg-[#0B1120]/70 py-20">
+    <section className="section-shell bg-[#0B1120] py-20">
       <div className="mx-auto max-w-3xl px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -109,7 +109,7 @@ export default function ContactForm() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Your Name"
-                      className={`w-full rounded-xl border bg-[#0B1120]/70 px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] ${
+                      className={`w-full rounded-xl border bg-[#0B1120] px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] ${
                         errors.name
                           ? "border-red-400 focus:border-red-400"
                           : "border-slate-700 focus:border-cyan-400"
@@ -135,7 +135,7 @@ export default function ContactForm() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="Email Address"
-                      className={`w-full rounded-xl border bg-[#0B1120]/70 px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] ${
+                      className={`w-full rounded-xl border bg-[#0B1120] px-5 py-3.5 pl-11 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] ${
                         errors.email
                           ? "border-red-400 focus:border-red-400"
                           : "border-slate-700 focus:border-cyan-400"
@@ -161,7 +161,7 @@ export default function ContactForm() {
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder="Subject"
-                  className={`w-full rounded-xl border bg-[#0B1120]/70 px-5 py-3.5 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] ${
+                  className={`w-full rounded-xl border bg-[#0B1120] px-5 py-3.5 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] ${
                     errors.subject
                       ? "border-red-400 focus:border-red-400"
                       : "border-slate-700 focus:border-cyan-400"
@@ -185,7 +185,7 @@ export default function ContactForm() {
                   onChange={handleChange}
                   placeholder="Your Message"
                   rows={5}
-                  className={`w-full rounded-xl border bg-[#0B1120]/70 px-5 py-3.5 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] resize-none ${
+                  className={`w-full rounded-xl border bg-[#0B1120] px-5 py-3.5 text-white outline-none transition-all duration-300 focus:shadow-[0_0_20px_rgba(34,211,238,0.1)] resize-none ${
                     errors.message
                       ? "border-red-400 focus:border-red-400"
                       : "border-slate-700 focus:border-cyan-400"

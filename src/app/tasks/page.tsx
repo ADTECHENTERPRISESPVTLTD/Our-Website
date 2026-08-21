@@ -178,7 +178,7 @@ export default function TasksPage() {
         </div>
         <Link
           href="/dashboard"
-          className="text-sm font-semibold text-[#94A3B8] hover:text-[#F8FAFC] hover:border-[#64748B] border border-[#2A3648] px-4 py-2 rounded-xl transition duration-200 bg-[#111827]/70"
+          className="text-sm font-semibold text-[#94A3B8] hover:text-[#F8FAFC] hover:border-[#64748B] border border-[#2A3648] px-4 py-2 rounded-xl transition duration-200 bg-[#111827]"
         >
           ← Back to Dashboard
         </Link>
@@ -218,7 +218,7 @@ export default function TasksPage() {
                     className={`text-xs font-medium px-3 py-1.5 rounded-lg border transition cursor-pointer ${
                       isAttachmentOpen || task.attachedFile
                         ? "bg-[#3B82F6]/20 text-[#3B82F6] border-[#3B82F6]/40"
-                        : "bg-[#111827]/70 text-[#94A3B8] border-[#2A3648] hover:text-[#F8FAFC]"
+                        : "bg-[#111827] text-[#94A3B8] border-[#2A3648] hover:text-[#F8FAFC]"
                     }`}
                   >
                     📎 File {task.attachedFile ? "(1)" : ""}
@@ -229,7 +229,7 @@ export default function TasksPage() {
                     className={`text-xs font-medium px-3 py-1.5 rounded-lg border transition cursor-pointer ${
                       isCommentOpen
                         ? "bg-[#3B82F6]/20 text-[#3B82F6] border-[#3B82F6]/40"
-                        : "bg-[#111827]/70 text-[#94A3B8] border-[#2A3648] hover:text-[#F8FAFC]"
+                        : "bg-[#111827] text-[#94A3B8] border-[#2A3648] hover:text-[#F8FAFC]"
                     }`}
                   >
                     💬 Query ({task.comments.length})
@@ -274,7 +274,7 @@ export default function TasksPage() {
                 </div>
               </div>
 
-              <div className="bg-[#111827]/70 border border-[#2A3648] p-3.5 rounded-xl flex items-center justify-between text-xs md:text-sm">
+              <div className="bg-[#111827] border border-[#2A3648] p-3.5 rounded-xl flex items-center justify-between text-xs md:text-sm">
                 <span className="text-[#94A3B8] font-medium">Due Date / Deadline:</span>
                 <span className="text-[#EF4444] font-semibold bg-[#EF4444]/10 border border-[#EF4444]/20 px-3 py-1 rounded-lg">
                   ⌛ {task.deadline}
@@ -282,7 +282,7 @@ export default function TasksPage() {
               </div>
 
               {isAttachmentOpen && (
-                <div className="bg-[#111827]/70 border border-[#3B82F6]/30 p-4 rounded-xl space-y-3">
+                <div className="bg-[#111827] border border-[#3B82F6]/30 p-4 rounded-xl space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-semibold text-[#3B82F6] uppercase tracking-wider">
                       Upload ZIP
@@ -309,7 +309,7 @@ export default function TasksPage() {
               )}
 
               {isCommentOpen && (
-                <div className="bg-[#111827]/70 border border-[#3B82F6]/30 p-4 rounded-xl space-y-4">
+                <div className="bg-[#111827] border border-[#3B82F6]/30 p-4 rounded-xl space-y-4">
                   <h4 className="text-xs font-semibold text-[#3B82F6] uppercase tracking-wider">
                     Task Discussion & Queries ({task.comments.length})
                   </h4>

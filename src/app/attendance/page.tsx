@@ -39,7 +39,7 @@ export default function AttendancePage() {
           </div>
           <Link
             href="/dashboard"
-            className="text-sm font-semibold text-[#94A3B8] hover:text-[#F8FAFC] hover:border-[#64748B] border border-[#2A3648] px-4 py-2 rounded-xl transition duration-200 bg-[#111827]/70"
+            className="text-sm font-semibold text-[#94A3B8] hover:text-[#F8FAFC] hover:border-[#64748B] border border-[#2A3648] px-4 py-2 rounded-xl transition duration-200 bg-[#111827]"
           >
             ← Back to Dashboard
           </Link>

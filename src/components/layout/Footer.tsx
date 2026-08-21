@@ -88,16 +88,15 @@ export default function Footer() {
 
       setSubscribeSuccess(true);
       setEmail("");
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : "Something went wrong. Please try again.";
-      setSubscribeError(message);
+    } catch (error: any) {
+      setSubscribeError(error.message || "Something went wrong. Please try again.");
     } finally {
       setIsSubscribing(false);
     }
   };
 
   return (
-    <footer className="relative bg-[#0B1120]/70 border-t border-[#1A2233] overflow-hidden">
+    <footer className="relative bg-[#0B1120] border-t border-[#1A2233] overflow-hidden">
       {/* Background Glow */}
       <div className="absolute left-0 bottom-0 h-64 w-64 bg-cyan-500/5 blur-[120px] pointer-events-none" />
       <div className="absolute right-0 top-0 h-64 w-64 bg-blue-500/5 blur-[120px] pointer-events-none" />
@@ -113,7 +112,8 @@ export default function Footer() {
                 alt="AD Tech Logo"
                 width={140}
                 height={75}
-                className="h-10 w-auto object-contain"
+                className="h-12 w-12 object-contain"
+                priority
               />
               <span className="text-xl font-bold text-white">AD TECH</span>
             </Link>

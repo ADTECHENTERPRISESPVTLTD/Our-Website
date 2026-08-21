@@ -27,7 +27,7 @@ const timeline = [
 
 export default function CompanyStory() {
   return (
-    <section className="relative py-28 bg-[#0B1120]/70 overflow-hidden">
+    <section className="relative py-28 bg-[#0B1120] overflow-hidden">
 
       {/* Background Glow */}
       <div className="absolute left-10 top-20 h-80 w-80 rounded-full bg-blue-600/10 blur-[140px]" />

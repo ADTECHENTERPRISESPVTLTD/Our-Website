@@ -4,7 +4,7 @@ import Card from "@/components/ui/Card";
 
 export default function CTA() {
   return (
-    <section className="relative overflow-hidden bg-[#0B1120]/70 py-24">
+    <section className="relative overflow-hidden bg-[#0B1120] py-24">
       {/* Glow */}
       <div className="bg-glow-cyan absolute left-1/2 top-1/2 h-[350px] w-[350px] -translate-x-1/2 -translate-y-1/2" />
 
