@@ -147,33 +147,33 @@ export default function DashboardPage() {
               label: "Total Tasks",
               value: totalTasks,
               icon: LayoutDashboard,
-              color: "from-cyan-500/20 to-blue-600/20",
-              border: "border-cyan-400/20",
-              textColor: "text-cyan-300",
+              color: "from-cyan-500/50 to-blue-600/50",
+              border: "border-cyan-400/40",
+              textColor: "text-cyan-200",
             },
             {
               label: "In Progress",
               value: inProgressCount,
               icon: Clock,
-              color: "from-amber-500/20 to-orange-600/20",
-              border: "border-amber-400/20",
-              textColor: "text-amber-300",
+              color: "from-amber-500/50 to-orange-600/50",
+              border: "border-amber-400/40",
+              textColor: "text-amber-200",
             },
             {
               label: "Completed",
               value: completedCount,
               icon: CheckCircle2,
-              color: "from-emerald-500/20 to-green-600/20",
-              border: "border-emerald-400/20",
-              textColor: "text-emerald-300",
+              color: "from-emerald-500/50 to-green-600/50",
+              border: "border-emerald-400/40",
+              textColor: "text-emerald-200",
             },
             {
               label: "Pending",
               value: pendingCount,
               icon: AlertCircle,
-              color: "from-red-500/20 to-rose-600/20",
-              border: "border-red-400/20",
-              textColor: "text-red-300",
+              color: "from-red-500/50 to-rose-600/50",
+              border: "border-red-400/40",
+              textColor: "text-red-200",
             },
           ].map((stat, index) => (
             <motion.div
@@ -247,7 +247,7 @@ export default function DashboardPage() {
                   <motion.div
                     key={task.id}
                     whileHover={{ x: 4 }}
-                    className="group flex items-center justify-between p-4 rounded-xl bg-[#111827] border border-[#2A3648] hover:border-cyan-400/20 transition-all duration-300 cursor-pointer"
+                    className="group flex items-center justify-between p-4 rounded-xl bg-[#0B1120] border border-[#1A2233] hover:border-cyan-400/30 transition-all duration-300 cursor-pointer"
                   >
                     <div className="flex items-center gap-4 min-w-0">
                       <div className={`w-2.5 h-2.5 rounded-full ${colors.dot} shrink-0`} />
@@ -302,7 +302,7 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 p-4 rounded-xl bg-[#111827] border border-[#2A3648]">
+              <div className="flex items-center gap-3 p-4 rounded-xl bg-[#0B1120] border border-[#1A2233]">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
@@ -326,7 +326,7 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="text-center p-6 rounded-xl bg-[#111827] border border-[#2A3648]">
+              <div className="text-center p-6 rounded-xl bg-[#0B1120] border border-[#1A2233]">
                 <p className="text-4xl font-bold text-emerald-400">100%</p>
                 <p className="text-sm text-[#94A3B8] mt-2">Active Attendance</p>
                 <div className="mt-4 h-2 w-full rounded-full bg-[#1A2233] overflow-hidden">
@@ -343,7 +343,7 @@ export default function DashboardPage() {
               <div className="space-y-3">
                 <Link
                   href="/attendance"
-                  className="flex items-center justify-between p-3.5 rounded-xl bg-[#111827] border border-[#2A3648] hover:border-cyan-400/20 hover:bg-gradient-to-r hover:from-cyan-500/5 hover:to-blue-600/5 transition-all duration-300 group"
+                  className="flex items-center justify-between p-3.5 rounded-xl bg-[#0B1120] border border-[#1A2233] hover:border-cyan-400/30 hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-blue-600/10 transition-all duration-300 group"
                 >
                   <div className="flex items-center gap-3">
                     <Calendar size={16} className="text-cyan-400" />
@@ -355,7 +355,7 @@ export default function DashboardPage() {
                 </Link>
                 <Link
                   href="/tasks"
-                  className="flex items-center justify-between p-3.5 rounded-xl bg-[#111827] border border-[#2A3648] hover:border-cyan-400/20 hover:bg-gradient-to-r hover:from-cyan-500/5 hover:to-blue-600/5 transition-all duration-300 group"
+                  className="flex items-center justify-between p-3.5 rounded-xl bg-[#0B1120] border border-[#1A2233] hover:border-cyan-400/30 hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-blue-600/10 transition-all duration-300 group"
                 >
                   <div className="flex items-center gap-3">
                     <ListChecks size={16} className="text-cyan-400" />
