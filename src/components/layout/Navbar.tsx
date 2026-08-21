@@ -92,7 +92,7 @@ export default function Navbar() {
         {/* Mobile Hamburger */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden relative z-50 flex h-10 w-10 items-center justify-center rounded-xl border border-[#1A2233] bg-[#0B1120] text-white transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-400/10"
+          className="lg:hidden relative z-[60] flex h-10 w-10 items-center justify-center rounded-xl border border-[#1A2233] bg-[#0B1120] text-white transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-400/10"
           aria-label="Toggle menu"
         >
           {isOpen ? <X size={20} /> : <Menu size={20} />}
