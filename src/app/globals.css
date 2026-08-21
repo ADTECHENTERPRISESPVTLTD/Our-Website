@@ -281,6 +281,77 @@ p {
   letter-spacing: -0.04em;
 }
 
+/* ---- Hero Eyebrow ---- */
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7dd3fc;
+}
+
+.hero-eyebrow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #06b6d4;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.8);
+  animation: pulse-glow 2.4s ease-in-out infinite;
+}
+
+/* ---- Hero Tagline (rotating main heading) ---- */
+.hero-tagline {
+  font-size: 3.5rem;
+  line-height: 1.15;
+  font-weight: 800;
+  color: #f8fafc;
+  letter-spacing: -0.03em;
+}
+
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-eyebrow {
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    gap: 0.4rem;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.4;
+    padding: 0 0.25rem;
+  }
+
+  .hero-tagline {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .hero-cta {
+    padding: 14px 24px;
+    font-size: 0.875rem;
+    width: 100%;
+  }
+  .stat-card {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hero-title {
+    font-size: 3.25rem;
+  }
+
+  .hero-tagline {
+    font-size: 2.75rem;
+    line-height: 1.15;
+  }
+}
+
 .section-subtitle {
   font-size: 1.25rem;
   font-weight: 600;
