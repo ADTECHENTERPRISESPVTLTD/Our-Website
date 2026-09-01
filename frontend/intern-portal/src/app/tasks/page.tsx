@@ -186,6 +186,57 @@ const toggleDrawer = (
   }));
 };
 
+const handleFileUpload = async (taskId: string, file: File | null) => {
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    await api.post(`/tasks/${taskId}/upload`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    setTasks((prev) =>
+      prev.map((task) =>
+        task._id === taskId ? { ...task, attachedFile: file.name } : task
+      )
+    );
+  } catch (error) {
+    console.error("Failed to upload file:", error);
+  }
+};
+
+const handleAddComment = async (taskId: string) => {
+  const text = commentInputs[taskId]?.trim();
+  if (!text) return;
+
+  try {
+    const res = await api.post(`/tasks/${taskId}/comments`, { text });
+    setTasks((prev) =>
+      prev.map((task) =>
+        task._id === taskId
+          ? {
+              ...task,
+              comments: [
+                ...(task.comments || []),
+                {
+                  id: res.data.data._id || Date.now().toString(),
+                  author: user?.fullName || "You",
+                  text,
+                  timestamp: new Date().toLocaleString("en-IN"),
+                },
+              ],
+            }
+          : task
+      )
+    );
+    setCommentInputs((prev) => ({ ...prev, [taskId]: "" }));
+  } catch (error) {
+    console.error("Failed to add comment:", error);
+  }
+};
+
   const filteredTasks = tasks
     .filter((t) => statusFilter === "All" || t.currentStatus === statusFilter)
     .sort(
