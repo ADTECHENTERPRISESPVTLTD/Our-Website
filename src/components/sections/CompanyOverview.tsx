@@ -11,8 +11,7 @@ const points = [
 
 export default function CompanyOverview() {
   return (
-    <section className="relative section-shell overflow-hidden bg-[#0B1120]/80 px-6 py-24">
-      <AuroraBackground starCount={60} pulseDuration={8} className="absolute inset-0 z-0 pointer-events-none" />
+    <section className="relative section-shell overflow-hidden bg-transparent px-6 py-24">
       <div className="relative z-10 mx-auto grid max-w-7xl items-start gap-10 lg:grid-cols-[1.05fr_0.95fr]">
         <motion.div
           initial={{ opacity: 0, x: -40 }}

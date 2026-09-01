@@ -6,8 +6,7 @@ import AuroraBackground from "@/components/ui/aurora-background";
 
 export default function FinalCTA() {
   return (
-    <section className="relative section-shell overflow-hidden bg-[#0B1120]/80 px-6 py-24">
-      <AuroraBackground starCount={60} pulseDuration={8} className="absolute inset-0 z-0 pointer-events-none" />
+    <section className="relative section-shell overflow-hidden bg-transparent px-6 py-24">
       <div className="relative z-10 mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 40 }}

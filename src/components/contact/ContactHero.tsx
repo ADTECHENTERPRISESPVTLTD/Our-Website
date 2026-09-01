@@ -7,8 +7,7 @@ import AuroraBackground from "@/components/ui/aurora-background";
 
 export default function ContactHero() {
   return (
-    <section className="site-hero relative overflow-hidden py-28 bg-[#0B1120]/80">
-      <AuroraBackground starCount={70} pulseDuration={8} className="absolute inset-0 z-0 pointer-events-none" />
+    <section className="site-hero relative overflow-hidden py-28 bg-transparent">
       {/* Background Glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="bg-glow-cyan -left-20 top-10 h-[400px] w-[400px] opacity-60" />

@@ -42,7 +42,7 @@ body {
 }
 
 main.page-shell {
-  background: var(--background);
+  background: transparent;
   color: var(--foreground);
   overflow-x: hidden;
 }
@@ -299,7 +299,7 @@ p {
 /* Site-wide hero/background utilities */
 .site-hero {
   min-height: 100vh;
-  background: var(--background);
+  background: transparent;
   position: relative;
   overflow: hidden;
 }

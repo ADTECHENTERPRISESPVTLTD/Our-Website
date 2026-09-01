@@ -169,27 +169,15 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center bg-[#0B1120]/80 overflow-hidden"
+      className="relative min-h-screen flex items-center bg-transparent overflow-hidden"
       aria-label="Hero section"
     >
-      {/* ─── Pure Aurora Background ─── */}
-      <AuroraBackground starCount={90} pulseDuration={8} className="absolute inset-0 z-0 pointer-events-none" />
-
-      {/* ─── Gradient Overlays ─── */}
-      <div
-        className="absolute inset-0 z-[1] pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 60% at 50% -20%, rgba(6, 182, 212, 0.08), transparent), radial-gradient(ellipse 60% 50% at 80% 80%, rgba(129, 140, 248, 0.06), transparent)",
-        }}
-        aria-hidden="true"
-      />
-
       {/* ─── Grid Overlay ─── */}
       <div
-        className="absolute inset-0 z-[1] bg-grid compact opacity-40 pointer-events-none"
+        className="absolute inset-0 z-[1] bg-grid compact opacity-25 pointer-events-none"
         aria-hidden="true"
       />
+
 
       {/* ─── Main Content ─── */}
       <div

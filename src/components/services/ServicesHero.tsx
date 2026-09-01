@@ -6,8 +6,7 @@ import AuroraBackground from "@/components/ui/aurora-background";
 
 export default function ServicesHero() {
   return (
-    <section className="site-hero relative overflow-hidden pt-36 pb-24 bg-[#0B1120]/80">
-      <AuroraBackground starCount={70} pulseDuration={8} className="absolute inset-0 z-0 pointer-events-none" />
+    <section className="site-hero relative overflow-hidden pt-36 pb-24 bg-transparent">
       <div className="bg-glow-cyan -top-40 -left-40 h-[450px] w-[450px] pointer-events-none" />
       <div className="bg-glow-blue -bottom-40 -right-40 h-[450px] w-[450px] pointer-events-none" />
 
